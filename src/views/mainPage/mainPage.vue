@@ -1,23 +1,25 @@
 
 <template>
     <div class="mainPage">
-        <a-layout-content class="content" >
+        <layout></layout>
+<!--        <a-layout-content class="content" >-->
 
-        </a-layout-content>
-        <a-layout-footer class="footer">
-            IRBL ©2022 Created by NJUSE
-        </a-layout-footer>
+<!--        </a-layout-content>-->
+<!--        <a-layout-footer class="footer">-->
+<!--            IRBL ©2022 Created by NJUSE-->
+<!--        </a-layout-footer>-->
+        <span>ddd</span>
 
 
     </div>
 </template>
 
 <script>
-
+    import layout from '../../components/layout2/layout2'
   export default {
     name: "mainPage",
       components:{
-
+          layout,
       },
       data() {
           return {

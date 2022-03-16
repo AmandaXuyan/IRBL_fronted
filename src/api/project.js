@@ -45,10 +45,11 @@ export function updateProjectAPI(data){
     })
 }
 
-export function getAllProjectAPI(userId) {
+export function getAllProjectAPI(data) {
     return axios({
-        url: `${api.projectPre}/${userId}/allProjects`,
+        url: `${api.projectPre}/allProjects`,
         method: 'get',
+        params:data
     })
 }
 

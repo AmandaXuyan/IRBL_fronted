@@ -6,6 +6,7 @@ const getters={
     userId: state => state.user.userId,
     userInfo: state => state.user.userInfo,
     userProjectList: state => state.user.userProjectList,
+    visibleLogin:state => state.user.visibleLogin,
     //project
     currentProjectId: state => state.project.currentProjectId,
     projectList: state => state.project.projectList,

@@ -48,7 +48,8 @@ const project =  {
         // eslint-disable-next-line no-unused-vars
         getProjectList: async({commit, state},userId) => {
             console.log("getProject/userId:----"+userId)
-            const res = await getAllProjectAPI(userId)
+            const data={'id':userId};
+            const res = await getAllProjectAPI(data)
             console.log(res)
             if(res){
                 commit('set_projectList', res)

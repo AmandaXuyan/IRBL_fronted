@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // eslint-disable-next-line no-unused-vars
-import loginPage from '../views/loginPage.vue'
+import loginPage from '../views/login/loginPage.vue'
 
 Vue.use(VueRouter)
 
@@ -14,24 +14,24 @@ const routes = [
   {
     path:'/',
     redirect:'/NJUSE',
-    component: () => import(/* webpackChunkName: "about" */ '../views/mainPage.vue')
+    
   },
   {
     path:'/NJUSE',
     name:'layout',
     redirect:'/mainPage',
     // component:()=>import ('@/components/layout2/layout2'),
-    component:()=>import ('@/components/layout'),
+    // component:()=>import ('@/components/layout'),
     children:[
       {
         path:'/mainPage',
         name:'main',
-        component:()=>import('@/views/mainPage'),
+        component:()=>import('@/views/mainPage/mainPage'),
       },
       {
         path:'/project/projectList',
         name:'projectList',
-        component:()=>import('@/views/project/projectList'),
+        component:()=>import('@/views/project/projectList/projectList'),
       },
       {
         path: '/project/projectDetail/:projectId',

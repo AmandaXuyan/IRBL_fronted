@@ -11,13 +11,14 @@ import {
 
 const getDefaultState = () => {
     return {
-        //todo: userId:''
-        userId: 1,
+        userId: 0,
         userInfo: {
             id:0,
             userName:'Tourist',
+            email:''
         },
         userProjectList: [],
+        visibleLogin:true,
 
 
     }
@@ -28,10 +29,12 @@ const user = {
     mutations: {
         reset_state: function(state) {
             state.token = '',
-                state.userId = '',
+                state.userId = 0,
+                state.visibleLogin=true ,
                 state.userInfo = {
                     id:0,
                     userName:'Tourist',
+                    email:'',
                 },
                 state.userProjectList = []
         },
@@ -52,24 +55,27 @@ const user = {
         },
         set_userProjectList: (state, data) => {
             state.userProjectList = data
-        }
+        },
+        set_visibleLogin: (state, data) => {
+            state.visibleLogin = data
+        },
     },
 
     actions: {
+        // eslint-disable-next-line no-unused-vars
         login: async ({ dispatch, commit }, userData) => {
-            console.log('login----param----'+userData)
             const res = await loginAPI(userData)
-            console.log('res----'+res)
             if(res){
                 setToken(res.id)
                 commit('set_userId', res.id)
-                dispatch('getUserInfo')
+                commit('set_visibleLogin',false)
+                commit('set_userInfo',res)
+                // dispatch('getUserInfo')
                 router.push({ name: 'projectList'})
             }
         },
         // eslint-disable-next-line no-unused-vars
         register: async({ commit }, data) => {
-            console.log('register----param----'+data)
             const res = await registerAPI(data)
             if(res){
                 message.success('注册成功')
