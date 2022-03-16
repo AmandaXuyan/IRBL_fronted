@@ -14,6 +14,8 @@ const getDefaultState = () => {
         //todo: userId:''
         userId: 1,
         userInfo: {
+            id:0,
+            userName:'Tourist',
         },
         userProjectList: [],
 
@@ -28,7 +30,8 @@ const user = {
             state.token = '',
                 state.userId = '',
                 state.userInfo = {
-
+                    id:0,
+                    userName:'Tourist',
                 },
                 state.userProjectList = []
         },
@@ -61,7 +64,7 @@ const user = {
                 setToken(res.id)
                 commit('set_userId', res.id)
                 dispatch('getUserInfo')
-                router.push('/NJUSE/project/projectList')
+                router.push({ name: 'projectList'})
             }
         },
         // eslint-disable-next-line no-unused-vars

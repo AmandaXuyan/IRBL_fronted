@@ -20,6 +20,7 @@ const routes = [
     path:'/NJUSE',
     name:'layout',
     redirect:'/mainPage',
+    // component:()=>import ('@/components/layout2/layout2'),
     component:()=>import ('@/components/layout'),
     children:[
       {
@@ -62,6 +63,11 @@ const routes = [
         name:'addIssue',
         component:()=>import('@/views/issue/components/issueModal'),
       },
+      {
+        path:'/project/createProject',
+        name:'createProject',
+        component:()=>import('@/views/project/createProjectPage/createPage'),
+      },
 
     ]
   },
@@ -82,6 +88,14 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
+
+//解决router报重复的问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+
 
 router.onError((error)=>{
   const pattern=/Loading chunk (\d)+failed/g;

@@ -21,7 +21,7 @@
                 </a>
                 <Form ref="loginFrom" :model="loginFrom" :rules="loginRule">
                     <Form-item prop="userName">
-                        <Input type="text" v-model="loginFrom.userName" placeholder="用户名">
+                        <Input type="text" v-model="loginFrom.email" placeholder="邮箱">
                             <Icon type="ios-person-outline" slot="prepend"></Icon>
                         </Input>
                     </Form-item>
@@ -87,7 +87,7 @@
                 loginShow: true,
                 registerShow: false,
                 loginFrom: {
-                    userName: '',
+                    email: '',
                     password: '',
                 },
                 registerFrom: {
@@ -96,8 +96,8 @@
                     email: '',
                 },
                 loginRule: {
-                    userName: [
-                        { required: true, message: '请填写用户名', trigger: 'blur' },
+                    email: [
+                        { required: true, message: '请填写邮箱', trigger: 'blur' },
                     ],
                     password: [
                         { required: true, message: '请填写密码', trigger: 'blur' },
