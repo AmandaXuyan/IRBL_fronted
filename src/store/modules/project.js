@@ -3,12 +3,13 @@
 // import { resetRouter } from '@/router'
 import { message } from 'ant-design-vue'
 import {
-    addByConfigAPI,
+    addProjectAPI,
     addByFileAPI,
     deleteProjectAPI,
     updateProjectAPI,
     getAllProjectAPI,
-    getProjectDetailByIdAPI
+    getProjectDetailByIdAPI,
+    addProjectUrlAPI
 } from '@/api/project'
 
 
@@ -16,7 +17,7 @@ const project =  {
     state: {
         projectList: [],
         projectListLoading: true,
-        currentProjectId:'',
+        currentProjectId: 1,
         currentProjectDetail:{},
         projectModalVisible:false,
         uploadVisible:false,
@@ -47,8 +48,8 @@ const project =  {
     actions:{
         // eslint-disable-next-line no-unused-vars
         getProjectList: async({commit, state},userId) => {
-            console.log("getProject/userId:----"+userId)
             const data={'id':userId};
+            console.log(data)
             const res = await getAllProjectAPI(data)
             console.log(res)
             if(res){
@@ -66,9 +67,9 @@ const project =  {
             }
         },
         // eslint-disable-next-line no-unused-vars
-        addByConfig: async({ state, commit }, data) => {
-            console.log("addByConfig:----"+data)
-            const res = await addByConfigAPI(data)
+        addProject: async({ state, commit }, data) => {
+            console.log(data)
+            const res = await addProjectAPI(data)
             console.log(res)
             if(res){
                 message.success('创建成功')
@@ -78,18 +79,33 @@ const project =  {
             }
         },
         // eslint-disable-next-line no-unused-vars
+        addProjectUrl: async({ state, commit }, data) => {
+            console.log(data)
+            const res = await addProjectUrlAPI(data)
+            console.log(res)
+            if(res){
+                message.success('创建成功')
+                commit('set_projectModalVisible', false)
+                commit('set_currentProjectDetail',res)
+                // commit('set_currentProjectId',res.id)
+            }
+        },
+
+        // eslint-disable-next-line no-unused-vars
         addByFile: async({ state, commit }, data) => {
+            console.log(data)
             const res = await addByFileAPI(data)
             console.log(res)
             if(res){
                 message.success('创建成功')
                 commit('set_uploadVisible', false)
                 commit('set_currentProjectDetail',res)
-                commit('set_currentProjectId',res.id)
+                // commit('set_currentProjectId',res.id)
             }
         },
         // eslint-disable-next-line no-unused-vars
         updateProject: async({ state, commit }, data) => {
+            console.log(data)
             const res = await updateProjectAPI(data)
             console.log(res)
             if(res){
@@ -99,9 +115,9 @@ const project =  {
         },
 
         // eslint-disable-next-line no-unused-vars
-        deleteProject: async({ state, dispatch }, projectId) => {
-            console.log("deleteProject:----"+projectId)
-            const res = await deleteProjectAPI(projectId)
+        deleteProject: async({ state, dispatch }, data) => {
+            console.log(data)
+            const res = await deleteProjectAPI(data)
             if(res) {
                 dispatch('getProjectList')
                 message.success('删除成功')

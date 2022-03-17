@@ -4,9 +4,17 @@ const api = {
     projectPre: '/api/project'
 }
 
-export function addByConfigAPI(data){
+export function addProjectAPI(data){
     return axios({
-        url:`${api.projectPre}/add/Config`,
+        url:`${api.projectPre}/add`,
+        method: 'POST',
+        data
+    })
+}
+
+export function addProjectUrlAPI(data){
+    return axios({
+        url:`${api.projectPre}/addProjectUrl`,
         method: 'POST',
         data
     })
@@ -14,25 +22,17 @@ export function addByConfigAPI(data){
 
 export function addByFileAPI(data){
     return axios({
-        url:`${api.projectPre}/add/File`,
+        url:`${api.projectPre}/addProjectFile`,
         method: 'POST',
         data
     })
 }
 
-export function addProjectFileAPI(data){
+export function deleteProjectAPI(data) {
     return axios({
-        url:`${api.projectPre}/${data.id}/addProjectFile`,
-        method: 'POST',
-        data
-    })
-}
-
-
-export function deleteProjectAPI(projectId) {
-    return axios({
-        url: `${api.projectPre}/${projectId}/delete`,
-        method: 'GET',
+        url: `${api.projectPre}/delete`,
+        method: 'DELETE',
+        params:data
     })
 }
 

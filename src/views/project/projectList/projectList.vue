@@ -5,61 +5,63 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             <layout></layout>
         </div>
 
-<!--        <a-layout>-->
-<!--        <a-layout-content style="margin: 0 16px;background: #EBFFEF">-->
-<!--            <div class="project-text">我的项目</div>-->
-<!--            <div class="tool-bar">-->
-<!--                <Button @click="addByConfig1()" >addByConfig</Button>-->
-<!--                <Button @click="uploadVis()" >addByFile</Button>-->
-<!--                <Button @click="deleteOneProject1()" >deleteProject</Button>-->
+        <a-layout>
+        <a-layout-content style="margin: 0 16px;background: #EBFFEF">
+            <div class="project-text">我的项目</div>
+            <div class="tool-bar">
+                <Button @click="addProject1()" >addProject</Button>
+                <Button @click="addProjectUrl1()" >addProjectUrl</Button>
+                <Button @click="uploadVis()" >addByFile</Button>
+                <Button @click="deleteOneProject1()" >deleteProject</Button>
+                <Button @click="searchIssue1()" >searchIssue</Button>
 
-<!--            </div>-->
-<!--            <List class="project-list">-->
-<!--                <ListItem class="project-list-item" style="margin: 5px;background: #fff">-->
-<!--                    <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"-->
-<!--                                  title="This is title"-->
-<!--                                  description="This is description, this is description."-->
-<!--                    />-->
-<!--                    <template slot="action">-->
-<!--                        <li>-->
-<!--                            <Button @click="jumpToDetail(projectId)" >Detail</Button>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <Button >getList</Button>-->
-<!--                        </li>-->
-<!--                    </template>-->
-<!--                </ListItem>-->
+            </div>
+            <List class="project-list">
+                <ListItem class="project-list-item" style="margin: 5px;background: #fff">
+                    <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
+                                  title="This is title"
+                                  description="This is description, this is description."
+                    />
+                    <template slot="action">
+                        <li>
+                            <Button @click="jumpToDetail(projectId)" >Detail</Button>
+                        </li>
+                        <li>
+                            <Button >getList</Button>
+                        </li>
+                    </template>
+                </ListItem>
 
-<!--            </List>-->
+            </List>
 
 
-<!--        </a-layout-content>-->
-<!--        </a-layout>-->
+        </a-layout-content>
+        </a-layout>
 
-<!--        <el-dialog-->
-<!--                v-dialogDrag-->
-<!--                :visible="uploadVisible"-->
-<!--                width="40%"-->
-<!--                :modal-append-to-body=false-->
-<!--                @cancel="cancelUpload"-->
-<!--                style="text-align: center">-->
-<!--            <el-upload-->
-<!--                    class="upload-demo"-->
-<!--                    drag-->
-<!--                    action="https://www.mocky.io/v2/5185415ba171ea3a00704eed/posts/"-->
-<!--                    multiple-->
-<!--                    :on-change="uploadPrepare"-->
-<!--                    :limit="1"-->
-<!--                    :on-error="uploadError"-->
-<!--                    :file-list="fileList"-->
-<!--                    :auto-upload="true"-->
-<!--                    :before-upload="beforeAvatarUpload">-->
-<!--                <i class="el-icon-upload"></i>-->
-<!--                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>-->
-<!--                <div class="el-upload__text">仅支持zip文件</div>-->
-<!--            </el-upload>-->
-<!--            <el-button type="primary" plain @click="addByFile1()" style="margin-top: 10px">确认上传</el-button>-->
-<!--        </el-dialog>-->
+        <el-dialog
+                v-dialogDrag
+                :visible="uploadVisible"
+                width="40%"
+                :modal-append-to-body=false
+                @cancel="cancelUpload"
+                style="text-align: center">
+            <el-upload
+                    class="upload-demo"
+                    drag
+                    action="https://www.mocky.io/v2/5185415ba171ea3a00704eed/posts/"
+                    multiple
+                    :on-change="uploadPrepare"
+                    :limit="1"
+                    :on-error="uploadError"
+                    :file-list="fileList"
+                    :auto-upload="true"
+                    :before-upload="beforeAvatarUpload">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__text">仅支持zip文件</div>
+            </el-upload>
+            <el-button type="primary" plain @click="addByFile1()" style="margin-top: 10px">确认上传</el-button>
+        </el-dialog>
 
     </div>
 </template>
@@ -76,9 +78,31 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         data(){
             return{
                 //todo:改id
-                projectId:1,
-                gitUrl:'https://github.com/AmandaXuyan/IRBL_fronted.git',
+                projectId:'',
+
                 fileList:[],
+                addProjectForm:{
+                    userId:1,
+                    projectName:'',
+                    projectDescription:'',
+                },
+                addProjectUrlForm:{
+                    userId:1,
+                    projectId:1,
+                    url:'https://github.com/AmandaXuyan/irbl_fronted.git'
+                },
+                addProjectFileForm:{
+                    userId:1,
+                    projectId:1,
+
+                },
+                deleteProjectForm:{
+                    id:1
+                },
+                searchIssueForm:{
+                    id:1,
+                    keywords:"",
+                },
 
 
             };
@@ -86,6 +110,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         computed:{
             ...mapGetters([
                 'userId',
+                'token',
                 'projectList',
                 'projectListLoading',
                 'projectModalVisible',
@@ -106,17 +131,22 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ]),
             ...mapActions([
                 'getProjectList',
-                'addByConfig',
+                'addProject',
                 'addByFile',
-                'deleteProject'
+                'deleteProject',
+                'addProjectUrl',
+                'searchIssue'
 
             ]),
             jumpToDetail(){
                 this.set_currentProjectId(this.projectId);
                 this.$router.push({ name: 'projectDetail', params: { projectId: this.projectId }})
             },
-            addByConfig1(){
-                this.addByConfig(this.gitUrl);
+            addProject1(){
+                this.addProject(this.addProjectForm);
+            },
+            addProjectUrl1(){
+                this.addProjectUrl(this.addProjectUrlForm)
             },
             /**
              *
@@ -128,7 +158,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 this.set_uploadVisible(false);
             },
             addByFile1(){
-                this.addByFile();
+                this.addByFile(this.addProjectFileForm);
                 this.set_uploadVisible(false);
             },
             deleteProject1(){
@@ -160,11 +190,11 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
              *
              */
             deleteOneProject1(){
-                this.deleteProject(this.projectId);
+                this.deleteProject(this.deleteProjectForm);
             },
-
-
-
+            searchIssue1(){
+                this.searchIssue(this.searchIssueForm)
+            }
 
         },
     }

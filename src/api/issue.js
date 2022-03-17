@@ -12,17 +12,17 @@ export function addIssueAPI(data){
     })
 }
 
-export function deleteIssueAPI(issueId) {
+export function deleteIssueAPI(data) {
     return axios({
-        url: `${api.issuePre}/${issueId}/delete`,
-        method: 'GET',
+        url: `${api.issuePre}/delete`,
+        method: 'DELETE',
+        params:data
     })
 }
 
-//更新某个issue?
 export function updateIssueAPI(data){
     return axios({
-        url: `${api.issuePre}/${data.id}/update`,
+        url: `${api.issuePre}/update`,
         method: 'POST',
         data
     })
@@ -32,20 +32,51 @@ export function getHistoryIssuesAPI(userId) {
     return axios({
         url: `${api.issuePre}/${userId}/historyIssues`,
         method: 'get',
+
     })
 }
 
-export function searchIssueAPI(content) {
+export function searchIssueAPI(data) {
     return axios({
-        url: `${api.issuePre}/${content}/search`,
+        url: `${api.issuePre}/search`,
         method: 'GET',
+        params:data,
     })
 }
 
-
-export function getIssueListAPI(userId) {
+/**
+ * 获取所有的在本平台创建的issue，以及手动拉取过的github上的issue
+ * @param data
+ * @returns {*}
+ */
+export function getIssueListAPI(data) {
     return axios({
-        url: `${api.issuePre}/${userId}/issueList`,
-        method: 'get',
+        url: `${api.issuePre}/historyIssues`,
+        method: 'GET',
+        params :data,
+    })
+}
+
+export function getIssueAdviceAPI(data) {
+    return axios({
+        url: `${api.issuePre}/advice`,
+        method: 'GET',
+        params :data,
+    })
+}
+
+export function getRepoAllIssuesAPI(data) {
+    return axios({
+        url: `${api.issuePre}/repoIssue`,
+        method: 'GET',
+        params :data,
+    })
+}
+
+export function saveRepoAllIssuesAPI(data) {
+    return axios({
+        url: `${api.issuePre}/storeRepoIssue`,
+        method: 'GET',
+        params :data,
     })
 }

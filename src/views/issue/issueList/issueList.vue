@@ -1,15 +1,13 @@
 <template>
     <div class="issueList">
+        <layout></layout>
         <h1>issueList!</h1>
         <a-layout>
             <a-layout-content style="margin: 0 16px;background: #EBFFEF">
                 <div class="tool-bar">
+                    <Button @click="addIssue1()" >addIssue</Button>
+                    <Button @click="deleteIssue1()" >deleteIssue</Button>
 
-                    <router-link to="/issue/addIssue">
-                        <Button @click="addIssue1()" >addIssue</Button>
-                    </router-link><router-view/>
-
-                    <Button @click="deleteOneIssue1()" >deleteIssue</Button>
 
                 </div>
                 <List class="project-list">
@@ -38,30 +36,40 @@
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
-
+    import layout from '../../../components/layout2/layout2'
     export default {
         name: "issueList",
         components:{
-
+            layout
         },
         data(){
             return{
                 issueId: 2,
                 addIssueInf:{},
-
+                issueForm:{
+                    projectId:2,
+                },
+                addIssueForm:{
+                    title:'',
+                    description:'',
+                    projectId:'',
+                    issueName:''
+                },
             };
         },
         computed:{
             ...mapGetters([
                 'userId',
                 'issueList',
+                'currentProjectId',
                 'issueListLoading',
                 'issueModalVisible',
+
 
             ])
         },
         async mounted() {
-            await this.getIssueList(this.userId);
+            await this.getIssueList(this.currentProjectId);
         },
         methods:{
             ...mapMutations([
@@ -70,19 +78,25 @@
             ]),
             ...mapActions([
                 'addIssue',
-                'getIssueList'
+                'getIssueList',
+                'deleteIssue',
+
 
             ]),
             jumpToDetail(){
                 this.$router.push({ name: 'issueDetail', params: { issueId: this.issueId }})
             },
             addIssue1(){
-                this.set_issueModalVisible(true);
+                this.$router.push({ name: 'createIssue',});
+                this.addIssue(this.addIssueForm);
+                // this.set_issueModalVisible(true);
 
             },
-            deleteOneIssue1(){
+            deleteIssue1(){
+                this.deleteIssue(this.deleteIssueForm);
 
             },
+
         },
     }
 </script>

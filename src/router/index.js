@@ -2,6 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // eslint-disable-next-line no-unused-vars
 import loginPage from '../views/login/loginPage.vue'
+import mainPage from '../views/mainPage/mainPage.vue'
+import projectList from "../views/project/projectList/projectList.vue";
+import issueList from '../views/issue/issueList/issueList.vue'
+import issueDetail from "../views/issue/issueDetail/issueDetail.vue";
+import projectDetail from '../views/project/projectDetail/projectDetail.vue';
+import userInfo from '../views/user/userInfo';
+import issueHistory from '../views/issue/issueHistory/issueHistory'
+import createProject from "@/views/project/createProjectPage/createPage";
+import createIssue from '../views/issue/components/issueModal'
 
 Vue.use(VueRouter)
 
@@ -13,64 +22,51 @@ const routes = [
   },
   {
     path:'/',
-    redirect:'/NJUSE',
-    
+    name:'main',
+    component:mainPage,
+
   },
   {
-    path:'/NJUSE',
-    name:'layout',
-    redirect:'/mainPage',
-    // component:()=>import ('@/components/layout2/layout2'),
-    // component:()=>import ('@/components/layout'),
-    children:[
-      {
-        path:'/mainPage',
-        name:'main',
-        component:()=>import('@/views/mainPage/mainPage'),
-      },
-      {
-        path:'/project/projectList',
-        name:'projectList',
-        component:()=>import('@/views/project/projectList/projectList'),
-      },
-      {
-        path: '/project/projectDetail/:projectId',
-        name: 'projectDetail',
-        component: () => import('@/views/project/projectDetail')
-      },
-      {
-        path: '/user/info/:userId',
-        name: 'userInfo',
-        component: () => import('@/views/user/userInfo')
-      },
-      {
-        path:'/issue/issueList',
-        name:'issueList',
-        component:()=>import('@/views/issue/issueList'),
-      },
-      {
-        path:'/issue/issueDetail/:issueId',
-        name:'issueDetail',
-        component:()=>import('@/views/issue/issueDetail'),
-      },
-      {
-        path:'/issue/issueHistory',
-        name:'issueHistory',
-        component:()=>import('@/views/issue/issueHistory'),
-      },
-      {
-        path:'/issue/addIssue',
-        name:'addIssue',
-        component:()=>import('@/views/issue/components/issueModal'),
-      },
-      {
-        path:'/project/createProject',
-        name:'createProject',
-        component:()=>import('@/views/project/createProjectPage/createPage'),
-      },
-
-    ]
+    path:'/projectList',
+    name:'projectList',
+    component:projectList,
   },
+  {
+    path:'/issueList',
+    name:'issueList',
+    component:issueList,
+  },
+  {
+    path: '/projectDetail',
+    name: 'projectDetail',
+    component: projectDetail,
+  },
+  {
+    path: '/user/info',
+    name: 'userInfo',
+    component: userInfo,
+  },
+  {
+    path:'/issueDetail',
+    name:'issueDetail',
+    component:issueDetail,
+  },
+  {
+    path:'/issue/issueHistory',
+    name:'issueHistory',
+    component:issueHistory,
+  },
+  {
+    path:'/createProject',
+    name:'createProject',
+    component:createProject,
+  },
+  {
+    path:'/createIssue',
+    name:'createIssue',
+    component:createIssue,
+  },
+
 
 ]
 

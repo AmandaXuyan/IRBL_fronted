@@ -1,5 +1,7 @@
 <template>
     <div class="userInfo">
+        <layout></layout>
+
         <h1>userInfo!</h1>
 
     </div>
@@ -7,11 +9,11 @@
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
-
+    import layout from '../../components/layout2/layout2'
     export default {
         name: "userInfo",
         components:{
-
+            layout,
         },
         data(){
             return{

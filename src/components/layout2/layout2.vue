@@ -39,6 +39,10 @@
             </Menu>
 
         </Affix>
+<!--        <Affix class="layout-pop" :offset-top="60" v-if="visiblePop">-->
+<!--            sss-->
+<!--        </Affix>-->
+
     </div>
 
 </template>
@@ -55,7 +59,8 @@
             return {
                 activePage: '',
                 localUserName: {},
-                visiblePop:false,
+                visiblePop:true,
+
             };
         },
         computed: {

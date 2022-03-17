@@ -24,5 +24,6 @@ const getters={
     searchResult:state=>state.issue.searchResult,
 
 
+
 }
 export default getters

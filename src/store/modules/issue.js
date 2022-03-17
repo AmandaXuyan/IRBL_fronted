@@ -8,19 +8,23 @@ import{
     updateIssueAPI,
     getHistoryIssuesAPI,
     searchIssueAPI,
-    getIssueListAPI
+    getIssueListAPI,
+    getIssueAdviceAPI,
+    getRepoAllIssuesAPI,
+    saveRepoAllIssuesAPI
 } from '@/api/issue'
 
 
 const issue =  {
     state: {
-        currentIssueId:'',
+        currentIssueId:0,
         issueList: [],
         historyIssueList:[],
         currentIssueDetail:{},
         issueListLoading:false,
         issueModalVisible:false,
         searchResult:{},
+        issueAdviceList:[]
 
     },
     mutations:{
@@ -31,7 +35,7 @@ const issue =  {
             state.issueListLoading = data
         },
         set_currentIssueId: function(state, data) {
-            state.currentProjectId = data
+            state.currentIssueId = data
         },
         set_currentIssueDetail: function(state, data) {
             state.currentIssueDetail = {
@@ -48,6 +52,9 @@ const issue =  {
         set_searchResult:function(state, data) {
             state.searchResult = data
         },
+        set_issueAdviceList:function(state, data) {
+            state.set_issueAdviceList = data
+        },
 
     },
     actions:{
@@ -63,16 +70,28 @@ const issue =  {
             }
         },
         // eslint-disable-next-line no-unused-vars
-        getIssueList: async({commit, state},userId) => {
-            const res = await getIssueListAPI(userId)
+        getIssueList: async({commit, state},id) => {
+            const data={id:id};
+            console.log(data)
+            const res = await getIssueListAPI(data)
             if(res){
                 commit('set_issueList', res)
                 commit('set_issueListLoading', false)
             }
         },
         // eslint-disable-next-line no-unused-vars
-        deleteIssue: async({ state, dispatch }, issueId) => {
-            const res = await deleteIssueAPI(issueId)
+        getRepoAllIssues:async({commit, state},id) => {
+            const data={id:id};
+            console.log(data)
+            const res = await getRepoAllIssuesAPI(data)
+            if(res){
+                commit('set_issueList', res)
+
+            }
+        },
+        // eslint-disable-next-line no-unused-vars
+        deleteIssue: async({ state, dispatch }, data) => {
+            const res = await deleteIssueAPI(data)
             if(res) {
                 dispatch('getIssueList')
                 message.success('删除成功')
@@ -82,12 +101,13 @@ const issue =  {
         },
         // eslint-disable-next-line no-unused-vars
         updateIssue: async({ state, commit }, data) => {
+            console.log(data)
             const res = await updateIssueAPI(data)
             console.log(res)
             if(res){
                 message.success('保存成功')
                 commit('set_currentIssueDetail',res)
-                commit('set_currentProjectId',res.id)
+                commit('set_currentProjectId',res.projectId)
             }
         },
 
@@ -101,6 +121,7 @@ const issue =  {
 
         // eslint-disable-next-line no-unused-vars
         searchIssue: async({ state, commit }, data) => {
+            console.log(data)
             const res = await searchIssueAPI(data)
             console.log(res)
             if(res){
@@ -108,6 +129,29 @@ const issue =  {
                 commit('set_searchResult',res)
             }
         },
+
+        // eslint-disable-next-line no-unused-vars
+        getIssueAdvice: async({commit, state},id) => {
+            const data={id:id};
+            console.log(data)
+            const res = await getIssueAdviceAPI(data)
+            if(res){
+                commit('set_issueAdviceList', res)
+            }
+        },
+
+        // eslint-disable-next-line no-unused-vars
+        saveRepoAllIssues:async({commit},id) => {
+            const data={id:id};
+            console.log(data)
+            const res = await saveRepoAllIssuesAPI(data)
+            if(res){
+                message.success('保存成功')
+            }
+        },
+
+
+
 
 
     }

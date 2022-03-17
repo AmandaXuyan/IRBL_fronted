@@ -1,17 +1,18 @@
 <template>
-    <div class="layoutPage">
-        <h1>logoutPage!</h1>
+    <div class="issueHistory">
+        <layout></layout>
 
+        <h1>issueHistory!</h1>
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
-
+    import layout from '../../../components/layout2/layout2'
     export default {
-        name: "logoutPage",
+        name: "issueHistory",
         components:{
-
+            layout,
         },
         data(){
             return{

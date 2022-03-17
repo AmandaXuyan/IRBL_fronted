@@ -70,6 +70,7 @@ const user = {
                 commit('set_userId', res.id)
                 commit('set_visibleLogin',false)
                 commit('set_userInfo',res)
+                commit('set_token',res.id)
                 // dispatch('getUserInfo')
                 router.push({ name: 'projectList'})
             }

@@ -6,6 +6,8 @@
             </li>
             <li>
                 <Button @click="updateProject1()" >updateProject</Button>
+                <Button @click="getRepoAllIssues1()" >getRepoAllIssues</Button>
+                <Button @click="saveRepoAllIssues1()" >saveRepoAllIssues</Button>
             </li>
 
         </div>
@@ -23,13 +25,18 @@
         },
         data(){
             return{
-                projectUpdate:{},
+                projectUpdate:{
+                    id:0,
+                    projectName:'',
+                    projectDescription:'',
+                },
             };
         },
         computed:{
             ...mapGetters([
                 'currentProjectId',
-                'currentProjectDetail'
+                'currentProjectDetail',
+
             ])
         },
         async mounted() {
@@ -41,13 +48,21 @@
             ]),
             ...mapActions([
                 'getProjectDetailById',
-                'updateProject'
+                'updateProject',
+                'getRepoAllIssues',
+                'saveRepoAllIssues'
             ]),
             jumpToList(){
                 this.$router.push({ name: 'projectList'})
             },
             updateProject1(){
                 this.updateProject(this.projectUpdate);
+            },
+            getRepoAllIssues1(){
+                this.getRepoAllIssues(this.currentProjectId);
+            },
+            saveRepoAllIssues1(){
+                this.saveRepoAllIssues(this.currentProjectId);
             }
 
         },
