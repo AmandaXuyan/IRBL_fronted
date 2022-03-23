@@ -1,6 +1,6 @@
 <template>
     <div class="issueHistory">
-        <layout></layout>
+
 
         <h1>issueHistory!</h1>
     </div>
@@ -8,11 +8,11 @@
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
-    import layout from '../../../components/layout2/layout2'
+
     export default {
         name: "issueHistory",
         components:{
-            layout,
+
         },
         data(){
             return{

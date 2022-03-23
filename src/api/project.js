@@ -12,6 +12,11 @@ export function addProjectAPI(data){
     })
 }
 
+/**
+ * 通过url增加project文件
+ * @param data
+ * @returns commit记录，projectVO
+ */
 export function addProjectUrlAPI(data){
     return axios({
         url:`${api.projectPre}/addProjectUrl`,
@@ -20,6 +25,24 @@ export function addProjectUrlAPI(data){
     })
 }
 
+/**
+ * todo: 选择某个commit版本
+ * @param data {userId,projectId,commitId}
+ * @returns
+ */
+export function getCommitProjectAPI(data) {
+    return axios({
+        url: `${api.projectPre}/getCommitProject`,
+        method: 'get',
+        params:data
+    })
+}
+
+/**
+ * 通过上传文件增加project文件
+ * @param data
+ * @returns {AxiosPromise}
+ */
 export function addByFileAPI(data){
     return axios({
         url:`${api.projectPre}/addProjectFile`,
@@ -54,6 +77,11 @@ export function getAllProjectAPI(data) {
 }
 
 //todo:currentProjectDetail 获得某个项目详细信息
+/**
+ *
+ * @param param
+ * @returns {AxiosPromise}
+ */
 export function getProjectDetailByIdAPI(param) {
     return axios({
         url: `${api.projectPre}/${param.id}/detail`,

@@ -17,10 +17,14 @@ const project =  {
     state: {
         projectList: [],
         projectListLoading: true,
-        currentProjectId: 1,
+        currentProjectId: 0,
         currentProjectDetail:{},
-        projectModalVisible:false,
+        addProjectVisible:false,
         uploadVisible:false,
+        panelLeftFirst:false,
+        //todo:记得改成false
+        connectResVisible:true,
+
     },
     mutations:{
         set_projectList:function(state, data) {
@@ -38,11 +42,17 @@ const project =  {
                 ...data,
             }
         },
-        set_projectModalVisible: function(state, data) {
+        set_addProjectVisible: function(state, data) {
             state.projectModalVisible = data
         },
         set_uploadVisible:function(state, data) {
             state.uploadVisible = data
+        },
+        set_panelLeftFirst:function(state, data) {
+            state.panelLeftFirst = data
+        },
+        set_connectResVisible:function(state, data) {
+            state.connectResVisible = data
         },
     },
     actions:{
@@ -73,7 +83,7 @@ const project =  {
             console.log(res)
             if(res){
                 message.success('创建成功')
-                commit('set_projectModalVisible', false)
+                commit('set_addProjectVisible', false)
                 commit('set_currentProjectDetail',res)
                 commit('set_currentProjectId',res.id)
             }
@@ -84,9 +94,10 @@ const project =  {
             const res = await addProjectUrlAPI(data)
             console.log(res)
             if(res){
-                message.success('创建成功')
-                commit('set_projectModalVisible', false)
+                message.success('连接成功')
+                commit('set_addProjectVisible', false)
                 commit('set_currentProjectDetail',res)
+                commit('set_connectResVisible',true)
                 // commit('set_currentProjectId',res.id)
             }
         },
@@ -97,7 +108,7 @@ const project =  {
             const res = await addByFileAPI(data)
             console.log(res)
             if(res){
-                message.success('创建成功')
+                message.success('导入成功')
                 commit('set_uploadVisible', false)
                 commit('set_currentProjectDetail',res)
                 // commit('set_currentProjectId',res.id)
@@ -115,7 +126,8 @@ const project =  {
         },
 
         // eslint-disable-next-line no-unused-vars
-        deleteProject: async({ state, dispatch }, data) => {
+        deleteProject: async({ state, dispatch },) => {
+            const data={id:state.currentProjectId};
             console.log(data)
             const res = await deleteProjectAPI(data)
             if(res) {

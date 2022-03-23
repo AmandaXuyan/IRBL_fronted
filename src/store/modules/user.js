@@ -17,8 +17,8 @@ const getDefaultState = () => {
             userName:'Tourist',
             email:''
         },
-        userProjectList: [],
         visibleLogin:true,
+        visiblePop:false,
 
 
     }
@@ -35,8 +35,7 @@ const user = {
                     id:0,
                     userName:'Tourist',
                     email:'',
-                },
-                state.userProjectList = []
+                }
         },
         set_token: function(state, token){
             state.token = token
@@ -53,11 +52,11 @@ const user = {
                 ...data
             }
         },
-        set_userProjectList: (state, data) => {
-            state.userProjectList = data
-        },
         set_visibleLogin: (state, data) => {
             state.visibleLogin = data
+        },
+        set_visiblePop:(state, data) => {
+            state.visiblePop = data
         },
     },
 

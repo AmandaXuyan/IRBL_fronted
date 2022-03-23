@@ -13,7 +13,7 @@
                     IRBL
                 </div>
                 <div class="layout-nav">
-                    <Menu-item name="projectList">
+                    <Menu-item name="projectList" @mouseenter.native="mouseOver">
                         Projects
                     </Menu-item>
                     <Menu-item name="issueList">
@@ -29,44 +29,89 @@
                         Sign In
                     </Menu-item>
                 </div>
-                <span class="create-header" @click="goToActivePage('createProject')">Create Project</span>
+                <span class="create-header" @click="goToActivePage('addProject')">Create Project</span>
                 <div class="layout-right">
-                    <a @click="goToActivePage()" class="right-link">Home</a>
+                    <a @click="goToActivePage('main')" class="right-link">Home</a>
                     <a @click="loginOut" class="right-link" v-if="!this.visibleLogin" >Log Out</a>
                     <a class="right-link">|</a>
                     <a class="right-link" >Hi, {{this.userInfo.userName}} !</a>
                 </div>
             </Menu>
-
         </Affix>
-<!--        <Affix class="layout-pop" :offset-top="60" v-if="visiblePop">-->
-<!--            sss-->
-<!--        </Affix>-->
+        <Affix class="layout-pop" style="width:100%" :offset-top="60" v-if="visiblePop" @mouseleave.native="mouseLeave">
+            <div class="nav-menu">
+                <div class="nav-menu-project">
+                    <navMenu icon-name="md-add" icon-title="Create" page-name="createProject"/>
+                    <navMenu icon-name="md-add" icon-title="Create" page-name="createProject"/>
+                </div>
+            </div>
+        </Affix>
+<!--        <Affix class="layout-se-header" style="width:100%" :offset-top="60">-->
+<!--            <div class="se-header-bread">-->
 
+<!--            </div>-->
+<!--        </Affix>-->
+<!--        <div class="layout-content" >-->
+<!--            <div class="side-content" style="margin-bottom: 22px">-->
+<!--                <span class="side-content-tool">-->
+<!--                    <a-icon type="plus-circle" />-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">-->
+<!--                <div class="split-content" style="color: #fff">-->
+<!--                    <rs-panes style="left:50px"-->
+<!--                                  size=200-->
+<!--                                  min-size=100-->
+<!--                                  resizerBorderColor="#658885"-->
+<!--                                  resizerColor="#658885"-->
+<!--                                  split-to="columns"-->
+<!--                                  :allow-resize="true"-->
+<!--                                  class="split-panes-wrap">-->
+<!--                        <div slot="split-content-left">-->
+
+<!--                        </div>-->
+<!--                        <div slot="split-content-right">-->
+
+<!--                        </div>-->
+<!--                    </rs-panes>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="bottom-content">
+            <span class="copyright"> NJUSE</span>
+        </div>
     </div>
+
 
 </template>
 <style src="./index.less" lang="less"></style>
 <script>
     import { SelfBuildingSquareSpinner } from 'epic-spinners';
     import {mapGetters, mapMutations} from 'vuex';
+    import navMenu from '../nav-menu'
+    import {Modal} from 'ant-design-vue'
+
+
     export default {
         name: "layoutTwo",
         components: {
             SelfBuildingSquareSpinner,
+            navMenu,
+
         },
         data() {
             return {
                 activePage: '',
                 localUserName: {},
-                visiblePop:true,
 
             };
         },
         computed: {
             ...mapGetters({
                 userInfo: 'userInfo',
-                visibleLogin:'visibleLogin'
+                visibleLogin:'visibleLogin',
+                visiblePop:'visiblePop'
             }),
         },
         mounted() {
@@ -79,13 +124,18 @@
         methods: {
             ...mapMutations([
                 'set_visibleLogin',
+                'set_visiblePop',
+                'set_userId',
+                'reset_state'
             ]),
             loginOut() {
-                this.$Modal.confirm({
+                Modal.confirm({
                     title: '退出',
-                    content: '<h2>确认退出？</h2>',
+                    content: '确认退出？',
                     onOk: () => {
                         localStorage.setItem('token', null); // 将token清空
+                        this.set_userId(0);
+                        this.reset_state();
                         this.$router.push({name:'main'});
                         this.set_visibleLogin(true);
                     },
@@ -98,11 +148,19 @@
                 // this.$router.push(`/${key}`);
                 this.$router.push({ name: key})
             },
+            //次菜单栏跳转页面
+            mouseOver(){
+                this.set_visiblePop(true);
+            },
+            mouseLeave(){
+                this.set_visiblePop(false);
+            },
 
         },
     }
 </script>
 
 <style scoped>
+
 
 </style>

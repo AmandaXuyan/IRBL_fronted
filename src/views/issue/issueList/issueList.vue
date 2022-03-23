@@ -1,8 +1,9 @@
 <template>
     <div class="issueList">
-        <layout></layout>
+
         <h1>issueList!</h1>
         <a-layout>
+
             <a-layout-content style="margin: 0 16px;background: #EBFFEF">
                 <div class="tool-bar">
                     <Button @click="addIssue1()" >addIssue</Button>
@@ -27,6 +28,8 @@
                     </ListItem>
 
                 </List>
+                <projectItem> </projectItem>
+                <projectItem> </projectItem>
 
 
             </a-layout-content>
@@ -36,11 +39,11 @@
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
-    import layout from '../../../components/layout2/layout2'
+
     export default {
         name: "issueList",
         components:{
-            layout
+
         },
         data(){
             return{

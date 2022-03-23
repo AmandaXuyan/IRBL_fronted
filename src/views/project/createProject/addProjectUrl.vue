@@ -6,7 +6,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             <layout2/>
             <Affix class="layout-se-header" style="width:100%;background-color:#354A51 " :offset-top="60">
                 <div class="se-header-bread">
-                    <span class="se-header-title" >Project  {{this.currentProjectDetail.projectName}}</span>
+                    <span class="se-header-title" > Create Project {{this.currentProjectDetail.projectName}}'s File !</span>
+                    <span class="se-header-title-right" @click="cancelCreate" > Cancel</span>
                 </div>
             </Affix>
             <div class="layout-content" >
@@ -24,29 +25,21 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   min-size=100
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
+                                <Card class='upload-options' title="Options" icon="ios-options" :padding="0" shadow>
+                                    <CellGroup>
+                                        <Cell class="import-from-git" title="Import from github "  />
+                                        <Cell class="upload-local" title="Upload local" to="/addProjectFile"/>
+                                    </CellGroup>
+                                </Card>
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" header="Project Detail"
-                                                      :style="collapseStyle" v-if="this.panelLeftFirst">
-                                        <span> todo: add项目详情API:id={{this.currentProjectId}}</span>
-
-                                    </a-collapse-panel>
-                                    <a-collapse-panel key="2" header="This is panel header 2" :disabled="false " :style="collapseStyle">
-                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
-                                    </a-collapse-panel>
-                                    <a-collapse-panel key="3" header="This is panel header 3" :style="collapseStyle">
+                                    <a-collapse-panel key="1" header="This is panel header 1"
+                                                      :style="collapseStyle">
                                         <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
                                     </a-collapse-panel>
                                 </a-collapse>
                             </div>
                             <div slot="secondPane" class="second-pane" style="padding-right: 30px;width: 100%;text-align: left">
-                                <div class="toolbar">
-                                    <li>
-                                        <Button @click="updateProject1()" >updateProject</Button>
-                                        <Button @click="getRepoAllIssues1()" >getRepoAllIssues</Button>
-                                        <Button @click="saveRepoAllIssues1()" >saveRepoAllIssues</Button>
-                                    </li>
-
-                                </div>
+                                <createProjectUrl></createProjectUrl>
                             </div>
                         </rs-panes>
 
@@ -63,12 +56,14 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
 <script>
     // eslint-disable-next-line no-unused-vars
     import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import createProjectUrl from "../components/createProjectUrl";
+    import {Modal} from "ant-design-vue";
 
 
     export default {
-        name: "projectDetail",
+        name: "addProjectUrl",
         components:{
-
+            createProjectUrl,
         },
         data(){
             return{
@@ -76,12 +71,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 projectId:'',
                 split1:0.5,
                 collapseStyle:"background: #354A51;color:#fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden",
-                projectUpdate:{
-                    id:0,
-                    projectName:'',
-                    projectDescription:'',
-                },
-
 
             };
         },
@@ -91,7 +80,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'addProjectVisible',
                 'currentProjectId',
                 'currentProjectDetail',
-                'panelLeftFirst'
+                'connectResVisible'
             ])
         },
         async mounted() {
@@ -100,12 +89,10 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ...mapMutations([
                 'set_currentProjectId',
                 'set_addProjectVisible',
-                'set_panelLeftFirst',
             ]),
             ...mapActions([
-                'updateProject',
-                'getRepoAllIssues',
-                'saveRepoAllIssues'
+                'deleteProject',
+                'getProjectList'
             ]),
             jumpToDetail(){
                 this.set_currentProjectId(this.projectId);
@@ -114,18 +101,21 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             jumpToCreate(){
                 this.$router.push( 'addProject')
             },
-            jumpToList(){
-                this.$router.push({ name: 'projectList'})
-            },
-            updateProject1(){
-                this.updateProject(this.projectUpdate);
-            },
-            getRepoAllIssues1(){
-                this.getRepoAllIssues(this.currentProjectId);
-            },
-            saveRepoAllIssues1(){
-                this.saveRepoAllIssues(this.currentProjectId);
+            cancelCreate(){
+                Modal.confirm({
+                    title: '取消创建项目',
+                    content: '确认取消创建该项目？',
+                    onOk: () => {
+                        this.deleteProject();
+                        this.getProjectList(this.userId);
+                        this.$router.push({ name: 'projectList'})
+                    },
+                    onCancel: () => {
+                        console.log('点击了取消');
+                    },
+                });
             }
+
         },
     }
 </script>
@@ -138,12 +128,24 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         font-size: 15px;
         color: #EBFFEF;
     }
-    .toolbar{
-        margin: 0px;
-        color: #6a8bad;
-        font-size: 18px;
-        height: 58px;
-        padding-right: 85%;
+    .ivu-card-head p, .ivu-card-head-inner{
+        color: #fff;
+    }
+    .upload-options{
+        margin-bottom: 12px;
+        width: 300px;
+        background-color: #354A51
+    }
+    .import-from-git{
+        color: #DBF5E0;
+    }
+    .se-header-title-right{
+        position: absolute;
+        right:35px;
+        margin-top: 10px;
+        font-size: 15px;
+        color: #EBFFEF;
+        cursor:pointer;
     }
 
 </style>

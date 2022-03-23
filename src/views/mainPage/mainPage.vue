@@ -1,26 +1,20 @@
 
 <template>
     <div class="mainPage">
-        <layout></layout>
+        <layout2></layout2>
 
     </div>
 
-<!--        <a-layout-content class="content" >-->
-
-<!--        </a-layout-content>-->
-<!--        <a-layout-footer class="footer">-->
-<!--            IRBL ©2022 Created by NJUSE-->
-<!--        </a-layout-footer>-->
 
 </template>
 <style src="./index.less" lang="less"></style>
 
 <script>
-    import layout from '../../components/layout2/layout2'
+import layout2 from "../../components/layout2/layout2";
   export default {
     name: "mainPage",
       components:{
-          layout,
+          layout2,
       },
       data() {
           return {

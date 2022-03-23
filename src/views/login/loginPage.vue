@@ -8,7 +8,7 @@
                     style="float: left;margin-top: 9px;"
             />
             <span class="title" >Information Retrieval</span>
-            <h3 style="color: #49A8AC;" align="center">IRBL</h3>
+            <h3 style="color: #658885;" align="center">IRBL</h3>
         </div>
         <transition name="slide-fade">
             <Card class="loginCard" v-if="loginShow">

@@ -9,8 +9,11 @@ import issueDetail from "../views/issue/issueDetail/issueDetail.vue";
 import projectDetail from '../views/project/projectDetail/projectDetail.vue';
 import userInfo from '../views/user/userInfo';
 import issueHistory from '../views/issue/issueHistory/issueHistory'
-import createProject from "@/views/project/createProjectPage/createPage";
 import createIssue from '../views/issue/components/issueModal'
+import addProject from "@/views/project/createProject/addProject";
+import addProjectFile from '@/views/project/createProject/addProjectFile';
+import addProjectUrl from '@/views/project/createProject/addProjectUrl';
+import addProjectUrlCommit from "@/views/project/createProject/addProjectUrlCommit";
 
 Vue.use(VueRouter)
 
@@ -31,6 +34,27 @@ const routes = [
     name:'projectList',
     component:projectList,
   },
+  {
+    path:'/addProject',
+    name:'addProject',
+    component:addProject,
+  },
+  {
+    path:'/addProjectFile',
+    name:'addProjectFile',
+    component:addProjectFile,
+  },
+  {
+    path:'/addProjectUrl',
+    name:'addProjectUrl',
+    component:addProjectUrl,
+  },
+  {
+    path:'/addProjectUrlCommit',
+    name:'addProjectUrlCommit',
+    component:addProjectUrlCommit,
+  },
+
   {
     path:'/issueList',
     name:'issueList',
@@ -55,11 +79,6 @@ const routes = [
     path:'/issue/issueHistory',
     name:'issueHistory',
     component:issueHistory,
-  },
-  {
-    path:'/createProject',
-    name:'createProject',
-    component:createProject,
   },
   {
     path:'/createIssue',

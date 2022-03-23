@@ -5,7 +5,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             <layout2/>
             <Affix class="layout-se-header" style="width:100%;background-color:#354A51 " :offset-top="60">
                 <div class="se-header-bread">
-                    <span class="se-header-title"> My Projects</span>
+                    <span class="se-header-title"> Create project</span>
+                    <span class="se-header-title-right" @click="cancelCreate" > Cancel</span>
                 </div>
             </Affix>
             <div class="layout-content" >
@@ -24,10 +25,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" header="Project Detail"
-                                                      :style="collapseStyle" v-if="this.panelLeftFirst">
-                                        <span> todo: add项目详情API:id={{this.currentProjectId}}</span>
-
+                                    <a-collapse-panel key="1" header="This is panel header 1"
+                                                      :style="collapseStyle">
+                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
                                     </a-collapse-panel>
                                     <a-collapse-panel key="2" header="This is panel header 2" :disabled="false " :style="collapseStyle">
                                         <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
@@ -37,21 +37,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                     </a-collapse-panel>
                                 </a-collapse>
                             </div>
-                            <div slot="secondPane" class="second-pane" ref="element" style="padding-right: 30px;width: 100%;text-align: left;">
-                                <div class="scroll-content">
-                                    <div class="tool-bar" style="margin-top: 20px">
-                                        <Button @click="searchIssue1()" >searchIssue</Button>
-                                    </div>
-                                    <div class="projectList" v-for="item in projectList" :key="item.id">
-                                        <List >
-                                            <projectItem :project-name="item.projectName"
-                                                         :id="item.id"
-                                                         :project-description="item.projectDescription"
-                                                         :githubRepoName="item.githubRepoName"
-                                            ></projectItem>
-                                        </List>
-                                    </div>
-                                </div>
+                            <div slot="secondPane" class="second-pane" style="padding-right: 30px;width: 100%;text-align: left">
+                                <createProject></createProject>
                             </div>
                         </rs-panes>
 
@@ -59,97 +46,89 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 </div>
             </div>
         </div>
+
     </div>
 </template>
-<style src="./index.less" lang="less"></style>
 
 <script>
     // eslint-disable-next-line no-unused-vars
     import { mapGetters, mapActions, mapMutations } from 'vuex'
-    import layout2 from '../../../components/layout2/layout2'
-    import projectItem from '../components/projectItem'
+    import createProject from "../components/createProject";
+    import {Modal} from "ant-design-vue";
+
     export default {
-        name: "projectList",
+        name: "addProject",
         components:{
-            layout2,
-            projectItem,
-
-
+            createProject,
         },
         data(){
             return{
                 //todo:改id
                 projectId:'',
-                searchIssueForm:{
-                    id:1,
-                    keywords:"",
-                },
                 split1:0.5,
-                movieList: [
-                    {
-                        name: 'The Shawshank Redemption',
-                        url: 'https://movie.douban.com/subject/1292052/',
-                        rate: 9.6
-                    },],
-                randomMovieList: [],
-                collapseStyle:"background: #354A51;color:#fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden",
+                collapseStyle:"background: #354A51;color:#fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden"
+
 
             };
         },
         computed:{
             ...mapGetters([
                 'userId',
-                'token',
-                'projectList',
-                'projectListLoading',
                 'addProjectVisible',
-                'uploadVisible',
                 'currentProjectId',
-                'panelLeftFirst'
             ])
         },
         async mounted() {
-            await this.getProjectList(this.userId);
-            this.set_panelLeftFirst(false);
-
         },
         methods:{
             ...mapMutations([
-                'set_projectList',
-                'set_ProjectListLoading',
-                'set_uploadVisible',
                 'set_currentProjectId',
                 'set_addProjectVisible',
-                'set_panelLeftFirst'
             ]),
             ...mapActions([
-                'getProjectList',
-                'searchIssue'
-
+                'deleteProject',
+                'getProjectList'
             ]),
             jumpToDetail(){
                 this.set_currentProjectId(this.projectId);
-                this.$router.push({ name: 'projectDetail', params: { projectId: this.projectId }})
-            },
-
-            searchIssue1(){
-                this.searchIssue(this.searchIssueForm)
+                this.$router.push({name:'projectDetail'})
             },
             jumpToCreate(){
-                this.set_addProjectVisible(true);
-                this.$router.push( 'addProject');
+                this.$router.push( {name:'addProject'})
             },
-            selected(id){
-                this.activeName = id;
-            },
-
-
+            cancelCreate(){
+                Modal.confirm({
+                    title: '取消创建项目',
+                    content: '确认取消创建该项目？',
+                    onOk: () => {
+                        this.deleteProject();
+                        this.getProjectList(this.userId);
+                        this.$router.push({ name: 'projectList'})
+                    },
+                    onCancel: () => {
+                        console.log('点击了取消');
+                    },
+                });
+            }
         },
     }
 </script>
 
 <style scoped>
-
-
+    .se-header-title{
+        position: absolute;
+        left:72px;
+        margin-top: 10px;
+        font-size: 15px;
+        color: #EBFFEF;
+    }
+    .se-header-title-right{
+        position: absolute;
+        right:35px;
+        margin-top: 10px;
+        font-size: 15px;
+        color: #EBFFEF;
+        cursor:pointer;
+    }
 
 </style>

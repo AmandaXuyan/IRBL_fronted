@@ -4,22 +4,93 @@
 }
 .layout{
   border: 0px solid #d7dde4;
-  background: #EBFFEF;
+  background: #354A51;
   font-family:"Arial";
+
 }
-.layout-pop{
-  background: #49A8AC;
+.layout-se-header{
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #658885;
   color: #ffffff;
+  height: 48px;
+}
+.layout-content{
+  background-color: #354A51;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+.side-content{
+  top: 108px;
+  left: 0px;
+  bottom: 22px;
+  position: fixed;
+  padding-top: 8px;
+  border-right-width: 1px;
+  border-right-style: solid;
+  //border-right-color: rgb(52, 52, 52);
+  height: 100%;
+  color: #658885;
+  font-size: 25px;
+  font-weight: bold;
+  border-right-color: #658885;
+  //background-color: rgb(21, 21, 21);
+  z-index: 999;
+  .side-content-tool{
+    margin-bottom: 16px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+.bottom-content{
+  background-color: #658885;
+  color: rgb(255, 255, 255);
+  position: fixed;
+  display: flex;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  width: 100%;
+  height: 22px;
+  padding-left: 20px;
+}
+
+.split-content{
+  left:50px;
+  height: 500px;
+  //border: 1px solid #658885;
+
+}
+.split-content-pane{
+  padding: 10px;
+  color: #fff
+}
+
+.layout-pop{
+  background: #658885;
+  color: #ffffff;
+  height: 109px;
+  position:absolute;
+  z-index:999;
+  .nav-menu{
+    font-size: large;
+    color: #ffffff;
+    display:inline-block;
+  }
 }
 
 .layout-top {
-  //.ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item-active {
-  //  background: #49A8AC;
-  //  color: #ffffff;
-  //}
-  .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item:hover, .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-submenu:hover {
-    background: #49A8AC;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #658885;
+  .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item-active {
     color: #ffffff;
+    //background: #658885;
+  }
+  .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-item:hover, .ivu-menu-primary.ivu-menu-horizontal .ivu-menu-submenu:hover {
+    background: #658885;
+    color: #fff;
   }
 }
 .layout-logo{
@@ -74,18 +145,5 @@
   }
 
 }
-.layout-content{
-  min-height: 200px;
-  margin: 15px;
-  overflow: hidden;
-  background: #fff;
-  border-radius: 4px;
-}
-.layout-content-main{
-  padding: 10px;
-}
-.layout-copy{
-  text-align: center;
-  padding: 10px 0 20px;
-  color: #9ea7b4;
-}
+
+
