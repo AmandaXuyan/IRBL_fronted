@@ -26,17 +26,20 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
                                     <a-collapse-panel key="1" header="Project Detail"
-                                                      :style="collapseStyle" v-if="this.panelLeftFirst">
+                                                      :style="collapseStyle">
                                         <span> todo: add项目详情API:id={{this.currentProjectId}}</span>
 
                                     </a-collapse-panel>
-                                    <a-collapse-panel key="2" header="This is panel header 2" :disabled="false " :style="collapseStyle">
-                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
-                                    </a-collapse-panel>
-                                    <a-collapse-panel key="3" header="This is panel header 3" :style="collapseStyle">
+                                    <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
+                                        <a-collapse-panel key="1" header="Files" :disabled="false" :style="collapseStyle">
+                                            <projectTree></projectTree>
+                                        </a-collapse-panel>
+                                    </a-collapse>
+                                    <a-collapse-panel key="3" header="Issues" :style="collapseStyle">
                                         <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
                                     </a-collapse-panel>
                                 </a-collapse>
+
                             </div>
                             <div slot="secondPane" class="second-pane" style="padding-right: 30px;width: 100%;text-align: left">
                                 <div class="toolbar">
@@ -63,19 +66,20 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
 <script>
     // eslint-disable-next-line no-unused-vars
     import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import projectTree from "../components/projectTree";
 
 
     export default {
         name: "projectDetail",
         components:{
-
+            projectTree,
         },
         data(){
             return{
                 //todo:改id
                 projectId:'',
                 split1:0.5,
-                collapseStyle:"background: #354A51;color:#fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden",
+                collapseStyle:"background: #354A51;color:#fff;border-radius: 0px;margin-bottom: 0px;border: 1;border-color:#658885;overflow: hidden",
                 projectUpdate:{
                     id:0,
                     projectName:'',

@@ -92,7 +92,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         rate: 9.6
                     },],
                 randomMovieList: [],
-                collapseStyle:"background: #354A51;color:#fff;border-radius: 4px;margin-bottom: 24px;border: 0;overflow: hidden",
+                collapseStyle:"background: #354A51;color:#fff;border-radius: 0px;margin-bottom: 24px;border: 1;border-color:#658885;overflow: hidden",
 
             };
         },

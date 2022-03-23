@@ -2,8 +2,9 @@
 
 ## Project setup
 ```
-npm install
+1、npm install
 ```
+##### 2、将src/assets/下的indent2em文件夹复制粘贴到node_modules/tinymce/plugins路径下
 
 ### Compiles and hot-reloads for development
 ```
