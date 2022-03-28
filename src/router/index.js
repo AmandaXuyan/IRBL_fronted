@@ -5,15 +5,16 @@ import loginPage from '../views/login/loginPage.vue'
 import mainPage from '../views/mainPage/mainPage.vue'
 import projectList from "../views/project/projectList/projectList.vue";
 import issueList from '../views/issue/issueList/issueList.vue'
-import issueDetail from "../views/issue/issueDetail/issueDetail.vue";
 import projectDetail from '../views/project/projectDetail/projectDetail.vue';
 import userInfo from '../views/user/userInfo';
 import issueHistory from '../views/issue/issueHistory/issueHistory'
-import createIssue from '../views/issue/components/issueModal'
+// import issueDetail from '../views/issue/issueDetail/issueDetail'
+// import createIssue from '../views/issue/components/issueModal'
 import addProject from "@/views/project/createProject/addProject";
 import addProjectFile from '@/views/project/createProject/addProjectFile';
 import addProjectUrl from '@/views/project/createProject/addProjectUrl';
 import addProjectUrlCommit from "@/views/project/createProject/addProjectUrlCommit";
+import createIssue from '@/views/issue/createIssue/createIssue';
 
 Vue.use(VueRouter)
 
@@ -54,6 +55,12 @@ const routes = [
     name:'addProjectUrlCommit',
     component:addProjectUrlCommit,
   },
+  // {
+  //   path:'/issueDetail',
+  //   name:'issueDetail',
+  //   component:issueDetail,
+  //
+  // },
 
   {
     path:'/issueList',
@@ -66,26 +73,20 @@ const routes = [
     component: projectDetail,
   },
   {
+    path: '/createIssue',
+    name: 'createIssue',
+    component: createIssue,
+  },
+  {
     path: '/user/info',
     name: 'userInfo',
     component: userInfo,
-  },
-  {
-    path:'/issueDetail',
-    name:'issueDetail',
-    component:issueDetail,
   },
   {
     path:'/issue/issueHistory',
     name:'issueHistory',
     component:issueHistory,
   },
-  {
-    path:'/createIssue',
-    name:'createIssue',
-    component:createIssue,
-  },
-
 
 ]
 

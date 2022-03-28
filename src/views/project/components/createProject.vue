@@ -10,7 +10,7 @@
             </div>
             <Divider style="background-color: #658885"/>
             <div class="add-first">
-                <div class="add-title-style">
+                <div class="add-title-style" >
                     <span> Project Name</span>
                 </div>
                 <div class="add-header-desccription" style="margin-bottom: 5px">
@@ -130,6 +130,7 @@
     .add-header-desccription{
         color: #fff;
         font-size: 13px;
+        margin-top: 5px;
 
     }
     .add-title-style{

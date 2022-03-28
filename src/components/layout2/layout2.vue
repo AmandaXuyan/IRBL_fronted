@@ -13,10 +13,10 @@
                     IRBL
                 </div>
                 <div class="layout-nav">
-                    <Menu-item name="projectList" @mouseenter.native="mouseOver">
+                    <Menu-item name="projectList" @mouseenter.native="mouseOver" @mouseleave.native="mouseLeave">
                         Projects
                     </Menu-item>
-                    <Menu-item name="issueList">
+                    <Menu-item name="issueList" v-if="this.issueShowVisible">
                         Issues
                     </Menu-item>
                     <Menu-item name="issueHistory">
@@ -34,15 +34,15 @@
                     <a @click="goToActivePage('main')" class="right-link">Home</a>
                     <a @click="loginOut" class="right-link" v-if="!this.visibleLogin" >Log Out</a>
                     <a class="right-link">|</a>
-                    <a class="right-link" >Hi, {{this.userInfo.userName}} !</a>
+                    <a class="right-link" @click="goToActivePage('userInfo')">Hi, {{this.userInfo.userName}} !</a>
                 </div>
             </Menu>
         </Affix>
-        <Affix class="layout-pop" style="width:100%" :offset-top="60" v-if="visiblePop" @mouseleave.native="mouseLeave">
+        <Affix class="layout-pop" style="width:100%" :offset-top="60" v-if="visiblePop" @mouseenter.native="mouseOver" @mouseleave.native="mouseLeave">
             <div class="nav-menu">
                 <div class="nav-menu-project">
-                    <navMenu icon-name="md-add" icon-title="Create" page-name="createProject"/>
-                    <navMenu icon-name="md-add" icon-title="Create" page-name="createProject"/>
+                    <navMenu icon-name="md-folder-open" icon-title="List" page-name="projectList"/>
+                    <navMenu icon-name="md-add" icon-title="Create" page-name="addProject"/>
                 </div>
             </div>
         </Affix>
@@ -111,7 +111,8 @@
             ...mapGetters({
                 userInfo: 'userInfo',
                 visibleLogin:'visibleLogin',
-                visiblePop:'visiblePop'
+                visiblePop:'visiblePop',
+                issueShowVisible:'issueShowVisible',
             }),
         },
         mounted() {
@@ -126,7 +127,12 @@
                 'set_visibleLogin',
                 'set_visiblePop',
                 'set_userId',
-                'reset_state'
+                'reset_state',
+                'set_tabList',
+                'set_issueShowVisible',
+                'set_currentProjectId',
+
+
             ]),
             loginOut() {
                 Modal.confirm({
@@ -134,8 +140,8 @@
                     content: '确认退出？',
                     onOk: () => {
                         localStorage.setItem('token', null); // 将token清空
-                        this.set_userId(0);
                         this.reset_state();
+                        this.set_tabList([]);
                         this.$router.push({name:'main'});
                         this.set_visibleLogin(true);
                     },
@@ -146,6 +152,11 @@
             },
             goToActivePage(key) {
                 // this.$router.push(`/${key}`);
+                if(key ==='projectList'){
+                    this.set_issueShowVisible(false);
+                    this.set_currentProjectId(0);
+                }
+                this.set_tabList([]);
                 this.$router.push({ name: key})
             },
             //次菜单栏跳转页面

@@ -12,10 +12,10 @@
         </div>
         <transition name="slide-fade">
             <Card class="loginCard" v-if="loginShow">
-                <h2 slot="title" style="color: #354A51">
+                <h2 slot="title" style="color: #658885">
                     <span>登录</span>
                 </h2>
-                <a href="#" slot="extra" @click.prevent="changeCard" style="color: #354A51">
+                <a href="#" slot="extra" @click.prevent="changeCard" style="color: #658885">
                     <Icon type="shuffle"></Icon>
                     <span>注册</span>
                 </a>
@@ -31,17 +31,17 @@
                         </Input>
                     </Form-item>
                     <Form-item>
-                        <Button type="primary" @click="handleSubmit('loginFrom')">登录</Button>
+                        <Button type="primary" style="background-color: #658885" @click="handleSubmit('loginFrom')">登录</Button>
                     </Form-item>
                 </Form>
             </Card>
         </transition>
         <transition name="slide-fade">
             <Card class="loginCard" v-if="registerShow">
-                <h2 slot="title" style="color: #354A51">
+                <h2 slot="title" style="color: #658885">
                     <span>注册</span>
                 </h2>
-                <a href="#" slot="extra" @click.prevent="changeCard" style="color: #354A51">
+                <a href="#" slot="extra" @click.prevent="changeCard" style="color: #658885">
                     <Icon type="shuffle" ></Icon>
                     <span>登录</span>
                 </a>
@@ -63,7 +63,7 @@
                         </Input>
                     </Form-item>
                     <Form-item>
-                        <Button type="primary"  @click="handleSubmit('registerFrom')">注册</Button>
+                        <Button type="primary"  style="background-color: #658885" @click="handleSubmit('registerFrom')">注册</Button>
                     </Form-item>
                 </Form>
             </Card>

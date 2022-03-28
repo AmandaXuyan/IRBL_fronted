@@ -1,109 +1,177 @@
+import {SelfBuildingSquareSpinner} from "epic-spinners";
 <template>
-    <div class="issueList">
-
-        <h1>issueList!</h1>
-        <a-layout>
-
-            <a-layout-content style="margin: 0 16px;background: #EBFFEF">
-                <div class="tool-bar">
-                    <Button @click="addIssue1()" >addIssue</Button>
-                    <Button @click="deleteIssue1()" >deleteIssue</Button>
-
-
+    <div class="projectListPage">
+        <div class="page-content">
+            <layout2/>
+            <div class="project-title">
+                <span class="title-head">Project：{{this.currentProjectDetail.projectName}}--Issues</span>
+            </div>
+            <div class="layout-content">
+                <div class="side-content" style="margin-bottom: 22px;width: 50px">
+                <span class="side-content-tool">
+                    <a-icon type="plus-circle" @click="jumpToCreate"/>
+                </span>
+                    <span class="side-content-tool">
+                    <a-icon type="form" @click="jumpToCreateIssue"/>
+                </span>
                 </div>
-                <List class="project-list">
-                    <ListItem class="project-list-item" style="margin: 5px;background: #fff">
-                        <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
-                                      title="This is title"
-                                      description="This is description, this is description."
-                        />
-                        <template slot="action">
-                            <li>
-                                <Button @click="jumpToDetail(issueId)" >Detail</Button>
-                            </li>
-                            <li>
-                                <Button >getList</Button>
-                            </li>
-                        </template>
-                    </ListItem>
+                <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
+                    <div class="split-content" style="color: #fff">
+                        <rs-panes split-to="columns"
+                                  style="left:50px"
+                                  :allow-resize="true"
+                                  :size=this.size
+                                  :min-size=this.minSize
+                                  class="panes-wrap">
+                            <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
+                                <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
+                                    <a-collapse-panel key="1" header="Issues" :style="collapseStyle">
+                                        <div class="issueList" v-for="item in issueList" :key="item.id">
+                                            <List>
+                                                <issue-item :title="item.title"
+                                                            :id="item.id"
+                                                            :project-id="item.projectId"
+                                                            :description="item.description"
+                                                ></issue-item>
+                                            </List>
+                                        </div>
+                                    </a-collapse-panel>
+                                    <a-collapse-panel key="3" header="todo" :style="collapseStyle">
+                                        <div class="tool-bar" style="margin-top: 20px">
+                                            <Button @click="searchIssue1()">searchIssue</Button>
+                                        </div>
+                                    </a-collapse-panel>
+                                </a-collapse>
+                                <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
+                                    <a-collapse-panel key="1" header="Project Detail"
+                                                      :style="collapseStyle" v-if="this.panelLeftFirst">
+                                        <span> todo: issue详情API:id={{this.currentIssueId}}</span>
+                                    </a-collapse-panel>
+                                </a-collapse>
+                            </div>
+                            <div slot="secondPane" class="second-pane" ref="element"
+                                 style="padding-right: 30px;width: 100%;text-align: left;">
+                                <div class="scroll-content">
+                                    <issue-detail-show></issue-detail-show>
+                                </div>
+                            </div>
+                        </rs-panes>
 
-                </List>
-                <projectItem> </projectItem>
-                <projectItem> </projectItem>
 
-
-            </a-layout-content>
-        </a-layout>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
+<style src="./index.less" lang="less"></style>
 
 <script>
-    import {mapActions, mapGetters, mapMutations} from "vuex";
+    // eslint-disable-next-line no-unused-vars
+    import {mapGetters, mapActions, mapMutations} from 'vuex'
+    import layout2 from '../../../components/layout2/layout2'
+    import IssueDetailShow from "../components/issueDetailShow";
+    import IssueItem from "../components/issueItem";
 
     export default {
         name: "issueList",
-        components:{
+        components: {
+            IssueItem,
+            IssueDetailShow,
+            layout2,
 
         },
-        data(){
-            return{
-                issueId: 2,
-                addIssueInf:{},
-                issueForm:{
-                    projectId:2,
+        data() {
+            return {
+                //todo:改id
+                issueId: 0,
+                searchIssueForm: {
+                    id: 1,
+                    keywords: "",
                 },
-                addIssueForm:{
-                    title:'',
-                    description:'',
-                    projectId:'',
-                    issueName:''
-                },
+                split1: 0.5,
+                collapseStyle: "background: #354A51;color:#fff;border-radius: 0px;border: 1;border-color:#658885;overflow: hidden",
+
             };
         },
-        computed:{
+        computed: {
             ...mapGetters([
                 'userId',
-                'issueList',
                 'currentProjectId',
-                'issueListLoading',
-                'issueModalVisible',
-
-
+                'panelLeftFirst',
+                'currentIssueId',
+                'size',
+                'minSize',
+                'issueList',
+                'currentProjectDetail',
+                'issueDetailVisible'
             ])
         },
         async mounted() {
+            this.set_panelLeftFirst(false);
             await this.getIssueList(this.currentProjectId);
-        },
-        methods:{
-            ...mapMutations([
-                'set_issueModalVisible'
 
+        },
+        methods: {
+            ...mapMutations([
+                'set_currentProjectId',
+                'set_addProjectVisible',
+                'set_panelLeftFirst',
+                'set_currentIssueId',
+                'set_currentIssueDetail',
+                'set_issueDetailVisible',
+                'set_issueEditVisible',
             ]),
             ...mapActions([
+                'searchIssue',
                 'addIssue',
-                'getIssueList',
                 'deleteIssue',
-
-
+                'getIssueList'
             ]),
-            jumpToDetail(){
-                this.$router.push({ name: 'issueDetail', params: { issueId: this.issueId }})
+            searchIssue1() {
+                this.searchIssue(this.searchIssueForm)
             },
-            addIssue1(){
-                this.$router.push({ name: 'createIssue',});
+            jumpToCreate() {
+                this.set_currentIssueDetail({});
+                this.$router.push('addIssue');
+                this.set_issueEditVisible(false);
+            },
+            selected(id) {
+                this.activeName = id;
+            },
+            addIssue1() {
+                this.set_currentIssueDetail({});
+                this.$router.push({name: 'createIssue',});
+                this.set_issueEditVisible(false);
                 this.addIssue(this.addIssueForm);
                 // this.set_issueModalVisible(true);
-
             },
-            deleteIssue1(){
+            deleteIssue1() {
+                this.set_currentIssueDetail({});
                 this.deleteIssue(this.deleteIssueForm);
 
             },
+            jumpToCreateIssue() {
+                this.set_currentIssueDetail({});
+                this.$router.push({name: 'createIssue'})
+                this.set_issueEditVisible(false);
+            }
+            ,
+            $imgAdd(pos, $file) {
+                console.log(pos, $file);
+            },
+
 
         },
     }
 </script>
 
 <style scoped>
+    .ivu-table .rowClassName td {
+        background-color: #354A51;
+        color: #fff;
+        border: 0px;
+    }
+
 
 </style>

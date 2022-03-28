@@ -16,16 +16,25 @@ const getters={
     uploadVisible:state => state.project.uploadVisible,
     panelLeftFirst:state => state.project.panelLeftFirst,
     connectResVisible:state=> state.project.connectResVisible,
+    tabList:state=> state.project.tabList,
+    minSize:state=> state.project.minSize,
+    size:state=> state.project.size,
+    activePage:state=> state.project.activePage,
+    treeData:state=> state.project.treeData,
+    issueShowVisible:state=> state.project.issueShowVisible,
+    updateProjectPopV:state=> state.project.updateProjectPopV,
     //issue
     currentIssueId:state => state.issue.currentIssueId,
     issueList: state => state.issue.issueList,
     historyIssueList:state => state.issue.historyIssueList,
     issueListLoading:state => state.issue.issueListLoading,
     currentIssueDetail:state => state.issue.currentIssueDetail,
-    issueModalVisible:state => state.issue.issueModalVisible,
+    issueDetailVisible:state => state.issue.issueDetailVisible,
     searchResult:state=>state.issue.searchResult,
-
-
+    issueEditVisible:state => state.issue.issueEditVisible,
+    //file
+    codes:state=>state.file.codes,
+    fileLanguage:state=>state.file.fileLanguage,
 
 }
 export default getters

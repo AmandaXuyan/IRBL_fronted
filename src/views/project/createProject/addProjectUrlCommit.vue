@@ -11,9 +11,12 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 </div>
             </Affix>
             <div class="layout-content" >
-                <div class="side-content" style="margin-bottom: 22px">
-                <span class="side-content-tool">
+                <div class="side-content" style="margin-bottom: 22px;width: 50px">
+                <span class="side-content-tool" >
                     <a-icon type="plus-circle" @click="jumpToCreate"/>
+                </span>
+                    <span class="side-content-tool" >
+                    <a-icon type="form"  @click="jumpToCreateIssue"/>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
@@ -21,8 +24,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         <rs-panes split-to="columns"
                                   style="left:50px"
                                   :allow-resize="true"
-                                  size=200
-                                  min-size=100
+                                  :size=this.size
+                                  :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <Card class='upload-options' title="Options" icon="ios-options" :padding="0" shadow>
@@ -91,6 +94,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'addProjectVisible',
                 'currentProjectId',
                 'currentProjectDetail',
+                'size',
+                'minSize',
 
             ])
         },
@@ -124,6 +129,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         console.log('点击了取消');
                     },
                 });
+            },
+            jumpToCreateIssue(){
+                this.$router.push( {name:'createIssue'})
             }
 
         },

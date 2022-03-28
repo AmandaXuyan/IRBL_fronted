@@ -1,4 +1,4 @@
-@import '~iview/src/styles/index.less';
+@import '~view-design/src/styles/index.less';
 
 // 下面是要覆盖的变量
 @primary-color: #354A51;
@@ -25,9 +25,55 @@
 @input-bg                    : #354A51;
 @input-hover-border-color    : #DBF5E0;
 @input-focus-border-color    : #DBF5E0;
-@input-disabled-bg           : #f3f3f3;
+@input-disabled-bg           : #658885;
 @card-head-color:#DBF5E0;
 
+@date-picker-cell-hover-bg    : #658885;
+@table-thead-bg               : #354A51;
+@table-td-stripe-bg           : #354A51;
+@table-td-hover-bg            : #658885;
+@table-td-highlight-bg        : #658885;
+
+@border-color-base      : #658885;  // outside
+@border-color-split     : #658885;  // inside
+
+.ivu-tree-title-selected,.ivu-tree-title:hover,.ivu-tree-title-selected :hover {
+    background-color: #658885;
+}
+.ivu-input-word-count{
+    background: #354A51;
+}
+
+.ivu-menu{
+    background-color: #354A51;
+}
+
+.ivu-card{
+    background: #354A51;
+}
+.ivu-form-item-error .ivu-input-group-prepend, .ivu-form-item-error .ivu-input-group-append{
+    background: #354A51;
+}
+
+.ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab{
+    background: #354A51;
+    color: #fff;
+    border-radius: 0px 0px 0 0;
+    border-color: #658885;
+}
+.ivu-tabs-bar {
+    border-bottom: 1px solid #658885;
+}
+.ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active {
+    background: #658885;
+    color: #DBF5E0;
+}
+.ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab .ivu-tabs-close{
+    color: #DBF5E0;
+}
+.ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab:hover .ivu-tabs-close{
+    color: #fff;
+}
 .fc-primary {
     color: #354A51;
 }
@@ -53,3 +99,45 @@
     display: inline-block;
     vertical-align: middle;
 }
+
+.ivu-table {
+    width: inherit;
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    color: #fff;
+    font-size: 14px;
+    background-color: #354A51;
+    box-sizing: border-box;
+    border: 0px;
+    z-index: 999;
+}
+
+.ivu-table-wrapper{
+    border: 0px;
+    background-color: #354A51;
+}
+
+.ivu-table td.demo-table-info-column{
+    background-color: #354A51;
+    color: #fff;
+    border: 0px;
+}
+
+.ivu-select-single .ivu-select-input {
+    background-color: #354A51;
+    color: #fff;
+    border-color: #658885;
+    border-bottom: 1px;
+}
+.ivu-select-dropdown{
+    background-color: #354A51;
+    color: #fff;
+    border-color: #658885;
+}
+
+
+
+
+
+

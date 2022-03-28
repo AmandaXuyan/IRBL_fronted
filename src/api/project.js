@@ -4,14 +4,6 @@ const api = {
     projectPre: '/api/project'
 }
 
-export function addProjectAPI(data){
-    return axios({
-        url:`${api.projectPre}/add`,
-        method: 'POST',
-        data
-    })
-}
-
 /**
  * 通过url增加project文件
  * @param data
@@ -22,19 +14,6 @@ export function addProjectUrlAPI(data){
         url:`${api.projectPre}/addProjectUrl`,
         method: 'POST',
         data
-    })
-}
-
-/**
- * todo: 选择某个commit版本
- * @param data {userId,projectId,commitId}
- * @returns
- */
-export function getCommitProjectAPI(data) {
-    return axios({
-        url: `${api.projectPre}/getCommitProject`,
-        method: 'get',
-        params:data
     })
 }
 
@@ -51,6 +30,32 @@ export function addByFileAPI(data){
     })
 }
 
+/**
+ * todo: 选择某个commit版本
+ * @param data {userId,projectId,commitId}
+ * @returns
+ */
+export function getCommitProjectAPI(data) {
+    return axios({
+        url: `${api.projectPre}/getCommitProject`,
+        method: 'GET',
+        params:data
+    })
+}
+
+/**
+ * todo:currentProjectDetail 获得某个项目详细信息
+ * @param param{projectId}
+ * @returns {AxiosPromise}
+ */
+export function getProjectDetailByIdAPI(data) {
+    return axios({
+        url: `${api.projectPre}/get`,
+        method: 'GET',
+        params:data
+    })
+}
+
 export function deleteProjectAPI(data) {
     return axios({
         url: `${api.projectPre}/delete`,
@@ -59,10 +64,10 @@ export function deleteProjectAPI(data) {
     })
 }
 
-//更新某个项目
+//todo: 返回值从true换成update后的信息
 export function updateProjectAPI(data){
     return axios({
-        url: `${api.projectPre}/${data.id}/update`,
+        url: `${api.projectPre}/update`,
         method: 'POST',
         data
     })
@@ -71,21 +76,24 @@ export function updateProjectAPI(data){
 export function getAllProjectAPI(data) {
     return axios({
         url: `${api.projectPre}/allProjects`,
-        method: 'get',
+        method: 'GET',
         params:data
     })
 }
 
-//todo:currentProjectDetail 获得某个项目详细信息
-/**
- *
- * @param param
- * @returns {AxiosPromise}
- */
-export function getProjectDetailByIdAPI(param) {
+export function addProjectAPI(data){
     return axios({
-        url: `${api.projectPre}/${param.id}/detail`,
+        url:`${api.projectPre}/add`,
+        method: 'POST',
+        data
+    })
+}
+
+export function getFileTreeAPI(data) {
+    return axios({
+        url: `${api.projectPre}/getFileTree`,
         method: 'GET',
+        params:data
     })
 }
 

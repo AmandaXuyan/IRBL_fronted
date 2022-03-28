@@ -3,15 +3,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     <div class="projectListPage">
         <div class="page-content">
             <layout2/>
-            <Affix class="layout-se-header" style="width:100%;background-color:#354A51 " :offset-top="60">
-                <div class="se-header-bread">
-                    <span class="se-header-title"> My Projects</span>
-                </div>
-            </Affix>
             <div class="layout-content" >
-                <div class="side-content" style="margin-bottom: 22px">
-                <span class="side-content-tool">
+                <div class="side-content" style="margin-bottom: 22px;width: 50px">
+                <span class="side-content-tool" >
                     <a-icon type="plus-circle" @click="jumpToCreate"/>
+                </span>
+                    <span class="side-content-tool" >
+                    <a-icon type="form"  @click="jumpToCreateIssue"/>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
@@ -19,8 +17,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         <rs-panes split-to="columns"
                                   style="left:50px"
                                   :allow-resize="true"
-                                  size=200
-                                  min-size=100
+                                  :size=this.size
+                                  :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
@@ -29,18 +27,25 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                         <span> todo: add项目详情API:id={{this.currentProjectId}}</span>
 
                                     </a-collapse-panel>
-                                    <a-collapse-panel key="2" header="This is panel header 2" :disabled="false " :style="collapseStyle">
-                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
-                                    </a-collapse-panel>
-                                    <a-collapse-panel key="3" header="This is panel header 3" :style="collapseStyle">
-                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
-                                    </a-collapse-panel>
+<!--                                    <a-collapse-panel key="2" header="This is panel header 2" :disabled="false " :style="collapseStyle">-->
+<!--                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>-->
+<!--                                    </a-collapse-panel>-->
+<!--                                    <a-collapse-panel key="3" header="This is panel header 3" :style="collapseStyle">-->
+<!--                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>-->
+<!--                                    </a-collapse-panel>-->
                                 </a-collapse>
                             </div>
                             <div slot="secondPane" class="second-pane" ref="element" style="padding-right: 30px;width: 100%;text-align: left;">
                                 <div class="scroll-content">
-                                    <div class="tool-bar" style="margin-top: 20px">
-                                        <Button @click="searchIssue1()" >searchIssue</Button>
+                                    <div class="project-list">
+                                        <span class="project-list-title" v-if="this.projectList.length!==0">My Projects</span>
+                                    </div>
+                                    <div class="no-project" v-if="this.projectList.length===0">
+                                        <span class="add-header-title">Please create your first project</span>
+                                        <div class="add-header-desccription">
+                                            <span class="create-header" @click="jumpToCreate()">Create</span>
+                                        </div>
+
                                     </div>
                                     <div class="projectList" v-for="item in projectList" :key="item.id">
                                         <List >
@@ -80,18 +85,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             return{
                 //todo:改id
                 projectId:'',
-                searchIssueForm:{
-                    id:1,
-                    keywords:"",
-                },
                 split1:0.5,
-                movieList: [
-                    {
-                        name: 'The Shawshank Redemption',
-                        url: 'https://movie.douban.com/subject/1292052/',
-                        rate: 9.6
-                    },],
-                randomMovieList: [],
                 collapseStyle:"background: #354A51;color:#fff;border-radius: 0px;margin-bottom: 24px;border: 1;border-color:#658885;overflow: hidden",
 
             };
@@ -105,7 +99,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'addProjectVisible',
                 'uploadVisible',
                 'currentProjectId',
-                'panelLeftFirst'
+                'panelLeftFirst',
+                'size',
+                'minSize'
             ])
         },
         async mounted() {
@@ -117,24 +113,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ...mapMutations([
                 'set_projectList',
                 'set_ProjectListLoading',
-                'set_uploadVisible',
-                'set_currentProjectId',
                 'set_addProjectVisible',
                 'set_panelLeftFirst'
             ]),
             ...mapActions([
                 'getProjectList',
-                'searchIssue'
 
             ]),
-            jumpToDetail(){
-                this.set_currentProjectId(this.projectId);
-                this.$router.push({ name: 'projectDetail', params: { projectId: this.projectId }})
-            },
-
-            searchIssue1(){
-                this.searchIssue(this.searchIssueForm)
-            },
             jumpToCreate(){
                 this.set_addProjectVisible(true);
                 this.$router.push( 'addProject');
@@ -142,6 +127,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             selected(id){
                 this.activeName = id;
             },
+            jumpToCreateIssue(){
+                this.$router.push( {name:'createIssue'})
+            }
 
 
         },

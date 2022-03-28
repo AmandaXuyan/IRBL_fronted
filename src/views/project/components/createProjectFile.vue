@@ -56,7 +56,7 @@
                 canUpload: false,
                 addProjectFileForm:{
                     userId:0,
-                    projectId:0,
+                    id:0,
                     file:null
                 },
             };
@@ -105,8 +105,9 @@
             upload () {
                 this.loadingStatus = true;
                 this.addProjectFileForm.file=this.file;
-                this.addProjectFileForm.projectId=this.currentProjectId;
+                this.addProjectFileForm.id=this.currentProjectId;
                 this.addProjectFileForm.userId=this.userId;
+                console.log(this.addProjectFileForm)
                 this.addByFile(this.addProjectFileForm);
                 setTimeout(() => {
                     this.file = null;
@@ -115,8 +116,6 @@
                 }, 1500);
                 this.$router.push({ name: 'projectDetail'});
             }
-
-
         },
     }
 </script>
@@ -137,6 +136,7 @@
     .add-header-desccription{
         color: #fff;
         font-size: 13px;
+        margin-top: 5px;
 
     }
     .add-title-style{

@@ -37,20 +37,27 @@
             ])
         },
         async mounted() {
+            this.set_updateProjectPopV(true);
 
         },
         methods:{
             ...mapMutations([
                 'set_currentProjectId',
-                'set_panelLeftFirst'
+                'set_panelLeftFirst',
+                'set_issueShowVisible',
+                'set_updateProjectPopV',
+
             ]),
             ...mapActions([
                 'deleteProject',
                 'getProjectList',
+                'getProjectDetailById',
 
             ]),
             jumpToDetail(){
-                this.set_currentProjectId(this.id)
+                this.set_currentProjectId(this.id);
+                this.getProjectDetailById();
+                this.set_issueShowVisible(true);
                 this.$router.push({ name: 'projectDetail'})
             },
             deleteProject1(){
@@ -59,7 +66,6 @@
                     content: '确认删除该项目？',
                     onOk: () => {
                         this.deleteProject();
-                        this.getProjectList(this.userId);
                         this.$router.push({ name: 'projectList'})
                     },
                     onCancel: () => {

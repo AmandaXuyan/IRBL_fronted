@@ -1,6 +1,6 @@
 <template>
-    <div class="nav-menu">
-        <Icon class="menu-icon" :type=this.iconName @click="jumpToPage"/>
+    <div class="nav-menu" @click="jumpToPage">
+        <Icon class="menu-icon" :type=this.iconName />
         <div class="menu-title" v-text="iconTitle"></div>
     </div>
 </template>
@@ -23,7 +23,8 @@
                 default: 'Create'
             },
             pageName:{
-
+                type: String,
+                default: ''
             },
         },
         data(){
@@ -48,8 +49,9 @@
 
             ]),
             jumpToPage(){
-                this.set_visiblePop(false);
+                console.log(this.pageName)
                 this.$router.push({ name:this.pageName})
+                this.set_visiblePop(false);
             },
 
         },
@@ -60,12 +62,14 @@
 <style scoped>
     .nav-menu{
         font-size: large;
-        color: #ffffff;}
+        color: #ffffff;
+        cursor: pointer
+    }
     .menu-icon{
         margin-top: 20px;
         margin-left: 40px;
         margin-right: 40px;
-        cursor: pointer;
+        /*cursor: pointer;*/
         transition: all 0.6s;
         font-size:40px;
     }

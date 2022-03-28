@@ -9,7 +9,8 @@ import {
     updateProjectAPI,
     getAllProjectAPI,
     getProjectDetailByIdAPI,
-    addProjectUrlAPI
+    addProjectUrlAPI,
+    getFileTreeAPI,
 } from '@/api/project'
 
 
@@ -24,7 +25,13 @@ const project =  {
         panelLeftFirst:false,
         //todo:记得改成false
         connectResVisible:true,
-
+        tabList:[],
+        minSize:100,
+        size:200,
+        activePage:'',
+        treeData:[],
+        issueShowVisible:false,
+        updateProjectPopV:true,
     },
     mutations:{
         set_projectList:function(state, data) {
@@ -54,11 +61,27 @@ const project =  {
         set_connectResVisible:function(state, data) {
             state.connectResVisible = data
         },
+        set_tabList:function(state, data) {
+            state.tabList = data
+        },
+        set_activePage:function(state, data) {
+            state.activePage = data
+        },
+        set_treeData:function(state, data) {
+            state.treeData = data
+        },
+        set_issueShowVisible:function(state, data) {
+            state.issueShowVisible = data
+        },
+        set_updateProjectPopV:function(state, data) {
+            state.updateProjectPopV = data
+        },
+
     },
     actions:{
         // eslint-disable-next-line no-unused-vars
         getProjectList: async({commit, state},userId) => {
-            const data={'id':userId};
+            const data={id:userId};
             console.log(data)
             const res = await getAllProjectAPI(data)
             console.log(res)
@@ -68,14 +91,14 @@ const project =  {
             }
         },
         getProjectDetailById: async({commit, state}) => {
-            console.log("getProjectDetailById:----"+state.currentProjectId)
-            const res = await getProjectDetailByIdAPI({
-                projectId: state.currentProjectId
-            })
+            const data={id:state.currentProjectId};
+            const res = await getProjectDetailByIdAPI(data)
             if(res){
                 commit('set_currentProjectDetail', res)
+                commit('set_issueShowVisible',true)
             }
         },
+
         // eslint-disable-next-line no-unused-vars
         addProject: async({ state, commit }, data) => {
             console.log(data)
@@ -116,9 +139,8 @@ const project =  {
         },
         // eslint-disable-next-line no-unused-vars
         updateProject: async({ state, commit }, data) => {
-            console.log(data)
             const res = await updateProjectAPI(data)
-            console.log(res)
+            console.log('res:'+res)
             if(res){
                 message.success('保存成功')
                 commit('set_currentProjectDetail',res)
@@ -135,6 +157,15 @@ const project =  {
                 message.success('删除成功')
             }else{
                 message.error('删除失败')
+            }
+        },
+
+        getFileTree: async({commit, state}) => {
+            const data={id:state.currentProjectId};
+            const res = await getFileTreeAPI(data);
+            console.log("getFileTree"+res);
+            if(res){
+                commit('set_treeData', res)
             }
         },
 

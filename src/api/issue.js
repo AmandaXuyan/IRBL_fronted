@@ -28,13 +28,6 @@ export function updateIssueAPI(data){
     })
 }
 
-export function getHistoryIssuesAPI(userId) {
-    return axios({
-        url: `${api.issuePre}/${userId}/historyIssues`,
-        method: 'get',
-
-    })
-}
 
 export function searchIssueAPI(data) {
     return axios({
@@ -46,7 +39,7 @@ export function searchIssueAPI(data) {
 
 /**
  * 获取所有的在本平台创建的issue，以及手动拉取过的github上的issue
- * @param data
+ * @param data projectId
  * @returns {*}
  */
 export function getIssueListAPI(data) {
@@ -78,5 +71,13 @@ export function saveRepoAllIssuesAPI(data) {
         url: `${api.issuePre}/storeRepoIssue`,
         method: 'GET',
         params :data,
+    })
+}
+
+export function getIssueDetailByIdAPI(data) {
+    return axios({
+        url: `${api.issuePre}/get`,
+        method: 'GET',
+        params:data
     })
 }

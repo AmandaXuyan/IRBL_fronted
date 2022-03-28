@@ -4,16 +4,16 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     <div class="projectListPage">
         <div class="page-content">
             <layout2/>
-            <Affix class="layout-se-header" style="width:100%;background-color:#354A51 " :offset-top="60">
-                <div class="se-header-bread">
-                    <span class="se-header-title" > Create Project {{this.currentProjectDetail.projectName}}'s File !</span>
-                    <span class="se-header-title-right" @click="cancelCreate" > Cancel</span>
-                </div>
-            </Affix>
+            <div class="project-title">
+                <span class="title-head"> Import {{this.currentProjectDetail.projectName}}'s File !</span>
+            </div>
             <div class="layout-content" >
-                <div class="side-content" style="margin-bottom: 22px">
-                <span class="side-content-tool">
+                <div class="side-content" style="margin-bottom: 22px;width: 50px">
+                <span class="side-content-tool" >
                     <a-icon type="plus-circle" @click="jumpToCreate"/>
+                </span>
+                    <span class="side-content-tool" >
+                    <a-icon type="form"  @click="jumpToCreateIssue"/>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
@@ -21,8 +21,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         <rs-panes split-to="columns"
                                   style="left:50px"
                                   :allow-resize="true"
-                                  size=200
-                                  min-size=100
+                                  :size=this.size
+                                  :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <Card class='upload-options' title="Options" icon="ios-options" :padding="0" shadow>
@@ -32,13 +32,14 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                     </CellGroup>
                                 </Card>
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" header="This is panel header 1"
+                                    <a-collapse-panel key="1" header="导航"
                                                       :style="collapseStyle">
-                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>
+                                        <p>以压缩形式上传你的代码包，大小不超过500M</p>
                                     </a-collapse-panel>
                                 </a-collapse>
                             </div>
                             <div slot="secondPane" class="second-pane" style="padding-right: 30px;width: 100%;text-align: left">
+                                <div class="header-title-right"><span @click="cancelCreate"> Cancel</span></div>
                                 <createProjectFile></createProjectFile>
                             </div>
                         </rs-panes>
@@ -78,7 +79,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'userId',
                 'addProjectVisible',
                 'currentProjectId',
-                'currentProjectDetail'
+                'currentProjectDetail',
+                'size',
+                'minSize'
             ])
         },
         async mounted() {
@@ -112,19 +115,15 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         console.log('点击了取消');
                     },
                 });
+            },
+            jumpToCreateIssue(){
+                this.$router.push( {name:'createIssue'})
             }
         },
     }
 </script>
 
 <style scoped>
-    .se-header-title{
-        position: absolute;
-        left:72px;
-        margin-top: 10px;
-        font-size: 15px;
-        color: #EBFFEF;
-    }
     .ivu-card-head p, .ivu-card-head-inner{
         color: #fff;
     }
@@ -136,13 +135,11 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     .upload-local{
         color: #DBF5E0;
     }
-    .se-header-title-right{
+
+    .header-title-right {
         position: absolute;
-        right:35px;
-        margin-top: 10px;
-        font-size: 15px;
-        color: #EBFFEF;
-        cursor:pointer;
+        right: 90px;
+        top:20px;
     }
 
 </style>
