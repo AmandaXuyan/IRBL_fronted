@@ -127,12 +127,12 @@ const project =  {
 
         // eslint-disable-next-line no-unused-vars
         addByFile: async({ state, commit }, data) => {
-            console.log(data)
+            console.log(data);
             const res = await addByFileAPI(data)
-            console.log(res)
+            console.log(res);
             if(res){
-                message.success('导入成功')
-                commit('set_uploadVisible', false)
+                message.success('导入成功');
+                commit('set_uploadVisible', false);
                 commit('set_currentProjectDetail',res)
                 // commit('set_currentProjectId',res.id)
             }

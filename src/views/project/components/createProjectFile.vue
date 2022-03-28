@@ -13,24 +13,24 @@
                     <span> Upload File</span>
                 </div>
                 <div class="upload-block" style="margin-top: 20px">
-                <Upload
-                        :before-upload="handleUpload"
-                        type="drag"
-                        action="//jsonplaceholder.typicode.com/posts/">
-                    <div style="padding: 20px 0;background-color: #354A51">
-                        <Icon type="ios-cloud-upload" size="52" style="color: #DBF5E0;background-color: #354A51"></Icon>
-                        <p>Click or drag files here to upload</p>
-                    </div>
-                </Upload>
+                    <Upload
+                            :before-upload="handleUpload"
+                            type="drag"
+                            action="//jsonplaceholder.typicode.com/posts/">
+                        <div style="padding: 20px 0;background-color: #354A51">
+                            <Icon type="ios-cloud-upload" size="52" style="color: #DBF5E0;background-color: #354A51"></Icon>
+                            <p>Click or drag files here to upload</p>
+                        </div>
+                    </Upload>
                     <div v-if="file !== null" style="margin-top: 5px">
                         <Button type="text" @click="upload" :loading="loadingStatus">
                             {{ loadingStatus ? 'Uploading' : 'Click to upload' }}</Button>
                     </div>
                 </div>
             </div>
-<!--            <div class="create-header" @click="uploadFile1">-->
-<!--                Upload-->
-<!--            </div>-->
+            <!--            <div class="create-header" @click="uploadFile1">-->
+            <!--                Upload-->
+            <!--            </div>-->
         </div>
 
     </div>
@@ -107,7 +107,7 @@
                 this.addProjectFileForm.file=this.file;
                 this.addProjectFileForm.id=this.currentProjectId;
                 this.addProjectFileForm.userId=this.userId;
-                console.log(this.addProjectFileForm)
+                console.log(this.addProjectFileForm);
                 this.addByFile(this.addProjectFileForm);
                 setTimeout(() => {
                     this.file = null;

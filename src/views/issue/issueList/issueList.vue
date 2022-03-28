@@ -109,7 +109,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         },
         async mounted() {
             this.set_panelLeftFirst(false);
-            await this.getIssueList(this.currentProjectId);
+            this.getIssueList(this.currentProjectId);
 
         },
         methods: {

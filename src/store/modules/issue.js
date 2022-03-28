@@ -65,11 +65,11 @@ const issue =  {
     actions:{
         // eslint-disable-next-line no-unused-vars
         addIssue: async({ state, commit }, data) => {
-            const res = await addIssueAPI(data)
-            console.log("addIssue-----"+res)
+            const res = await addIssueAPI(data);
+            console.log("addIssue-----"+res);
             if(res){
-                message.success('创建成功')
-                commit('set_currentIssueDetail',res)
+                message.success('创建成功');
+                commit('set_currentIssueDetail',res);
                 commit('set_currentIssueId',res.id)
 
             }
@@ -77,19 +77,19 @@ const issue =  {
         // eslint-disable-next-line no-unused-vars
         getIssueList: async({commit, state},id) => {
             const data={id:id};
-            console.log(data)
-            const res = await getIssueListAPI(data)
-            console.log("issueList----"+res)
+            console.log(data);
+            const res = await getIssueListAPI(data);
+            console.log("issueList----"+res);
             if(res){
-                commit('set_issueList', res)
+                commit('set_issueList', res);
                 commit('set_issueListLoading', false)
             }
         },
         // eslint-disable-next-line no-unused-vars
         getRepoAllIssues:async({commit, state},id) => {
             const data={id:id};
-            console.log(data)
-            const res = await getRepoAllIssuesAPI(data)
+            console.log(data);
+            const res = await getRepoAllIssuesAPI(data);
             if(res){
                 commit('set_issueList', res)
 
@@ -97,7 +97,7 @@ const issue =  {
         },
         // eslint-disable-next-line no-unused-vars
         deleteIssue: async({ state, dispatch }) => {
-            const data={id:state.currentIssueId}
+            const data={id:state.currentIssueId};
             const res = await deleteIssueAPI(data);
             if(res) {
                 // dispatch('getIssueList');
@@ -108,9 +108,9 @@ const issue =  {
         },
         // eslint-disable-next-line no-unused-vars
         updateIssue: async({ state, commit ,dispatch}, data) => {
-            console.log(data)
-            const res = await updateIssueAPI(data)
-            console.log(res)
+            console.log(data);
+            const res = await updateIssueAPI(data);
+            console.log(res);
             if(res){
                 message.success('保存成功');
                 dispatch('getIssueList',res.projectId);

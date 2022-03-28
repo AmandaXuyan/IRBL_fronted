@@ -45,11 +45,18 @@
         data() {
             return {
                 id: this.currentProjectId,
+                githubRepoOwner: '',
+                githubRepoName:'',
+                accountName:'',
+                personalAccessToken:'',
                 projectUrl: '',
                 addProjectUrlForm: {
                     userId: 0,
                     projectId: 0,
-                    url: ''
+                    githubRepoOwner: '',
+                    githubRepoName:'',
+                    accountName:'',
+                    personalAccessToken:'',
                 },
 
             };

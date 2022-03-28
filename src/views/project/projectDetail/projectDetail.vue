@@ -16,7 +16,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                     <a-icon type="form" @click="jumpToCreateIssue"/>
                 </span>
                     <span class="side-content-tool">
-                    <a-icon type="form" @click="updateProjectPop"/>
+                    <a-icon type="md-paper" @click="updateProjectPop"/>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
