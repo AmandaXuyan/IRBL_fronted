@@ -4,6 +4,7 @@ import user from './modules/user'
 import project from "@/store/modules/project";
 import issue from "@/store/modules/issue";
 import getters from "@/store/getters";
+import file from '@/store/modules/file'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
   modules: {
     user,
     project,
-    issue
+    issue,
+    file
   },
 
 

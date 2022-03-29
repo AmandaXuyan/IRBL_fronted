@@ -11,18 +11,31 @@
                 <Divider style="background-color: #658885"/>
                 <div class="add-first">
                     <div class="add-title-style">
-                        <span> Github URL</span>
+                        <span> Repository Owner</span>
+                        <Input v-model="githubRepoOwner"
+                               placeholder="enter repository owner..." style="width: 200px;margin-left: 20px"/>
                     </div>
-                    <div class="add-header-desccription" style="margin-bottom: 5px">
+                    <div class="add-title-style">
+                        <span> Repository Name</span>
+                        <Input v-model="githubRepoName"
+                               placeholder="enter repository name..." style="width: 200px;margin-left: 20px"/>
+                    </div>
+                    <Divider style="background-color: #658885"/>
+                    <div class="add-header-desccription">
             <span>
-                Use Git or checkout with SVN using the web URL.
+                 If you do not fill in the github accout related information, there will be some function about issues that cannot be used.
             </span>
                     </div>
-                    <div class="add-input">
-                        <Input v-model="projectUrl"
-                               placeholder="Paste your URL here" style="width: 400px"/>
+                    <div class="add-title-style">
+                        <span> Your Account Name(optional)</span>
+                        <Input v-model="accountName"
+                               placeholder="enter account name..." style="width: 200px;margin-left: 20px"/>
                     </div>
-
+                    <div class="add-title-style">
+                        <span> Personal Access Token(optional)</span>
+                        <Input v-model="personalAccessToken"
+                               placeholder="enter token..." style="width: 200px;margin-left: 20px"/>
+                    </div>
                 </div>
                 <div class="create-header" @click="connectGithub1">
                     Connect
@@ -85,12 +98,15 @@
                 this.$router.push({name: 'projectDetail'})
             },
             connectGithub1() {
-                if (this.projectUrl == '') {
-                    message.info('请先填写URL')
+                if (this.githubRepoOwner === ''|| this.githubRepoName === '') {
+                    message.info('请把信息填写完整')
                 } else {
                     this.addProjectUrlForm.projectId = this.currentProjectId;
                     this.addProjectUrlForm.userId = this.userId;
-                    this.addProjectUrlForm.url = this.projectUrl;
+                    this.addProjectUrlForm.githubRepoOwner = this.githubRepoOwner;
+                    this.addProjectUrlForm.githubRepoName = this.githubRepoName;
+                    this.addProjectUrlForm.accountName = this.accountName;
+                    this.addProjectUrlForm.personalAccessToken = this.personalAccessToken;
                     console.log(this.addProjectUrlForm);
                     this.addProjectUrl(this.addProjectUrlForm);
                     // this.$router.push({ name: 'addProjectUrlCommit'})
@@ -129,7 +145,7 @@
         font-weight: 600;
         font-size: 16px;
         line-height: 1.5;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .add-input {

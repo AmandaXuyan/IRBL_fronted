@@ -10,13 +10,19 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             <div class="layout-content">
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">
                 <span class="side-content-tool">
+                    <Poptip trigger="hover" content="create project" placement="right">
                     <a-icon type="plus-circle" @click="jumpToCreate"/>
+                    </Poptip>
                 </span>
                     <span class="side-content-tool">
+                        <Poptip trigger="hover" content="create issue" placement="right">
                     <a-icon type="form" @click="jumpToCreateIssue"/>
+                        </Poptip>
                 </span>
                     <span class="side-content-tool">
+                        <Poptip trigger="hover" content="update project information" placement="right">
                     <a-icon type="md-paper" @click="updateProjectPop"/>
+                        </Poptip>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
@@ -27,10 +33,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   :size=this.size
                                   :min-size=this.minSize
                                   class="panes-wrap">
-                            <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
+                            <div slot="firstPane" class="first-pane" style="width: 100%;height:100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" header="Files" :disabled="false" :style="collapseStyle">
+                                    <a-collapse-panel key="1"  header="Files" :disabled="false"
+                                                      :style="collapseStyle">
+                                        <vue-scroll :ops="ops">
                                         <projectTree></projectTree>
+                                        </vue-scroll>
                                     </a-collapse-panel>
                                     <a-collapse-panel key="2" header="todo" :style="collapseStyle">
                                         <div class="toolbar" style="height: 100px;">
@@ -81,8 +90,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         },
         data() {
             return {
-                //todo:改id
-                projectId: '',
                 split1: 0.5,
                 collapseStyle: "background: #354A51;color:#fff;border-radius: 0px;margin-bottom: 0px;border: 1;border-color:#658885;overflow: hidden",
                 projectUpdate: {
@@ -116,20 +123,17 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'set_addProjectVisible',
                 'set_panelLeftFirst',
                 'set_tabList',
-                'set_updateProjectPopV'
+                'set_updateProjectPopV',
+                'set_treeData'
             ]),
             ...mapActions([
                 'updateProject',
                 'getRepoAllIssues',
                 'saveRepoAllIssues'
             ]),
-            jumpToDetail() {
-                this.set_currentProjectId(this.projectId);
-                this.set_tabList([]);
-                this.$router.push({name: 'projectDetail'})
-            },
             jumpToCreate() {
                 this.set_tabList([]);
+                this.set_treeData([]);
                 this.$router.push('addProject')
             },
             jumpToList() {
@@ -147,11 +151,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             },
             jumpToCreateIssue() {
                 this.set_tabList([]);
+                this.set_treeData([]);
                 this.$router.push({name: 'createIssue'})
             },
             updateProjectPop(){
                 this.set_updateProjectPopV(true);
-            }
+            },
+
         },
     }
 </script>

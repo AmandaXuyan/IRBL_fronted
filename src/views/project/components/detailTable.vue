@@ -35,11 +35,7 @@
 
             };
         },
-        watch:{
-            activePage(){
-                this.getFileByTree1()
-            }
-        },
+
         computed:{
             ...mapGetters([
                 'tabList',
@@ -76,8 +72,8 @@
             // eslint-disable-next-line no-unused-vars
             htmlOnCodeChange(value,event){},
             getFileByTree1(){
+                // eslint-disable-next-line no-unused-vars
                 const data={userId:this.userId,projectId:this.currentProjectId,fileName:this.activePage}
-                this.getFileByTree(data)
             },
 
 

@@ -9,10 +9,14 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             <div class="layout-content">
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">
                 <span class="side-content-tool">
+                    <Poptip trigger="hover" content="create project" placement="right">
                     <a-icon type="plus-circle" @click="jumpToCreate"/>
+                    </Poptip>
                 </span>
                     <span class="side-content-tool">
+                        <Poptip trigger="hover" content="create issue" placement="right">
                     <a-icon type="form" @click="jumpToCreateIssue"/>
+                        </Poptip>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
@@ -26,14 +30,18 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
                                     <a-collapse-panel key="1" header="Issues" :style="collapseStyle">
-                                        <div class="issueList" v-for="item in issueList" :key="item.id">
-                                            <List>
-                                                <issue-item :title="item.title"
-                                                            :id="item.id"
-                                                            :project-id="item.projectId"
-                                                            :description="item.description"
-                                                ></issue-item>
-                                            </List>
+                                        <div style="max-height: 400px">
+                                            <vue-scroll :ops="ops">
+                                                <div class="issueList" v-for="item in issueList" :key="item.id">
+                                                    <List>
+                                                        <issue-item :title="item.title"
+                                                                    :id="item.id"
+                                                                    :project-id="item.projectId"
+                                                                    :description="item.description"
+                                                        ></issue-item>
+                                                    </List>
+                                                </div>
+                                            </vue-scroll>
                                         </div>
                                     </a-collapse-panel>
                                     <a-collapse-panel key="3" header="todo" :style="collapseStyle">

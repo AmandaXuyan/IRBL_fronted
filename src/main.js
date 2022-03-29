@@ -36,11 +36,23 @@ import layout2 from './components/layout2/layout2'
 // eslint-disable-next-line vue/multi-word-component-names
 Vue.component("layout2",layout2)
 
-// import { HappyScroll } from 'vue-happy-scroll'
-// //自定义组件名
-// Vue.component('happy-scroll', HappyScroll)
-// // 引入css
-// import 'vue-happy-scroll/docs/happy-scroll.css'
+import vuescroll from 'vuescroll';
+Vue.use(vuescroll, {
+  ops: {
+    mode: 'native',
+    sizeStrategy: 'percent',
+    detectResize: true,
+    locking: true,
+    bar: {
+      background:"#658885",
+    },
+    rail: {
+      size: '4px',
+      gutterOfSide: '1px',
+    }
+  },
+
+});
 
 Vue.config.productionTip = false
 

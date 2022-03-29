@@ -86,9 +86,8 @@
             },
             handleUpload (file) {
                 this.file = file;
-                const isZIP = file.type === 'application/zip';
+                const isZIP = (file.type === 'application/zip')|| (file.type === 'application/x-zip-compressed');
                 const isLt2M = file.size / 1024 / 1024 < 500;
-
                 if (!isZIP) {
                     this.$message.error('上传文件只能是 ZIP 格式!');
                 }
@@ -107,8 +106,11 @@
                 this.addProjectFileForm.file=this.file;
                 this.addProjectFileForm.id=this.currentProjectId;
                 this.addProjectFileForm.userId=this.userId;
+                var mydata = new FormData();
+                mydata.append("id",this.currentProjectId)
+                mydata.append("file",this.file)
                 console.log(this.addProjectFileForm);
-                this.addByFile(this.addProjectFileForm);
+                this.addByFile(mydata);
                 setTimeout(() => {
                     this.file = null;
                     this.loadingStatus = false;

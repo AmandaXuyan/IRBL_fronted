@@ -25,8 +25,9 @@ const file = {
     actions:{
         // eslint-disable-next-line no-unused-vars
         getFileByTree: async({commit, state},path) => {
-            const data = {fileName:path}
+            const data = {fileName:path};
             const res = await getFileByTreeAPI(data);
+            console.log(res);
             if(res){
                 commit('set_codes', res.fileContent);
                 commit('set_fileLanguage', res.fileLanguage)

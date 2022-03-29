@@ -3,13 +3,17 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     <div class="projectListPage">
         <div class="page-content">
             <layout2/>
-            <div class="layout-content" >
+            <div class="layout-content">
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">
-                <span class="side-content-tool" >
+                <span class="side-content-tool">
+                    <Poptip trigger="hover" content="create project" placement="right">
                     <a-icon type="plus-circle" @click="jumpToCreate"/>
+                    </Poptip>
                 </span>
-                    <span class="side-content-tool" >
-                    <a-icon type="form"  @click="jumpToCreateIssue"/>
+                    <span class="side-content-tool">
+                        <Poptip trigger="hover" content="create issue" placement="right">
+                    <a-icon type="form" @click="jumpToCreateIssue"/>
+                        </Poptip>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
@@ -25,36 +29,34 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                     <a-collapse-panel key="1" header="Project Detail"
                                                       :style="collapseStyle" v-if="this.panelLeftFirst">
                                         <span> todo: add项目详情API:id={{this.currentProjectId}}</span>
-
                                     </a-collapse-panel>
-<!--                                    <a-collapse-panel key="2" header="This is panel header 2" :disabled="false " :style="collapseStyle">-->
-<!--                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>-->
-<!--                                    </a-collapse-panel>-->
-<!--                                    <a-collapse-panel key="3" header="This is panel header 3" :style="collapseStyle">-->
-<!--                                        <p>A dog is a type of domesticated animal. Known for its loyalty a</p>-->
-<!--                                    </a-collapse-panel>-->
                                 </a-collapse>
                             </div>
-                            <div slot="secondPane" class="second-pane" ref="element" style="padding-right: 30px;width: 100%;text-align: left;">
+                            <div slot="secondPane" class="second-pane" ref="element"
+                                 style="padding-right: 70px;width: 100%;text-align: left;">
                                 <div class="scroll-content">
                                     <div class="project-list">
-                                        <span class="project-list-title" v-if="this.projectList.length!==0">My Projects</span>
+                                        <span class="project-list-title"
+                                              v-if="this.projectList.length!==0" >My Projects</span>
                                     </div>
                                     <div class="no-project" v-if="this.projectList.length===0">
                                         <span class="add-header-title">Please create your first project</span>
                                         <div class="add-header-desccription">
                                             <span class="create-header" @click="jumpToCreate()">Create</span>
                                         </div>
-
                                     </div>
-                                    <div class="projectList" v-for="item in projectList" :key="item.id">
-                                        <List >
-                                            <projectItem :project-name="item.projectName"
-                                                         :id="item.id"
-                                                         :project-description="item.projectDescription"
-                                                         :githubRepoName="item.githubRepoName"
-                                            ></projectItem>
-                                        </List>
+                                    <div style="height: 750px;margin-top: 20px">
+                                        <vue-scroll :ops="ops">
+                                            <div class="projectList" v-for="item in projectList" :key="item.id">
+                                                <List>
+                                                    <projectItem :project-name="item.projectName"
+                                                                 :id="item.id"
+                                                                 :project-description="item.projectDescription"
+                                                                 :githubRepoName="item.githubRepoName"
+                                                    ></projectItem>
+                                                </List>
+                                            </div>
+                                        </vue-scroll>
                                     </div>
                                 </div>
                             </div>
@@ -70,27 +72,28 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
 
 <script>
     // eslint-disable-next-line no-unused-vars
-    import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import {mapGetters, mapActions, mapMutations} from 'vuex'
     import layout2 from '../../../components/layout2/layout2'
     import projectItem from '../components/projectItem'
+
     export default {
         name: "projectList",
-        components:{
+        components: {
             layout2,
             projectItem,
 
 
         },
-        data(){
-            return{
+        data() {
+            return {
                 //todo:改id
-                projectId:'',
-                split1:0.5,
-                collapseStyle:"background: #354A51;color:#fff;border-radius: 0px;margin-bottom: 24px;border: 1;border-color:#658885;overflow: hidden",
+                projectId: '',
+                split1: 0.5,
+                collapseStyle: "background: #354A51;color:#fff;border-radius: 0px;margin-bottom: 24px;border: 1;border-color:#658885;overflow: hidden",
 
             };
         },
-        computed:{
+        computed: {
             ...mapGetters([
                 'userId',
                 'token',
@@ -109,7 +112,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             this.set_panelLeftFirst(false);
 
         },
-        methods:{
+        methods: {
             ...mapMutations([
                 'set_projectList',
                 'set_ProjectListLoading',
@@ -120,15 +123,15 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'getProjectList',
 
             ]),
-            jumpToCreate(){
+            jumpToCreate() {
                 this.set_addProjectVisible(true);
-                this.$router.push( 'addProject');
+                this.$router.push('addProject');
             },
-            selected(id){
+            selected(id) {
                 this.activeName = id;
             },
-            jumpToCreateIssue(){
-                this.$router.push( {name:'createIssue'})
+            jumpToCreateIssue() {
+                this.$router.push({name: 'createIssue'})
             }
 
 
@@ -137,7 +140,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
 </script>
 
 <style scoped>
-
 
 
 </style>

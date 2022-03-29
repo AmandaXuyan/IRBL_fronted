@@ -9,11 +9,15 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             </div>
             <div class="layout-content" >
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">
-                <span class="side-content-tool" >
+                <span class="side-content-tool">
+                    <Poptip trigger="hover" content="create project" placement="right">
                     <a-icon type="plus-circle" @click="jumpToCreate"/>
+                    </Poptip>
                 </span>
-                    <span class="side-content-tool" >
-                    <a-icon type="form"  @click="jumpToCreateIssue"/>
+                    <span class="side-content-tool">
+                        <Poptip trigger="hover" content="create issue" placement="right">
+                    <a-icon type="form" @click="jumpToCreateIssue"/>
+                        </Poptip>
                 </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">

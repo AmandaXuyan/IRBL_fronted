@@ -52,12 +52,15 @@
                 'deleteProject',
                 'getProjectList',
                 'getProjectDetailById',
+                'getFileTree',
 
             ]),
             jumpToDetail(){
-                this.set_currentProjectId(this.id);
+                console.log("_____1")
+                // this.set_currentProjectId(this.id);
                 this.getProjectDetailById();
                 this.set_issueShowVisible(true);
+                this.getFileTree(this.id);
                 this.$router.push({ name: 'projectDetail'})
             },
             deleteProject1(){

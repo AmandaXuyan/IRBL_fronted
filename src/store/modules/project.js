@@ -82,44 +82,41 @@ const project =  {
         // eslint-disable-next-line no-unused-vars
         getProjectList: async({commit, state},userId) => {
             const data={id:userId};
-            console.log(data)
             const res = await getAllProjectAPI(data)
-            console.log(res)
+            console.log(res);
             if(res){
-                commit('set_projectList', res)
+                commit('set_projectList', res);
                 commit('set_projectListLoading', false)
             }
         },
         getProjectDetailById: async({commit, state}) => {
             const data={id:state.currentProjectId};
-            const res = await getProjectDetailByIdAPI(data)
+            const res = await getProjectDetailByIdAPI(data);
             if(res){
-                commit('set_currentProjectDetail', res)
+                commit('set_currentProjectDetail', res);
                 commit('set_issueShowVisible',true)
             }
         },
 
         // eslint-disable-next-line no-unused-vars
         addProject: async({ state, commit }, data) => {
-            console.log(data)
-            const res = await addProjectAPI(data)
-            console.log(res)
+            const res = await addProjectAPI(data);
             if(res){
-                message.success('创建成功')
-                commit('set_addProjectVisible', false)
-                commit('set_currentProjectDetail',res)
+                message.success('创建成功');
+                commit('set_addProjectVisible', false);
+                commit('set_currentProjectDetail',res);
                 commit('set_currentProjectId',res.id)
             }
         },
         // eslint-disable-next-line no-unused-vars
         addProjectUrl: async({ state, commit }, data) => {
-            console.log(data)
-            const res = await addProjectUrlAPI(data)
-            console.log(res)
+            console.log(data);
+            const res = await addProjectUrlAPI(data);
+            console.log(res);
             if(res){
-                message.success('连接成功')
-                commit('set_addProjectVisible', false)
-                commit('set_currentProjectDetail',res)
+                message.success('连接成功');
+                commit('set_addProjectVisible', false);
+                commit('set_currentProjectDetail',res);
                 commit('set_connectResVisible',true)
                 // commit('set_currentProjectId',res.id)
             }
@@ -160,12 +157,15 @@ const project =  {
             }
         },
 
-        getFileTree: async({commit, state}) => {
-            const data={id:state.currentProjectId};
+        // eslint-disable-next-line no-unused-vars
+        getFileTree: async({commit, state},projectId) => {
+            const data={id:projectId};
+            console.log(data)
             const res = await getFileTreeAPI(data);
-            console.log("getFileTree"+res);
+            console.log(res);
+            commit('set_treeData', res.children)
             if(res){
-                commit('set_treeData', res)
+                commit('set_treeData', res.children)
             }
         },
 
