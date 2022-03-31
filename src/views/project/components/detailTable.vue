@@ -1,18 +1,18 @@
 <template>
     <div class="detail-table">
-<!--        closable :draggable="true" @on-tab-remove="handleTabRemove"-->
-        <Tabs type="card"    @on-drag-drop="handleDragDrop">
+        <!--        closable :draggable="true" @on-tab-remove="handleTabRemove"-->
+        <Tabs type="card"
+              v-model="activePage"
+              @on-drag-drop="handleDragDrop" >
             <TabPane v-for="(tab, index) in tabList" :key="index" :label="tab.label" :name="tab.name"
                      v-model="activePage" :v-if="tab.show">
-                <span>{{tab.label}}</span>
-                    <MyEditor
-                            :language="'html'"
-                            :codes="htmlCodes"
-                            @onMounted="htmlOnMounted"
-                            @onCodeChange="htmlOnCodeChange"
-                            v-model="activePage"
-                            :tabName="tab.name"
-                            />
+                <MyEditor
+                        :language="fileLanguage"
+                        :codes="codes"
+                        @onMounted="htmlOnMounted"
+                        @onCodeChange="htmlOnCodeChange"
+                        :tabName="tab.name"
+                />
             </TabPane>
         </Tabs>
     </div>
@@ -25,18 +25,18 @@
 
     export default {
         name: "detailTable",
-        components:{
+        components: {
             MyEditor
         },
-        data(){
-            return{
-                htmlCodes:'<div>This is html</div>',
-                htmlEditor:null,
+        data() {
+            return {
+                htmlCodes: "<div>默认</div>",
+                htmlEditor: null,
 
             };
         },
 
-        computed:{
+        computed: {
             ...mapGetters([
                 'tabList',
                 'activePage',
@@ -49,7 +49,7 @@
         async mounted() {
 
         },
-        methods:{
+        methods: {
             ...mapMutations([
                 'set_activePage',
                 'set_codes',
@@ -59,21 +59,22 @@
                 'getFileByTree'
             ]),
             // eslint-disable-next-line no-unused-vars
-            handleDragDrop (name, newName, a, b, names) {
+            handleDragDrop(name, newName, a, b, names) {
                 // names 为调整后的 name 集合
-                this.tabList.splice(b,1,...this.tabList.splice(a, 1 , this.tabList[b]));
+                this.tabList.splice(b, 1, ...this.tabList.splice(a, 1, this.tabList[b]));
             },
-            handleTabRemove (name) {
+            handleTabRemove(name) {
                 this['tab' + name] = false;
             },
-            htmlOnMounted(edit){
+            htmlOnMounted(edit) {
                 this.htmlEditor = edit;
             },
             // eslint-disable-next-line no-unused-vars
-            htmlOnCodeChange(value,event){},
-            getFileByTree1(){
+            htmlOnCodeChange(value, event) {
+            },
+            getFileByTree1() {
                 // eslint-disable-next-line no-unused-vars
-                const data={userId:this.userId,projectId:this.currentProjectId,fileName:this.activePage}
+                const data = {userId: this.userId, projectId: this.currentProjectId, fileName: this.activePage}
             },
 
 

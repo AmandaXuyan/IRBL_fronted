@@ -1,14 +1,8 @@
 <template>
-    <div class="issueItem" @mouseenter="getIssueInf" @click="jumpToDetail">
+    <div class="issueItem" @mouseenter="getIssueInf" @click="jumpToDetail" >
         <ListItem class="issueItem-one">
-            <ListItemMeta :title="this.title"
-            />
-            <Icon type="ios-trash-outline" @click="deleteIssue1"/>
-<!--            <template slot="action" >-->
-<!--                <li>-->
-<!--                    <a @click="deleteIssue1" style="color: #fff">Delete</a>-->
-<!--                </li>-->
-<!--            </template>-->
+            <ListItemMeta :title="this.title"/>
+            <Icon type="ios-trash-outline"  @click="deleteIssue1"/>
         </ListItem>
 
     </div>
@@ -29,6 +23,7 @@
                 'userId',
                 'currentProjectId',
                 'currentIssueId',
+                'issueList'
             ])
         },
         async mounted() {
@@ -58,8 +53,8 @@
                     title: '删除Issue',
                     content: '确认删除该Issue？',
                     onOk: () => {
-                        this.deleteIssue();
-                        // this.$router.push({ name: 'issueList'})
+                        this.dele();
+                        this.$router.push({ name: 'issueList'})
                     },
                     onCancel: () => {
                         console.log('点击了取消');
@@ -73,6 +68,9 @@
                 this.set_panelLeftFirst(true)
                 // this.set_currentProjectId(this.projectId)
                 this.set_currentIssueId(this.id)
+            },
+            async dele(){
+                await this.deleteIssue();
             }
 
         },

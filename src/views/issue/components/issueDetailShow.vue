@@ -8,6 +8,8 @@
                            disabled
                            style="width: 500px"/>
                     <Button style="margin-left: 40px" @click="toUpdateIssue1" >Edit</Button>
+                    <Button style="margin-left: 40px" @click="toAdviceIssue1" >Advice</Button>
+                    <Button style="margin-left: 40px" @click="writeBackSingle1" >WriteBack</Button>
                 </div>
                 <div class="markdown">
                     <mavon-editor
@@ -124,7 +126,9 @@
             ...mapActions([
                 'updateIssue',
                 'getIssueDetailById',
-                'getIssueList'
+                'getIssueList',
+                'getIssueAdvice',
+                'writeBackSingle'
             ]),
 
             saveIssue() {
@@ -150,6 +154,12 @@
             cancelUpdate(){
                 this.set_issueEditVisible(false);
             },
+            toAdviceIssue1(){
+                this.getIssueAdvice(this.currentIssueId);
+            },
+            writeBackSingle1(){
+                this.writeBackSingle(this.currentIssueId);
+            }
 
         },
     }

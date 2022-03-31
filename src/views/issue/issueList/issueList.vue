@@ -4,7 +4,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         <div class="page-content">
             <layout2/>
             <div class="project-title">
-                <span class="title-head">Project：{{this.currentProjectDetail.projectName}}--Issues</span>
+                <span class="title-head">Issue：{{this.currentProjectDetail.projectName}} -- {{this.currentIssueDetail.title}}</span>
             </div>
             <div class="layout-content">
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">
@@ -28,11 +28,33 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
+                                <div class="no-curr-project">
+                                    <Select v-model="model11"
+                                            filterable
+                                            clearable
+                                            placeholder="🔍 搜索issue"
+                                            ref="issueSelect"
+                                            style="border-bottom: 1px"
+                                            @on-change="getChosenIssue"
+                                            @on-clear="clearIssue"
+                                    >
+                                        <Option value="0" selected="selected" style="display: none;"></Option>
+                                        <Option v-for="item in issueList" :value="item.id"  :key="item.value"
+                                                :v-model="chosenIssue"
+                                                style="max-height: 80px">
+                                            {{item.title}}
+                                        </Option>
+                                    </Select>
+                                    <Divider style="margin-top: 3px;margin-bottom: 0"></Divider>
+                                </div>
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
                                     <a-collapse-panel key="1" header="Issues" :style="collapseStyle">
-                                        <div style="max-height: 400px">
-                                            <vue-scroll :ops="ops">
-                                                <div class="issueList" v-for="item in issueList" :key="item.id">
+                                        <div class="no-issue" v-if="issueList.length===0">
+                                            <span>点击左边按钮, 创建一个issue吧</span>
+                                        </div>
+                                        <div style="height: 250px">
+                                            <vue-scroll >
+                                                <div class="issueList" v-for="item in issueList" :key="item.id" style="margin-right: 20px;max-height: 250px">
                                                     <List>
                                                         <issue-item :title="item.title"
                                                                     :id="item.id"
@@ -42,11 +64,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                                     </List>
                                                 </div>
                                             </vue-scroll>
-                                        </div>
-                                    </a-collapse-panel>
-                                    <a-collapse-panel key="3" header="todo" :style="collapseStyle">
-                                        <div class="tool-bar" style="margin-top: 20px">
-                                            <Button @click="searchIssue1()">searchIssue</Button>
                                         </div>
                                     </a-collapse-panel>
                                 </a-collapse>
@@ -64,8 +81,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                 </div>
                             </div>
                         </rs-panes>
-
-
                     </div>
                 </div>
             </div>
@@ -99,7 +114,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 },
                 split1: 0.5,
                 collapseStyle: "background: #354A51;color:#fff;border-radius: 0px;border: 1;border-color:#658885;overflow: hidden",
-
+                chosenIssue: '',
+                model11:'',
             };
         },
         computed: {
@@ -112,14 +128,24 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'minSize',
                 'issueList',
                 'currentProjectDetail',
-                'issueDetailVisible'
+                'issueDetailVisible',
+                'currentIssueDetail'
             ])
         },
         async mounted() {
             this.set_panelLeftFirst(false);
-            this.getIssueList(this.currentProjectId);
-
+            // await this.getIssueList(this.currentProjectId);
+            // console.log(this.currentProjectId);
         },
+        // watch:{
+        //     modal11:{
+        //         getChosenIssue(){
+        //             this.set_currentIssueId(this.modal11);
+        //             this.getIssueDetailById();
+        //         },
+        //     }
+        // },
+
         methods: {
             ...mapMutations([
                 'set_currentProjectId',
@@ -134,7 +160,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'searchIssue',
                 'addIssue',
                 'deleteIssue',
-                'getIssueList'
+                'getIssueList',
+                'getIssueDetailById'
             ]),
             searchIssue1() {
                 this.searchIssue(this.searchIssueForm)
@@ -168,8 +195,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             $imgAdd(pos, $file) {
                 console.log(pos, $file);
             },
-
-
+            async getChosenIssue(ops){
+                this.set_currentIssueId(ops);
+                await this.getIssueDetailById();
+            },
+            clearIssue(){
+                this.set_panelLeftFirst(false);
+            },
         },
     }
 </script>

@@ -21,7 +21,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 </span>
                     <span class="side-content-tool">
                         <Poptip trigger="hover" content="update project information" placement="right">
-                    <a-icon type="md-paper" @click="updateProjectPop"/>
+                    <a-icon type="container" @click="updateProjectPop"/>
                         </Poptip>
                 </span>
                 </div>
@@ -35,10 +35,16 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;height:100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1"  header="Files" :disabled="false"
+                                    <a-collapse-panel key="1" header="Files" :disabled="false"
                                                       :style="collapseStyle">
-                                        <vue-scroll :ops="ops">
-                                        <projectTree></projectTree>
+                                        <div class="no-file" v-if="this.treeData===[]">
+                                            <span>还没有导入文件</span>
+                                            <div>
+                                                <Button>Import</Button>
+                                            </div>
+                                        </div>
+                                        <vue-scroll>
+                                            <projectTree></projectTree>
                                         </vue-scroll>
                                     </a-collapse-panel>
                                     <a-collapse-panel key="2" header="todo" :style="collapseStyle">
@@ -113,6 +119,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'tabList',
                 'updateProjectPopV',
                 'issueShowVisible',
+                'treeData'
             ])
         },
         async mounted() {
@@ -154,7 +161,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 this.set_treeData([]);
                 this.$router.push({name: 'createIssue'})
             },
-            updateProjectPop(){
+            updateProjectPop() {
                 this.set_updateProjectPopV(true);
             },
 

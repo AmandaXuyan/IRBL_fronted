@@ -27,9 +27,28 @@
                                 <!--                                <List header="Header" footer="Footer" border size="small">-->
                                 <!--                                    <ListItem class="list-pro" v-for="(p, index) in this.projectList" :key="index">{{p.projectName}}</ListItem>-->
                                 <!--                                </List>-->
+<!--                                <div class="no-curr-project">-->
+<!--                                    <Select v-model="model11"-->
+<!--                                            filterable-->
+<!--                                            clearable-->
+<!--                                            placeholder="选择所在项目"-->
+<!--                                            ref="issueSelect"-->
+<!--                                            style="border-bottom: 1px"-->
+<!--                                            @on-change="getChosenProject"-->
+<!--                                            @on-clear="clearIssue"-->
+<!--                                    >-->
+<!--                                        <Option value="0" selected="selected" style="display: none;"></Option>-->
+<!--                                        <Option v-for="item in projectList" :value="item.id"  :key="item.value"-->
+<!--                                                :v-model="chosenProject"-->
+<!--                                                style="max-height: 80px">-->
+<!--                                            {{item.projectName}}-->
+<!--                                        </Option>-->
+<!--                                    </Select>-->
+<!--                                    <Divider style="margin-top: 3px;margin-bottom: 0"></Divider>-->
+<!--                                </div>-->
                                 <div class="no-curr-project" v-if="chosenProject===0">
                                     <span>请选择Issue所在项目</span>
-                                    <Select v-model="model11" filterable>
+                                    <Select v-model="model11" filterable placeholder="选择所在项目">
                                         <Option v-for="item in this.projectList" :value="item.id" :key="item.value"
                                                 v-model="chosenProject" on-change="getChosenProject">
                                             {{item.projectName}}
@@ -39,7 +58,7 @@
                                 <div class="chosen-project" v-if="chosenProject!==0">
                                     <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
                                         <a-collapse-panel key="1" header="所在项目" :style="collapseStyle">
-                                            <div  style="margin-top: 20px">
+                                            <div>
                                              {{currentProjectDetail.projectName}}
                                             </div>
                                         </a-collapse-panel>
@@ -98,11 +117,13 @@
         },
         async mounted() {
             await this.getProjectList(this.userId);
+            await this.getProjectDetailById();
         },
         methods: {
             ...mapMutations([
                 'set_currentProjectId',
                 'set_addProjectVisible',
+
             ]),
             ...mapActions([
                 'deleteIssue',
@@ -129,9 +150,9 @@
             jumpToCreateIssue() {
                 this.$router.push({name: 'createIssue'})
             },
-            getChosenProject(){
+            async getChosenProject(){
                 this.set_currentProjectId(this.chosenProject);
-                this.getProjectDetailById();
+                await this.getProjectDetailById();
             }
         },
     }

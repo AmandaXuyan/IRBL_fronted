@@ -81,3 +81,11 @@ export function getIssueDetailByIdAPI(data) {
         params:data
     })
 }
+
+export function writeBackSingleAPI(data) {
+    return axios({
+        url: `${api.issuePre}/writeBackSingle`,
+        method: 'GET',
+        params:data
+    })
+}

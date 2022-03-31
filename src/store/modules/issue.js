@@ -11,7 +11,8 @@ import{
     getIssueAdviceAPI,
     getRepoAllIssuesAPI,
     saveRepoAllIssuesAPI,
-    getIssueDetailByIdAPI
+    getIssueDetailByIdAPI,
+    writeBackSingleAPI
 } from '@/api/issue'
 
 
@@ -64,13 +65,14 @@ const issue =  {
     },
     actions:{
         // eslint-disable-next-line no-unused-vars
-        addIssue: async({ state, commit }, data) => {
+        addIssue: async({ state, diapatch,commit}, data) => {
             const res = await addIssueAPI(data);
             console.log("addIssue-----"+res);
             if(res){
                 message.success('创建成功');
-                commit('set_currentIssueDetail',res);
-                commit('set_currentIssueId',res.id)
+                await commit('set_currentIssueDetail',res);
+                await commit('set_currentIssueId',res.id);
+                await diapatch('getIssueList',res.id);
 
             }
         },
@@ -96,11 +98,11 @@ const issue =  {
             }
         },
         // eslint-disable-next-line no-unused-vars
-        deleteIssue: async({ state, dispatch }) => {
+        deleteIssue: async({ state, dispatch ,commit}) => {
             const data={id:state.currentIssueId};
             const res = await deleteIssueAPI(data);
             if(res) {
-                // dispatch('getIssueList');
+                dispatch('getIssueList',state.currentIssueDetail.projectId);
                 message.success('删除成功')
             }else{
                 message.error('删除失败')
@@ -133,7 +135,7 @@ const issue =  {
             const res = await searchIssueAPI(data)
             console.log(res)
             if(res){
-                message.success('搜索成功')
+                message.success('搜索成功');
                 commit('set_searchResult',res)
             }
         },
@@ -141,10 +143,20 @@ const issue =  {
         // eslint-disable-next-line no-unused-vars
         getIssueAdvice: async({commit, state},id) => {
             const data={id:id};
-            console.log(data)
             const res = await getIssueAdviceAPI(data)
             if(res){
+                console.log('advice!')
                 commit('set_issueAdviceList', res)
+            }
+        },
+
+        // eslint-disable-next-line no-unused-vars
+        writeBackSingle:async({commit, state},id) => {
+            const data={id:id};
+            const res = await writeBackSingleAPI(data)
+            if(res){
+                message.success('写回成功');
+
             }
         },
 

@@ -13,6 +13,7 @@
                         placeholder="请输入Issue内容..."
                         :boxShadow="false"
                         toolbarsBackground="#354A51"
+                        previewBackground="#354A51"
                         :subfield="false"
                         style="z-index:1;border: 1px solid #d9d9d9;height: 500px"
                         v-model="issueContent"
@@ -57,7 +58,7 @@
                     imagelink: true, // 图片链接
                     code: true, // code
                     table: true, // 表格
-                    fullscreen: true, // 全屏编辑
+                    fullscreen: false, // 全屏编辑
                     readmodel: false, // 沉浸式阅读
                     htmlcode: true, // 展示html源码
                     help: false, // 帮助
@@ -132,7 +133,7 @@
                         message.info('请输入标题')
                     }else{
                         this.addIssue(this.addIssueForm);
-                        this.$router.push({name: 'issueList'})
+                        this.$router.push({name: 'issueList'});
                     }
 
                 }

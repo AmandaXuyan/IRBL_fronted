@@ -48,7 +48,7 @@
             handleContextMenu(data) {
                 console.log(data);
                 if ((data.children === null)) {
-                    const item = {label: data.title, name: data.title, show: true}
+                    const item = {label: data.title, name: data.title, show: true};
                     if (this.tabList == []) {
                         this.tabList.push(item)
                     } else {
@@ -64,7 +64,7 @@
                             this.tabList.push(item);
                         }
                     }
-                    this.set_activePage(item.label);
+                    this.set_activePage(item.name);
                     this.set_updateProjectPopV(false);
                     console.log(this.activePage)
                 }
@@ -88,11 +88,11 @@
                                 width: '100%'
                             },
                             on: {
-                                click: () => {
-                                    this.handleContextMenu(data);
+                                click: async () => {
                                     if (data.children == null) {
-                                        this.getFileByTree(data.path);
+                                        await this.getFileByTree(data);
                                     }
+                                    this.handleContextMenu(data);
 
                                 }
                             }

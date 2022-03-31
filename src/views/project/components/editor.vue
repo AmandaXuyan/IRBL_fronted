@@ -1,6 +1,6 @@
 <template>
     <div class="myEditor" >
-<!--            <el-button type="success" icon="el-icon-check" circle @click="RunResult"></el-button>-->
+<!--            <Button  @click="RunResult">res</Button>-->
 <!--            <span class="theme" style="float:right">-->
 <!--                <el-select v-model="theme" size="mini" @change="themeChange" placeholder="请选择主题">-->
 <!--                    <el-option-->
@@ -17,8 +17,14 @@
 <script>
     // eslint-disable-next-line no-unused-vars
     import * as monaco from 'monaco-editor'
+    import {mapGetters} from "vuex";
     export default {
         name:'myEditor',
+        computed: {
+            ...mapGetters([
+                'fileLanguage',
+            ])
+        },
         props:{
             codes:{
                 type:String,
@@ -29,7 +35,7 @@
             language:{
                 type:String,
                 default:function(){
-                    return 'html'
+                    return this.fileLanguage;
                 }
             },
             editorOptions:{
@@ -45,7 +51,9 @@
                         useTabStops: false,
                         fontSize: 28,       //字体大小
                         autoIndent:true,//自动布局
-                        //quickSuggestionsDelay: 500,   //代码提示延时
+                        quickSuggestionsDelay: 500,   //代码提示延时
+                        // TypeScript, JavaScript, CSS, LESS, SCSS, JSON, HTML, XML, PHP, C#, C++, Razor, Markdown, Diff, Java, VB, CoffeeScript, Handlebars, Batch, Pug, F#, Lua, Powershell, Python, Ruby, SASS, R, Objective-C
+
                     }
                 }
             },
@@ -79,6 +87,11 @@
             this.initEditor();
             this.RunResult();
         },
+        watch:{
+            tabName(){
+                this.monacoEditor.setValue(this.codes);
+            }
+        },
         methods:{
             initEditor(){
                 let self = this;
@@ -106,6 +119,7 @@
                 window.addEventListener('resize',function(){
                     this.initEditor();
                 })
+
             },
             RunResult(){
                 console.log(this.monacoEditor.getValue());
@@ -114,6 +128,8 @@
             themeChange(val){
                 this.initEditor();
             },
+
+
         }
     }
 </script>

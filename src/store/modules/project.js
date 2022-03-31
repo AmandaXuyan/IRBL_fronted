@@ -103,13 +103,14 @@ const project =  {
             const res = await addProjectAPI(data);
             if(res){
                 message.success('创建成功');
+                console.log(res);
                 commit('set_addProjectVisible', false);
                 commit('set_currentProjectDetail',res);
                 commit('set_currentProjectId',res.id)
             }
         },
         // eslint-disable-next-line no-unused-vars
-        addProjectUrl: async({ state, commit }, data) => {
+        addProjectUrl: async({ state, dispatch,commit }, data) => {
             console.log(data);
             const res = await addProjectUrlAPI(data);
             console.log(res);
@@ -117,7 +118,9 @@ const project =  {
                 message.success('连接成功');
                 commit('set_addProjectVisible', false);
                 commit('set_currentProjectDetail',res);
-                commit('set_connectResVisible',true)
+                commit('set_connectResVisible',true);
+                dispatch('getFileTree',state.currentProjectId)
+
                 // commit('set_currentProjectId',res.id)
             }
         },
@@ -160,10 +163,10 @@ const project =  {
         // eslint-disable-next-line no-unused-vars
         getFileTree: async({commit, state},projectId) => {
             const data={id:projectId};
-            console.log(data)
+            console.log('filetree');
+            console.log(data);
             const res = await getFileTreeAPI(data);
             console.log(res);
-            commit('set_treeData', res.children)
             if(res){
                 commit('set_treeData', res.children)
             }

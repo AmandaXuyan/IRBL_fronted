@@ -21,7 +21,7 @@
 
                 <div class="add-input">
                     <Input v-model="projectName"
-                           maxlength="10"
+                           maxlength="30"
                            show-word-limit placeholder=" Enter project name" style="width: 200px" />
                 </div>
                 <div class="add-title-style">

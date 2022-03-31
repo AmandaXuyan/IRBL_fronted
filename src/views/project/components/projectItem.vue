@@ -53,14 +53,15 @@
                 'getProjectList',
                 'getProjectDetailById',
                 'getFileTree',
+                'getIssueList'
 
             ]),
-            jumpToDetail(){
-                console.log("_____1")
-                // this.set_currentProjectId(this.id);
+            async jumpToDetail(){
+                await this.set_currentProjectId(this.id);
                 this.getProjectDetailById();
                 this.set_issueShowVisible(true);
                 this.getFileTree(this.id);
+                this.getIssueList(this.id);
                 this.$router.push({ name: 'projectDetail'})
             },
             deleteProject1(){
@@ -78,8 +79,9 @@
 
             },
             getProjectInf(){
-                this.set_panelLeftFirst(true)
-                this.set_currentProjectId(this.id)
+                this.set_panelLeftFirst(true);
+                this.set_currentProjectId(this.id);
+                this.getProjectDetailById();
             }
 
         },

@@ -28,7 +28,10 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
                                     <a-collapse-panel key="1" header="Project Detail"
                                                       :style="collapseStyle" v-if="this.panelLeftFirst">
-                                        <span> todo: add项目详情API:id={{this.currentProjectId}}</span>
+                                        <span> name :{{this.currentProjectDetail.projectName}} </span>
+                                        <div></div>
+                                        <span> description :{{this.currentProjectDetail.projectDescription}}</span>
+
                                     </a-collapse-panel>
                                 </a-collapse>
                             </div>
@@ -46,7 +49,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                         </div>
                                     </div>
                                     <div style="height: 750px;margin-top: 20px">
-                                        <vue-scroll :ops="ops">
+                                        <vue-scroll >
                                             <div class="projectList" v-for="item in projectList" :key="item.id">
                                                 <List>
                                                     <projectItem :project-name="item.projectName"
@@ -104,7 +107,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'currentProjectId',
                 'panelLeftFirst',
                 'size',
-                'minSize'
+                'minSize',
+                'currentProjectDetail'
             ])
         },
         async mounted() {

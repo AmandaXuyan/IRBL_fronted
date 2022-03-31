@@ -21,7 +21,7 @@
                                placeholder="enter repository name..." style="width: 200px;margin-left: 20px"/>
                     </div>
                     <Divider style="background-color: #658885"/>
-                    <div class="add-header-desccription">
+                    <div class="add-header-desccription" style="margin-bottom: 20px">
             <span>
                  If you do not fill in the github accout related information, there will be some function about issues that cannot be used.
             </span>
@@ -97,7 +97,7 @@
 
                 this.$router.push({name: 'projectDetail'})
             },
-            connectGithub1() {
+            async connectGithub1() {
                 if (this.githubRepoOwner === ''|| this.githubRepoName === '') {
                     message.info('请把信息填写完整')
                 } else {
@@ -107,8 +107,9 @@
                     this.addProjectUrlForm.githubRepoName = this.githubRepoName;
                     this.addProjectUrlForm.accountName = this.accountName;
                     this.addProjectUrlForm.personalAccessToken = this.personalAccessToken;
+                    console.log(1);
                     console.log(this.addProjectUrlForm);
-                    this.addProjectUrl(this.addProjectUrlForm);
+                    await this.addProjectUrl(this.addProjectUrlForm);
                     // this.$router.push({ name: 'addProjectUrlCommit'})
                     this.$router.push({name: 'projectDetail'});
                 }
