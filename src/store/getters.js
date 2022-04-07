@@ -26,7 +26,7 @@ const getters={
     //issue
     currentIssueId:state => state.issue.currentIssueId,
     issueList: state => state.issue.issueList,
-    historyIssueList:state => state.issue.historyIssueList,
+    gitIssueList:state => state.issue.gitIssueList,
     issueListLoading:state => state.issue.issueListLoading,
     currentIssueDetail:state => state.issue.currentIssueDetail,
     issueDetailVisible:state => state.issue.issueDetailVisible,

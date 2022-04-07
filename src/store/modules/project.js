@@ -102,8 +102,8 @@ const project =  {
         addProject: async({ state, commit }, data) => {
             const res = await addProjectAPI(data);
             if(res){
-                message.success('创建成功');
                 console.log(res);
+                message.success('创建成功');
                 commit('set_addProjectVisible', false);
                 commit('set_currentProjectDetail',res);
                 commit('set_currentProjectId',res.id)
@@ -139,11 +139,9 @@ const project =  {
         },
         // eslint-disable-next-line no-unused-vars
         updateProject: async({ state, commit }, data) => {
-            const res = await updateProjectAPI(data)
-            console.log('res:'+res)
+            const res = await updateProjectAPI(data);
             if(res){
                 message.success('保存成功')
-                commit('set_currentProjectDetail',res)
             }
         },
 

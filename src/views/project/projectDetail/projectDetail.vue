@@ -47,14 +47,14 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                             <projectTree></projectTree>
                                         </vue-scroll>
                                     </a-collapse-panel>
-                                    <a-collapse-panel key="2" header="todo" :style="collapseStyle">
-                                        <div class="toolbar" style="height: 100px;">
-                                            <li>
-                                                <Button @click="getRepoAllIssues1()">getRepoAllIssues</Button>
-                                                <Button @click="saveRepoAllIssues1()">saveRepoAllIssues</Button>
-                                            </li>
-                                        </div>
-                                    </a-collapse-panel>
+<!--                                    <a-collapse-panel key="2" header="todo" :style="collapseStyle">-->
+<!--                                        <div class="toolbar" style="height: 100px;">-->
+<!--                                            <li>-->
+<!--                                                <Button @click="getRepoAllIssues1()">getRepoAllIssues</Button>-->
+<!--                                                <Button @click="saveRepoAllIssues1()">saveRepoAllIssues</Button>-->
+<!--                                            </li>-->
+<!--                                        </div>-->
+<!--                                    </a-collapse-panel>-->
                                 </a-collapse>
 
                             </div>

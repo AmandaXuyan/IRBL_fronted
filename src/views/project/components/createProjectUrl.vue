@@ -64,12 +64,13 @@
                 personalAccessToken:'',
                 projectUrl: '',
                 addProjectUrlForm: {
-                    userId: 0,
-                    projectId: 0,
-                    githubRepoOwner: '',
+                    id: 0,
+                    githubRepoOwner:'',
                     githubRepoName:'',
                     accountName:'',
                     personalAccessToken:'',
+                    projectName:null,
+                    projectDescription:null,
                 },
 
             };
@@ -87,6 +88,7 @@
         methods: {
             ...mapMutations([
                 'set_currentProjectId',
+                'set_currentProjectDetail',
 
             ]),
             ...mapActions([
@@ -101,14 +103,14 @@
                 if (this.githubRepoOwner === ''|| this.githubRepoName === '') {
                     message.info('请把信息填写完整')
                 } else {
-                    this.addProjectUrlForm.projectId = this.currentProjectId;
-                    this.addProjectUrlForm.userId = this.userId;
+                    this.addProjectUrlForm.id = this.currentProjectId;
                     this.addProjectUrlForm.githubRepoOwner = this.githubRepoOwner;
                     this.addProjectUrlForm.githubRepoName = this.githubRepoName;
                     this.addProjectUrlForm.accountName = this.accountName;
                     this.addProjectUrlForm.personalAccessToken = this.personalAccessToken;
-                    console.log(1);
-                    console.log(this.addProjectUrlForm);
+                    this.addProjectUrlForm.projectName=this.currentProjectDetail.projectName;
+                    this.addProjectUrlForm.projectDescription=this.currentProjectDetail.projectDescription;
+                    this.set_currentProjectDetail(this.addProjectUrlForm);
                     await this.addProjectUrl(this.addProjectUrlForm);
                     // this.$router.push({ name: 'addProjectUrlCommit'})
                     this.$router.push({name: 'projectDetail'});

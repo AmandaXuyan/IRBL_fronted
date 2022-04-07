@@ -18,6 +18,11 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                     <a-icon type="form" @click="jumpToCreateIssue"/>
                         </Poptip>
                 </span>
+                    <span class="side-content-tool">
+                        <Poptip trigger="hover" content="save github issue" placement="right">
+                    <a-icon type="form" @click="saveGithubIssue"/>
+                        </Poptip>
+                </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
                     <div class="split-content" style="color: #fff">
@@ -52,6 +57,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                         <div class="no-issue" v-if="issueList.length===0">
                                             <span>点击左边按钮, 创建一个issue吧</span>
                                         </div>
+
                                         <div style="height: 250px">
                                             <vue-scroll >
                                                 <div class="issueList" v-for="item in issueList" :key="item.id" style="margin-right: 20px;max-height: 250px">
@@ -65,10 +71,25 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                                 </div>
                                             </vue-scroll>
                                         </div>
+
+                                    </a-collapse-panel>
+                                    <a-collapse-panel key="2" header="Github Issues" :style="collapseStyle">
+                                        <div style="height: 300px">
+                                            <vue-scroll >
+                                                <div class="issueList" v-for="item in gitIssueList" :key="item.title" style="margin-right: 20px;max-height: 250px">
+                                                    <List>
+                                                        <ListItem class="issueItem-one">
+                                                            <ListItemMeta :title="item.title"/>
+                                                        </ListItem>
+                                                    </List>
+                                                </div>
+                                            </vue-scroll>
+                                        </div>
+
                                     </a-collapse-panel>
                                 </a-collapse>
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" header="Project Detail"
+                                    <a-collapse-panel key="1" header="Issue Detail"
                                                       :style="collapseStyle" v-if="this.panelLeftFirst">
                                         <span> todo: issue详情API:id={{this.currentIssueId}}</span>
                                     </a-collapse-panel>
@@ -129,11 +150,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'issueList',
                 'currentProjectDetail',
                 'issueDetailVisible',
-                'currentIssueDetail'
+                'currentIssueDetail',
+                'gitIssueList',
             ])
         },
         async mounted() {
             this.set_panelLeftFirst(false);
+            await this.getGithubIssue();
             // await this.getIssueList(this.currentProjectId);
             // console.log(this.currentProjectId);
         },
@@ -161,7 +184,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'addIssue',
                 'deleteIssue',
                 'getIssueList',
-                'getIssueDetailById'
+                'getIssueDetailById',
+                'getRepoAllIssues'
             ]),
             searchIssue1() {
                 this.searchIssue(this.searchIssueForm)
@@ -201,6 +225,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             },
             clearIssue(){
                 this.set_panelLeftFirst(false);
+            },
+            getGithubIssue(){
+                console.log(this.currentProjectId);
+                this.getRepoAllIssues(this.currentProjectId);
+            },
+            saveGithubIssue(){
+
             },
         },
     }

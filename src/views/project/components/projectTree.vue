@@ -1,5 +1,5 @@
 <template>
-    <div class="file-tree" style="max-height: 300px">
+    <div class="file-tree" style="max-height: 500px">
         <Tree :data="this.treeData" ref="tree" :render="renderContent"></Tree>
         <span></span>
     </div>

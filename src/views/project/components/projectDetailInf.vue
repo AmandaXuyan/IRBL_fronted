@@ -34,6 +34,20 @@
                            v-if="updateProVisible"
                     />
                 </div>
+                <div class="add-title-style">
+                    <span style="margin-right: 30px"> Repository Owner</span>
+                    <Input v-model="this.currentProjectDetail.githubRepoOwner"
+                           disabled
+                           :placeholder="this.currentProjectDetail.githubRepoOwner"
+                           style="width: auto" />
+                </div>
+                <div class="add-title-style">
+                    <span style="margin-right: 30px"> Repository Name</span>
+                    <Input v-model="this.currentProjectDetail.githubRepoName"
+                           disabled
+                           :placeholder="this.currentProjectDetail.githubRepoName"
+                           style="width: auto" />
+                </div>
             </div>
             <div class="button-update">
             <Button @click="toUpdate" v-if="!updateProVisible">修改项目信息</Button>
@@ -76,6 +90,7 @@
         },
         methods:{
             ...mapMutations([
+                'set_currentProjectDetail',
 
             ]),
             ...mapActions([
@@ -92,6 +107,7 @@
                     message.info('project name 不能为空！')
                 }else{
                     this.updateProject(this.projectUpdate);
+                    this.set_currentProjectDetail(this.projectUpdate);
                     this.updateProVisible=false;
                     this.reset();
                 }

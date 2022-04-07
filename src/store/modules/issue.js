@@ -21,7 +21,7 @@ const issue =  {
     state: {
         currentIssueId:0,
         issueList: [],
-        historyIssueList:[],
+        gitIssueList:[],
         currentIssueDetail:{},
         issueListLoading:false,
         searchResult:{},
@@ -49,8 +49,8 @@ const issue =  {
         set_issueDetailVisible: function(state, data) {
             state.issueDetailVisible = data
         },
-        set_historyIssueList:function(state, data) {
-            state.historyIssueList = data
+        set_gitIssueList:function(state, data) {
+            state.gitIssueList = data
         },
         set_searchResult:function(state, data) {
             state.searchResult = data
@@ -92,8 +92,10 @@ const issue =  {
             const data={id:id};
             console.log(data);
             const res = await getRepoAllIssuesAPI(data);
+            // console.log(res);
             if(res){
-                commit('set_issueList', res)
+                commit('set_gitIssueList', res);
+                console.log(state.gitIssueList)
 
             }
         },
