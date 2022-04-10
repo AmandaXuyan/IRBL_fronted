@@ -33,8 +33,10 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                 </a-collapse>
                             </div>
                             <div slot="secondPane" class="second-pane" ref="element"
-                                 style="padding-right: 70px;width: 100%;text-align: left;">
-
+                                 style="height: 100%;width: 100%;text-align: left;">
+                                <div style="height: 100%; width: 100%;">
+                                    <CJS ref="ref_CJS"></CJS>
+                                </div>
                             </div>
                         </rs-panes>
 
@@ -50,13 +52,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     // eslint-disable-next-line no-unused-vars
     import {mapGetters, mapActions, mapMutations} from 'vuex'
     import layout2 from '../../components/layout2/layout2'
-
+    import CJS from './components/cjs';
 
     export default {
         name: "connectDetail",
         components: {
             layout2,
-
+            CJS
         },
         data() {
             return {
@@ -79,7 +81,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ])
         },
         async mounted() {
-
+            this.addEles();
         },
         methods: {
             ...mapMutations([
@@ -97,7 +99,93 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             },
             jumpToCreateIssue() {
                 this.$router.push({name: 'createIssue'})
-            }
+            },
+            addEles(){
+                this.$refs['ref_CJS'].addEles([
+                    {
+                        group: 'nodes',
+                        data: {'id': '鲁A123456', 'name': '鲁A123456',},
+                        classes: 'classes-A',
+                        position: {x: 200, y: 50}
+                    },
+                    {
+                        group: 'nodes',
+                        data: {'id': '鲁B123456', 'name': '鲁B123456',},
+                        classes: 'classes-A',
+                        position: {x: 500, y: 50}
+                    },
+                    {
+                        group: 'nodes',
+                        data: {'id': '鲁C123456', 'name': '鲁C123456',},
+                        classes: 'classes-A',
+                        display: 'hide',
+                        position: {x: 200, y: 150}
+                    },
+                    {
+                        group: 'nodes',
+                        data: {'id': '鲁D123456', 'name': '鲁D123456',},
+                        classes: 'classes-A',
+                        position: {x: 500, y: 150}
+                    },
+                    {
+                        group: 'nodes',
+                        data: {'id': '小王', 'name': '小王',},
+                        classes: 'classes-B',
+                        position: {x: 100, y: 100}
+                    },
+                    {
+                        group: 'nodes',
+                        data: {'id': '小赵', 'name': '小赵',},
+                        classes: 'classes-B',
+                        position: {x: 400, y: 100}
+                    },
+                    {
+                        group: 'nodes',
+                        data: {'id': '川川某公司', 'name': '川川某公司',},
+                        classes: 'classes-C',
+                        display: 'hide',
+                        position: {x: 300, y: 100}
+                    },
+                    {
+                        group: 'nodes',
+                        data: {'id': '京京某单位', 'name': '京京某单位',},
+                        classes: 'classes-D',
+                        position: {x: 300, y: 200}
+                    },
+                    {
+                        group: 'edges',
+                        data: {id: 'e0', name: '拥有', source: '小王', target: '鲁A123456'},
+                        classes: 'relationB'
+                    },
+                    {
+                        group: 'edges',
+                        data: {id: 'e1', name: '拥有', source: '小赵', target: '鲁B123456'},
+                        classes: 'relationB'
+                    },
+                    {
+                        group: 'edges',
+                        data: {id: 'e2', name: '拥有', source: '小王', target: '鲁C123456'},
+                        classes: 'relationA'
+                    },
+                    {
+                        group: 'edges',
+                        data: {id: 'e3', name: '拥有', source: '小赵', target: '鲁D123456'},
+                        classes: 'relationA'
+                    },
+                    {group: 'edges', data: {id: 'e4', name: '就职', source: '小王', target: '川川某公司'}, classes: 'relationA'},
+                    {group: 'edges', data: {id: 'e5', name: '就职', source: '小赵', target: '川川某公司'}, classes: 'relationA'},
+                    {
+                        group: 'edges',
+                        data: {id: 'e6', name: '租用', source: '川川某公司', target: '鲁A123456'},
+                        classes: 'relationA'
+                    },
+                    {
+                        group: 'edges',
+                        data: {id: 'e7', name: '租用', source: '川川某公司', target: '鲁B123456'},
+                        classes: 'relationA'
+                    }
+                ]);
+            },
 
 
         },
