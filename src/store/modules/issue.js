@@ -28,6 +28,7 @@ const issue =  {
         issueAdviceList:[],
         issueDetailVisible:false,
         issueEditVisible:false,
+        currentGraph:'',
 
     },
     mutations:{
@@ -60,6 +61,9 @@ const issue =  {
         },
         set_issueEditVisible:function(state, data) {
             state.issueEditVisible = data
+        },
+        set_currentGraph:function(state, data) {
+            state.currentGraph = data
         },
 
     },

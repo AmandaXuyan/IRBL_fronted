@@ -37,15 +37,16 @@
                     <a class="right-link" @click="goToActivePage('userInfo')">Hi, {{this.userInfo.userName}} !</a>
                 </div>
             </Menu>
-        </Affix>
-        <Affix class="layout-pop" style="width:100%" :offset-top="60" v-if="visiblePop" @mouseenter.native="mouseOver" @mouseleave.native="mouseLeave">
-            <div class="nav-menu">
-                <div class="nav-menu-project">
-                    <navMenu icon-name="md-folder-open" icon-title="List" page-name="projectList"/>
-                    <navMenu icon-name="md-add" icon-title="Create" page-name="addProject"/>
+            <Affix class="layout-pop" style="width:100%" :offset-top="60" v-if="visiblePop" @mouseenter.native="mouseOver" @mouseleave.native="mouseLeave">
+                <div class="nav-menu">
+                    <div class="nav-menu-project">
+                        <navMenu icon-name="md-folder-open" icon-title="List" page-name="projectList"/>
+                        <navMenu icon-name="md-add" icon-title="Create" page-name="addProject"/>
+                    </div>
                 </div>
-            </div>
+            </Affix>
         </Affix>
+
 <!--        <Affix class="layout-se-header" style="width:100%" :offset-top="60">-->
 <!--            <div class="se-header-bread">-->
 

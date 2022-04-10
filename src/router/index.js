@@ -10,6 +10,7 @@ import userInfo from '../views/user/userInfo';
 import issueHistory from '../views/issue/issueHistory/issueHistory'
 // import issueDetail from '../views/issue/issueDetail/issueDetail'
 // import createIssue from '../views/issue/components/issueModal'
+import connectDetail from '../views/connectGraph/connectDetail'
 import addProject from "@/views/project/createProject/addProject";
 import addProjectFile from '@/views/project/createProject/addProjectFile';
 import addProjectUrl from '@/views/project/createProject/addProjectUrl';
@@ -87,6 +88,12 @@ const routes = [
     name:'issueHistory',
     component:issueHistory,
   },
+  {
+    path:'/connectDetail',
+    name:'connectDetail',
+    component:connectDetail,
+  },
+
 
 ]
 

@@ -10,7 +10,7 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.less'
 import './assets/my-theme-antd.less'
 import store from './store'
-Vue.use(Antd)
+Vue.use(Antd);
 
 import 'view-design/dist/styles/iview.css'; // 使用 CSS
 import './assets/common.less';
