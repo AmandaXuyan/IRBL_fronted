@@ -1,11 +1,21 @@
 <template>
     <div class="create-issue">
+        <div id="tool-bar" style=" position: absolute; right: 90pt; top: 35pt; z-index: 2; ">
+            <div class="tools">
+                <div class="center-center">
+                    <Button style="margin-left: 20px" @click="addIssue1">Create</Button>
+                </div>
+            </div>
+            <div class="tools">
+                <div class="center-center">
+                    <Button style="margin-left: 20px" @click="cancelCreate">Cancel</Button>
+                </div>
+            </div>
+        </div>
         <div class="add-header">
-            <div class="add-input">
+            <div class="add-input" >
                 <Input v-model="title"
                        placeholder=" Enter issue title" style="width: 450px"/>
-                <Button style="margin-left: 20px" @click="addIssue1">Create</Button>
-                <Button style="margin-left: 20px" @click="cancelCreate">Cancel</Button>
             </div>
             <div class="markdown">
                 <mavon-editor
@@ -108,12 +118,12 @@
             jumpToDetail() {
                 this.$router.push({name: 'projectDetail'})
             },
-            addIssue1() {
+            async addIssue1() {
                 this.addIssueForm.description = this.issueContent;
                 this.addIssueForm.issueName = this.issueName;
                 this.addIssueForm.userId = this.userId;
-                this.addIssueForm.title=this.title;
-                this.addIssueForm.projectId=this.currentProjectId;
+                this.addIssueForm.title = this.title;
+                this.addIssueForm.projectId = this.currentProjectId;
                 if (this.userId === 0) {
                     Modal.confirm({
                         title: '请先登陆再创建Issue',
@@ -125,15 +135,17 @@
                             console.log('点击了取消');
                         },
                     });
-                } else if(this.addIssueForm.projectId === 0){
+                } else if (this.addIssueForm.projectId === 0) {
                     message.info('请先选择项目再创建Issue')
-                }
-                else {
-                    if(this.title===''){
+                } else {
+                    if (this.title === '') {
                         message.info('请输入标题')
-                    }else{
+                    } else {
                         this.addIssue(this.addIssueForm);
-                        this.$router.push({name: 'issueList'});
+                        await this.$router.replace({
+                            path: '/supplierAll',
+                            name: 'supplierAll'
+                        })
                     }
 
                 }
@@ -168,6 +180,22 @@
 
     .add-input {
         margin-bottom: 20px;
+    }
+    .tools {
+        display: inline-block;
+        height: 40px;
+        width: auto;
+        vertical-align: middle;
+    }
+
+    .center-center {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+        justify-content: center;
+        margin-left: 20px;
     }
 
 </style>

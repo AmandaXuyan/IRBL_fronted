@@ -12,7 +12,7 @@
                 <Icon type="ios-bulb-outline" />
 
             </template>
-            <a-card-meta :title=cardTitle :description=cardTitle>
+            <a-card-meta :title=cardTitle :description=cardDes>
                 <template #avatar>
                 <Icon type="md-git-network" />
                 </template>
@@ -31,11 +31,11 @@
 
         },
         props: {
-            cardDes: {
+            cardTitle: {
                 type: String,
                 default: 'card title'
             },
-            cardTitle: {
+            cardDes: {
                 type: String,
                 default: 'card description'
             },

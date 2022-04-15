@@ -23,7 +23,8 @@
                 'userId',
                 'currentProjectId',
                 'currentIssueId',
-                'issueList'
+                'issueList',
+                'pageName'
             ])
         },
         async mounted() {
@@ -33,7 +34,8 @@
             ...mapMutations([
                 'set_currentProjectId',
                 'set_panelLeftFirst',
-                'set_currentIssueId'
+                'set_currentIssueId',
+                'set_pageName'
             ]),
             ...mapActions([
                 'deleteIssue',
@@ -45,6 +47,9 @@
                 // this.set_currentProjectId(this.projectId);
                 this.set_currentIssueId(this.id);
                 this.getIssueDetailById(this.id);
+                if(this.pageName!=1){
+                    this.set_pageName(1);
+                }
                 // this.$router.push({ name: 'issueDetail'})
             },
             async deleteIssue1(){

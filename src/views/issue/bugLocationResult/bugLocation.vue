@@ -26,45 +26,15 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" header="Project Detail"
-                                                      :style="collapseStyle" v-if="this.panelLeftFirst">
-                                        <span> name : {{this.currentProjectDetail.projectName}} </span>
-                                        <div></div>
-                                        <span> description : {{this.currentProjectDetail.projectDescription}}</span>
-                                        <div></div>
-                                        <span v-if="this.currentProjectDetail.githubRepoName!=null"> repository name : {{this.currentProjectDetail.githubRepoName}}</span>
-                                        <div></div>
-                                        <span v-if="this.currentProjectDetail.githubRepoOwner!=null"> github owner : {{this.currentProjectDetail.githubRepoOwner}}</span>
+                                    <a-collapse-panel key="1" header="导航"
+                                                      :style="collapseStyle">
+                                        <span> issue重构历史页面！</span>
                                     </a-collapse-panel>
                                 </a-collapse>
                             </div>
                             <div slot="secondPane" class="second-pane" ref="element"
                                  style="padding-right: 70px;width: 100%;text-align: left;">
-                                <div class="scroll-content">
-                                    <div class="project-list" style="margin-top: 30px">
-                                        <span class="project-list-title"
-                                              v-if="this.projectList.length!==0" >My Projects</span>
-                                    </div>
-                                    <div class="no-project" v-if="this.projectList.length===0">
-                                        <span class="add-header-title">Please create your first project</span>
-                                        <div class="add-header-desccription">
-                                            <span class="create-header" @click="jumpToCreate()">Create</span>
-                                        </div>
-                                    </div>
-                                    <div style="height: 750px;margin-top: 20px">
-                                        <vue-scroll >
-                                            <div class="projectList" v-for="item in projectList" :key="item.id">
-                                                <List>
-                                                    <projectItem :project-name="item.projectName"
-                                                                 :id="item.id"
-                                                                 :project-description="item.projectDescription"
-                                                                 :githubRepoName="item.githubRepoName"
-                                                    ></projectItem>
-                                                </List>
-                                            </div>
-                                        </vue-scroll>
-                                    </div>
-                                </div>
+
                             </div>
                         </rs-panes>
 
@@ -80,15 +50,12 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     // eslint-disable-next-line no-unused-vars
     import {mapGetters, mapActions, mapMutations} from 'vuex'
     import layout2 from '../../../components/layout2/layout2'
-    import projectItem from '../components/projectItem'
+
 
     export default {
-        name: "projectList",
+        name: "bugLocation",
         components: {
             layout2,
-            projectItem,
-
-
         },
         data() {
             return {
@@ -103,31 +70,22 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ...mapGetters([
                 'userId',
                 'token',
-                'projectList',
-                'projectListLoading',
                 'addProjectVisible',
                 'uploadVisible',
                 'currentProjectId',
-                'panelLeftFirst',
                 'size',
                 'minSize',
-                'currentProjectDetail'
+                'getBugLocation'
             ])
         },
         async mounted() {
-            await this.getProjectList(this.userId);
-            this.set_panelLeftFirst(false);
 
         },
         methods: {
             ...mapMutations([
-                'set_projectList',
-                'set_ProjectListLoading',
                 'set_addProjectVisible',
-                'set_panelLeftFirst'
             ]),
             ...mapActions([
-                'getProjectList',
 
             ]),
             jumpToCreate() {

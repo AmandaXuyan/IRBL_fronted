@@ -70,7 +70,7 @@
             this.$cy = cytoscape({
                 // initial viewport state:
                 zoom: 1, // 图表的初始缩放级别.可以设置options.minZoom和options.maxZoom设置缩放级别的限制.
-                pan: {x: 70, y: 150}, // 图表的初始平移位置.
+                pan: {x: 0, y: 0}, // 图表的初始平移位置.
                 // interaction options:
                 minZoom: 1e-50, // 图表缩放级别的最小界限.视口的缩放比例不能小于此缩放级别.
                 maxZoom: 1e50, // 图表缩放级别的最大界限.视口的缩放比例不能大于此缩放级别.
@@ -144,8 +144,8 @@
                         }
                     ]
                 },
-                fillColor: 'rgba(0, 0, 0, 0.75)', // 指令默认颜色(the background colour of the menu)
-                activeFillColor: 'rgba(1, 105, 217, 0.75)', // 所选指令的颜色(the colour used to indicate the selected command)
+                fillColor: '#658885', // 指令默认颜色(the background colour of the menu)
+                activeFillColor: '#49A8AC', // 所选指令的颜色(the colour used to indicate the selected command)
                 activePadding: 10, // additional size in pixels for the active command
                 indicatorSize: 14, // the size in pixels of the pointer to the active command
                 separatorWidth: 4, //连续命令之间的空白间隔(以像素为单位)
@@ -154,7 +154,7 @@
                 maxSpotlightRadius: 14, // the maximum radius in pixels of the spotlight
                 openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
                 itemColor: 'white', // 各指令元素内字体颜色
-                itemTextShadowColor: 'red', // 各指令元素内字体阴影颜色
+                itemTextShadowColor: '#354A51', // 各指令元素内字体阴影颜色
                 zIndex: 9999, // the z-index of the ui div
                 atMouse: true, // draw menu at mouse position
             });
@@ -162,8 +162,8 @@
             // 不同节点的样式
             this.$cy
                 .style()
-                .selector('.classes-A')
-                .css({'background-color': '#6fb1fc','content': 'data(name)','border-color': '#6fb1fc', 'border-width': "5px"})
+                .selector('.issue')
+                .css({'background-color': '#49A8AC','content': 'data(name)','border-color': '#49A8AC', 'border-width': "5px"})
                 .selector('.classes-B')
                 .css({'background-color': '#b88cea', 'content': 'data(name)', 'border-color': '#b88cea', 'border-width': "5px"})
                 // // .style({'background-color': '#00FF00', 'border-color': '#00FF00', 'border-width': "1px",})
@@ -172,7 +172,7 @@
                 .css({'background-color': '#77c94f', 'content': 'data(name)','border-color':'#77c94f','border-width':"5px"})
                 .selector('.classes-D')
                 .css({'background-color': '#fcb16f','content': 'data(name)','border-color': '#fcb16f', 'border-width': "5px"})
-                .selector('.relationA')
+                .selector('.relation')
                 .css({
                     'target-arrow-color': '#999999', /*箭头颜色*/
                     'curve-style': 'bezier', /*线条样式曲线*/

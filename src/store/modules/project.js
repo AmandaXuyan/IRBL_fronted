@@ -27,7 +27,7 @@ const project =  {
         connectResVisible:true,
         tabList:[],
         minSize:100,
-        size:200,
+        size:284,
         activePage:'',
         treeData:[],
         issueShowVisible:false,

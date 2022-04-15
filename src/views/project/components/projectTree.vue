@@ -1,5 +1,5 @@
 <template>
-    <div class="file-tree" style="max-height: 500px">
+    <div class="file-tree" style="max-height: 750px">
         <Tree :data="this.treeData" ref="tree" :render="renderContent"></Tree>
         <span></span>
     </div>
@@ -28,8 +28,8 @@
                 'treeData',
             ])
         },
-        mounted() {
-            this.getFileTree(this.currentProjectId);
+        async mounted() {
+            await this.getFileTree(this.currentProjectId);
         },
         methods: {
             ...mapMutations([

@@ -32,6 +32,9 @@ const getters={
     issueDetailVisible:state => state.issue.issueDetailVisible,
     searchResult:state=>state.issue.searchResult,
     issueEditVisible:state => state.issue.issueEditVisible,
+    pageName:state => state.issue.pageName,
+    bugLocationList:state => state.issue.bugLocationList,
+    issueRelations:state => state.issue.issueRelations,
     //file
     codes:state=>state.file.codes,
     fileLanguage:state=>state.file.fileLanguage,

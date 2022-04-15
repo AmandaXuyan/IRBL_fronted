@@ -7,7 +7,6 @@
                 <div class="carousel-intro"
                      style="height:300px;max-width: 100%;position: relative;display: block;margin: auto;">
                     <Carousel autoplay
-                              autoplay-speed=2000
                               height="300px"
                               v-model="value2"
                               style="z-index: 2"
@@ -45,8 +44,6 @@
                         <graphCard></graphCard>
 
                     </div>
-
-
                 </div>
 
             </div>
@@ -62,6 +59,7 @@
 <script>
     import layout2 from "../../components/layout2/layout2";
     import graphCard from "./components/graph-card"
+    import {mapActions, mapGetters, mapMutations} from "vuex";
 
     export default {
         name: "mainPage",
@@ -74,6 +72,25 @@
                 value2: 0,
 
             };
+        },
+        computed: {
+            ...mapGetters([
+                'issueRelations'
+            ])
+        },
+        async mounted() {
+            // await this.getAllIssueRelation(6);
+        },
+        methods: {
+            ...mapMutations([
+            ]),
+            ...mapActions([
+                'getAllIssueRelation'
+
+            ]),
+
+
+
         },
     }
 </script>

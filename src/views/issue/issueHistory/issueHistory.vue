@@ -56,9 +56,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         name: "issueHistory",
         components: {
             layout2,
-
-
-
         },
         data() {
             return {

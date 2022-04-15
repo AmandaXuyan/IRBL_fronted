@@ -21,8 +21,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         <rs-panes split-to="columns"
                                   style="left:50px"
                                   :allow-resize="true"
-                                  :size=this.size
-                                  :min-size=this.minSize
+                                  size=0
+                                  max-size="0"
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
@@ -34,6 +34,20 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                             </div>
                             <div slot="secondPane" class="second-pane" ref="element"
                                  style="height: 100%;width: 100%;text-align: left;">
+                                <Menu mode="horizontal" :active-name=this.pageName @on-select="choosePage" style="height: 35px;line-height: 35px">
+                                    <MenuItem name="1">
+                                        <Icon type="ios-paper" />
+                                        Local Issues
+                                    </MenuItem>
+                                    <MenuItem name="2">
+                                        <Icon type="ios-people" />
+                                        Github Issues
+                                    </MenuItem>
+                                    <MenuItem name="3">
+                                        <Icon type="ios-construct" />
+                                        Issue Relations
+                                    </MenuItem>
+                                </Menu>
                                 <div style="height: 100%; width: 100%;">
                                     <CJS ref="ref_CJS"></CJS>
                                 </div>
@@ -77,7 +91,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'uploadVisible',
                 'currentProjectId',
                 'size',
-                'minSize'
+                'minSize',
+                'issueRelations'
             ])
         },
         async mounted() {
@@ -86,10 +101,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         methods: {
             ...mapMutations([
                 'set_addProjectVisible',
+                'set_pageName'
             ]),
-            ...mapActions([
-
-            ]),
+            ...mapActions([]),
             jumpToCreate() {
                 this.set_addProjectVisible(true);
                 this.$router.push('addProject');
@@ -100,7 +114,10 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             jumpToCreateIssue() {
                 this.$router.push({name: 'createIssue'})
             },
-            addEles(){
+            addEles() {
+                this.$refs['ref_CJS'].addEles(this.issueRelations);
+            },
+            addEles1() {
                 this.$refs['ref_CJS'].addEles([
                     {
                         group: 'nodes',
@@ -186,6 +203,18 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                     }
                 ]);
             },
+            async choosePage(data){
+                console.log(data);
+                await this.set_pageName(data);
+                if(data==3){
+                    this.$router.push({name: 'connectDetail'})
+                }else(
+                    this.$router.replace({
+                        path:'/supplierAll',
+                        name:'supplierAll'
+                    })
+                )
+            }
 
 
         },

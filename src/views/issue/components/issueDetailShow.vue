@@ -1,37 +1,54 @@
 <template>
     <div class="markdown">
         <div class="create-issue">
+            <div class="github-tool-bar" v-if="!this.issueEditVisible">
+                <div id="tool-bar" style=" position: absolute; right: 70pt; z-index: 2; ">
+                    <div class="tools">
+                        <div class="center-center">
+                            <Button @click="toUpdateIssue1">Edit</Button>
+                        </div>
+                    </div>
+                    <div class="tools">
+                        <div class="center-center">
+                            <Button @click="toAdviceIssue1">Advice</Button>
+                        </div>
+                    </div>
+                    <div class="tools">
+                        <div class="center-center">
+                            <Button @click="writeBackSingle1">WriteBack</Button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="add-header">
                 <div class="show" v-if="!this.issueEditVisible">
-                <div class="add-input">
-                    <Input v-model="this.currentIssueDetail.title"
-                           disabled
-                           style="width: 500px"/>
-                    <Button style="margin-left: 40px" @click="toUpdateIssue1" >Edit</Button>
-                    <Button style="margin-left: 40px" @click="toAdviceIssue1" >Advice</Button>
-                    <Button style="margin-left: 40px" @click="writeBackSingle1" >WriteBack</Button>
-                </div>
-                <div class="markdown">
-                    <mavon-editor
-                            :value="this.currentIssueDetail.description"
-                            defaultOpen="preview"
-                            :boxShadow="false"
-                            previewBackground="#354A51"
-                            style="z-index:1;height:50vh;border: 1px solid #d9d9d9;color: #fff"
-                            :editable="false"
-                            :subfield="false"
-                            :toolbarsFlag="false"
-                            :externalLink="false"
-                    >
-                    </mavon-editor>
-                </div>
+                    <div class="add-input">
+                        <Input v-model="this.currentIssueDetail.title"
+                               disabled
+                               style="width: 600px"/>
+                    </div>
+                    <div class="markdown">
+                        <mavon-editor
+                                :value="this.currentIssueDetail.description"
+                                defaultOpen="preview"
+                                :boxShadow="false"
+                                previewBackground="#354A51"
+                                style="z-index:1;height:auto;border: 1px solid #d9d9d9;color: #fff"
+                                :editable="false"
+                                :subfield="false"
+                                :toolbarsFlag="false"
+                                :externalLink="false"
+                        >
+                        </mavon-editor>
+                    </div>
                 </div>
                 <div class="edit" v-if="this.issueEditVisible">
                     <div class="add-input">
                         <Input v-model="title"
                                maxlength="100"
                                show-word-limit
-                               :placeholder=" this.currentIssueDetail.title" style="width: 450px"/>
+                               :placeholder=" this.currentIssueDetail.title" style="width: 600px"/>
                         <Button style="margin-left: 20px" @click="saveIssue">Save</Button>
                         <Button style="margin-left: 20px" @click="cancelUpdate">Cancel</Button>
                     </div>
@@ -41,6 +58,7 @@
                                 placeholder="请输入Issue内容..."
                                 :boxShadow="false"
                                 toolbarsBackground="#354A51"
+                                previewBackground="#354A51"
                                 :subfield="false"
                                 style="z-index:1;border: 1px solid #d9d9d9;height: 500px"
                                 v-model="this.currentIssueDetail.description"
@@ -63,7 +81,7 @@
         components: {},
         data() {
             return {
-                title:'',
+                title: '',
                 updateIssueForm: {
                     id: '',
                     title: '',
@@ -114,6 +132,7 @@
                 'currentIssueDetail',
                 'currentIssueId',
                 'issueEditVisible',
+                'bugLocationList',
 
             ])
         },
@@ -128,7 +147,8 @@
                 'getIssueDetailById',
                 'getIssueList',
                 'getIssueAdvice',
-                'writeBackSingle'
+                'writeBackSingle',
+                'getBugLocation'
             ]),
 
             saveIssue() {
@@ -136,8 +156,8 @@
                     title: '确定保存',
                     content: '确认对Issue进行修改？',
                     onOk: () => {
-                        this.currentIssueDetail.description=this.$refs.md1.d_value;
-                        this.currentIssueDetail.title=this.title;
+                        this.currentIssueDetail.description = this.$refs.md1.d_value;
+                        this.currentIssueDetail.title = this.title;
                         this.updateIssue(this.currentIssueDetail);
                         this.getIssueList(this.currentIssueDetail.projectId);
                         this.set_issueEditVisible(false);
@@ -148,17 +168,18 @@
                     },
                 });
             },
-            toUpdateIssue1(){
+            toUpdateIssue1() {
                 this.set_issueEditVisible(true);
             },
-            cancelUpdate(){
+            cancelUpdate() {
                 this.set_issueEditVisible(false);
             },
-            toAdviceIssue1(){
-                this.getIssueAdvice(this.currentIssueId);
+            async toAdviceIssue1() {
+                // await this.getIssueAdvice(this.currentIssueId);
+                await this.getBugLocation(this.currentIssueId);
             },
-            writeBackSingle1(){
-                this.writeBackSingle(this.currentIssueId);
+            async writeBackSingle1() {
+                await this.writeBackSingle(this.currentIssueId);
             }
 
         },
@@ -203,6 +224,23 @@
         text-align: center;
         margin-left: 5px;
         margin-top: 30px;
+    }
+
+    .tools {
+        display: inline-block;
+        height: 40px;
+        width: auto;
+        vertical-align: middle;
+    }
+
+    .center-center {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+        justify-content: center;
+        margin-left: 20px;
     }
 
 </style>

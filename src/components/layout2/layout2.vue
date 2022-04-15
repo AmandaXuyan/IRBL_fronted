@@ -132,8 +132,7 @@
                 'set_tabList',
                 'set_issueShowVisible',
                 'set_currentProjectId',
-
-
+                'set_pageName'
             ]),
             loginOut() {
                 Modal.confirm({
@@ -158,6 +157,7 @@
                     this.set_currentProjectId(0);
                 }
                 this.set_tabList([]);
+                this.set_pageName(1);
                 this.$router.push({ name: key})
             },
             //次菜单栏跳转页面

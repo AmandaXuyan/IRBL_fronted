@@ -101,7 +101,7 @@
                 return this.canUpload;
 
             },
-            upload () {
+            async upload () {
                 this.loadingStatus = true;
                 this.addProjectFileForm.file=this.file;
                 this.addProjectFileForm.id=this.currentProjectId;
@@ -110,7 +110,7 @@
                 mydata.append("id",this.currentProjectId)
                 mydata.append("file",this.file)
                 console.log(this.addProjectFileForm);
-                this.addByFile(mydata);
+                await this.addByFile(mydata);
                 setTimeout(() => {
                     this.file = null;
                     this.loadingStatus = false;

@@ -89,3 +89,28 @@ export function writeBackSingleAPI(data) {
         params:data
     })
 }
+
+export function writeBackAPI(data) {
+    return axios({
+        url: `${api.issuePre}/writeBack`,
+        method: 'GET',
+        params:data
+    })
+}
+
+
+export function getBugLocationAPI(data) {
+    return axios({
+        url: `${api.issuePre}/getBugLocation`,
+        method: 'GET',
+        params:data,
+    })
+}
+
+export function getAllIssueRelationAPI(data) {
+    return axios({
+        url: `${api.issuePre}/getAllIssueRelation`,
+        method: 'GET',
+        params:data,
+    })
+}

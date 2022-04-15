@@ -3,7 +3,7 @@
     <ListItem class="projectItem-one">
         <ListItemMeta avatar="https://joeschmoe.io/api/v1/random"
                       :title="this.projectName"
-                      :description='this.projectDescription'
+                      :description='"description: "+this.projectDescription'
         />
         <template slot="action" >
             <li>
@@ -28,6 +28,7 @@
         props:["projectName","projectDescription","id","tags","githubRepoName"],
         data(){
             return{
+                allDes:"description:"+this.projectDescription,
             };
         },
         computed:{
