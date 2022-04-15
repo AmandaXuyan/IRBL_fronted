@@ -24,6 +24,11 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                     <a-icon type="container" @click="updateProjectPop"/>
                         </Poptip>
                 </span>
+                    <span class="side-content-tool">
+                        <Poptip trigger="hover" content="upload local file" placement="right">
+                    <a-icon type="cloud-upload" @click="jumpToLocal"/>
+                        </Poptip>
+                </span>
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
                     <div class="split-content" style="color: #fff">
@@ -142,6 +147,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 this.set_tabList([]);
                 this.set_treeData([]);
                 this.$router.push('addProject')
+            },
+            jumpToLocal(){
+                this.$router.push('addProjectFile');
             },
             jumpToList() {
                 this.set_tabList([]);

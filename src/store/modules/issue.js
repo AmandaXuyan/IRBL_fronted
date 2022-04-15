@@ -34,6 +34,7 @@ const issue = {
         pageName: 1,
         bugLocationList: null,
         issueRelations:null,
+        tableId:0,
 
     },
     mutations: {
@@ -78,6 +79,9 @@ const issue = {
         },
         set_issueRelations: function (state, data) {
             state.issueRelations = data
+        },
+        set_tableId:function (state, data) {
+            state.tableId = data
         },
 
     },
@@ -144,6 +148,8 @@ const issue = {
             const data = {id: state.currentIssueId};
             const res = await getIssueDetailByIdAPI(data)
             if (res) {
+                console.log('issueDetail');
+                console.log(res);
                 commit('set_currentIssueDetail', res);
             }
         },

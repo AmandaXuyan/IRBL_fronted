@@ -132,7 +132,8 @@
                 'set_tabList',
                 'set_issueShowVisible',
                 'set_currentProjectId',
-                'set_pageName'
+                'set_pageName',
+                'set_treeData'
             ]),
             loginOut() {
                 Modal.confirm({
@@ -142,6 +143,7 @@
                         localStorage.setItem('token', null); // 将token清空
                         this.reset_state();
                         this.set_tabList([]);
+                        this.set_treeData(null);
                         this.$router.push({name:'main'});
                         this.set_visibleLogin(true);
                     },

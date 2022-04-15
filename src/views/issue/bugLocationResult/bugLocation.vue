@@ -3,6 +3,10 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     <div class="projectListPage">
         <div class="page-content">
             <layout2/>
+            <div class="project-title" @click="jumpToIssue" style="cursor:pointer;">
+                <!--                Issue：{{this.currentProjectDetail.projectName}}{{this.currentIssueDetail.title}} &#45;&#45;-->
+                <span class="title-head">Project: {{this.currentProjectDetail.projectName}} - Issues</span>
+            </div>
             <div class="layout-content">
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">
                 <span class="side-content-tool">
@@ -21,19 +25,77 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                         <rs-panes split-to="columns"
                                   style="left:50px"
                                   :allow-resize="true"
-                                  :size=this.size
+                                  :size=400
                                   :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" header="导航"
+                                    <a-collapse-panel key="1" header="Tips"
                                                       :style="collapseStyle">
-                                        <span> issue重构历史页面！</span>
+                                        <span> 如果对结果不满意，可以重构Issue后，再进行Bug Locate试试！</span>
+                                    </a-collapse-panel>
+                                </a-collapse>
+                                <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
+                                    <a-collapse-panel key="1" :header="this.currentIssueDetail.title"
+                                                      :style="collapseStyle">
+                                        <div class="issue-detail">
+                                            <!--                                            <span>title: {{this.currentIssueDetail.title}}</span>-->
+                                            <!--                                            <div></div>-->
+                                            <!--                                            <span v-if="this.currentIssueDetail.userName!=null">author: {{this.currentIssueDetail.userName}}</span>-->
+                                            <div class="markdown-issue" style="height: 600px">
+                                                <vue-scroll>
+                                                    <mavon-editor
+                                                            :value="this.currentIssueDetail.description"
+                                                            defaultOpen="preview"
+                                                            :boxShadow="false"
+                                                            previewBackground="#354A51"
+                                                            style="z-index:1;height:auto;border: 1px solid #d9d9d9;color: #fff"
+                                                            :editable="false"
+                                                            :subfield="false"
+                                                            :toolbarsFlag="false"
+                                                            :externalLink="false"
+                                                    >
+                                                    </mavon-editor>
+                                                </vue-scroll>
+                                            </div>
+                                        </div>
+
                                     </a-collapse-panel>
                                 </a-collapse>
                             </div>
                             <div slot="secondPane" class="second-pane" ref="element"
                                  style="padding-right: 70px;width: 100%;text-align: left;">
+                                <!-- 右边两行分栏  start                             -->
+                                <rs-panes split-to="rows"
+                                          :allow-resize="true"
+                                          :size=300
+                                          :min-size=this.minSize
+                                          class="panes-wrap">
+                                    <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
+                                        <!-- 右上角result list和chart-->
+                                        <rs-panes split-to="columns"
+                                                  :allow-resize="true"
+                                                  :size=650
+                                                  :min-size=this.minSize
+                                                  class="panes-wrap">
+                                            <div slot="firstPane" class="first-pane"
+                                                 style="width: 100%;text-align: left">
+                                                <result-list></result-list>
+                                            </div>
+                                            <div slot="secondPane" class="second-pane" ref="element"
+                                                 style="padding-right: 70px;width: 100%;text-align: left;">
+
+                                            </div>
+                                        </rs-panes>
+                                        <!--右上角result list和chart end -->
+                                    </div>
+                                    <div slot="secondPane" class="second-pane" ref="element"
+                                         style="padding-right: 70px;width: 100%;text-align: left;">
+                                        <result-detail></result-detail>
+
+                                    </div>
+                                </rs-panes>
+                                <!-- 右边两行分栏   end                            -->
 
                             </div>
                         </rs-panes>
@@ -50,12 +112,17 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     // eslint-disable-next-line no-unused-vars
     import {mapGetters, mapActions, mapMutations} from 'vuex'
     import layout2 from '../../../components/layout2/layout2'
+    import ResultList from "./components/resultList";
+    import ResultDetail from "./components/resultDetail";
 
 
     export default {
         name: "bugLocation",
         components: {
+            ResultDetail,
+            ResultList,
             layout2,
+
         },
         data() {
             return {
@@ -75,7 +142,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'currentProjectId',
                 'size',
                 'minSize',
-                'getBugLocation'
+                'bugLocationList',
+                'currentProjectDetail',
+                'currentIssueDetail',
             ])
         },
         async mounted() {
@@ -85,9 +154,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ...mapMutations([
                 'set_addProjectVisible',
             ]),
-            ...mapActions([
-
-            ]),
+            ...mapActions([]),
             jumpToCreate() {
                 this.set_addProjectVisible(true);
                 this.$router.push('addProject');
@@ -97,7 +164,10 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             },
             jumpToCreateIssue() {
                 this.$router.push({name: 'createIssue'})
-            }
+            },
+            jumpToIssue() {
+                this.$router.push({name: 'issueList'})
+            },
 
 
         },

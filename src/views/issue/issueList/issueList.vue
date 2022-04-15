@@ -142,11 +142,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                             Issue Relations
                                         </MenuItem>
                                     </Menu>
-                                    <div class="page-content" style="height: 730px">
-                                        <vue-scroll>
+                                    <div class="page-content">
                                         <issue-detail-show v-if="this.pageName==1"></issue-detail-show>
                                         <githubIssueList v-if="this.pageName==2"></githubIssueList>
-                                        </vue-scroll>
                                     </div>
                                 </div>
                             </div>

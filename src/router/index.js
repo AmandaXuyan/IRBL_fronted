@@ -17,7 +17,8 @@ import addProjectUrl from '@/views/project/createProject/addProjectUrl';
 import addProjectUrlCommit from "@/views/project/createProject/addProjectUrlCommit";
 import createIssue from '@/views/issue/createIssue/createIssue';
 import supplierAll from '@/views/mainPage/supplierAll'
-
+import bugLocation from "@/views/issue/bugLocationResult/bugLocation";
+import supplierAll2 from '@/views/issue/bugLocationResult/supplierAll2'
 Vue.use(VueRouter)
 
 const routes = [
@@ -38,6 +39,12 @@ const routes = [
     component:supplierAll,
   },
   {
+    path:'/supplierAll2',
+    name:'supplierAll2',
+    component:supplierAll2,
+  },
+
+  {
     path:'/projectList',
     name:'projectList',
     component:projectList,
@@ -46,6 +53,11 @@ const routes = [
     path:'/addProject',
     name:'addProject',
     component:addProject,
+  },
+  {
+    path:'/bugLocation',
+    name:'bugLocation',
+    component:bugLocation,
   },
   {
     path:'/addProjectFile',

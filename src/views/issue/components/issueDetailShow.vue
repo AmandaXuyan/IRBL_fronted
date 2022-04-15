@@ -1,27 +1,36 @@
 <template>
     <div class="markdown">
         <div class="create-issue">
-            <div class="github-tool-bar" v-if="!this.issueEditVisible">
-                <div id="tool-bar" style=" position: absolute; right: 70pt; z-index: 2; ">
-                    <div class="tools">
-                        <div class="center-center">
-                            <Button @click="toUpdateIssue1">Edit</Button>
-                        </div>
-                    </div>
-                    <div class="tools">
-                        <div class="center-center">
-                            <Button @click="toAdviceIssue1">Advice</Button>
-                        </div>
-                    </div>
-                    <div class="tools">
-                        <div class="center-center">
-                            <Button @click="writeBackSingle1">WriteBack</Button>
-                        </div>
+            <div id="tool-bar" style=" position: absolute; right: 100pt;top:10pt;margin-top: 30px; z-index: 2; "
+                 v-if="!this.issueEditVisible">
+                <div class="tools">
+                    <div class="center-center">
+                        <Button @click="toUpdateIssue1">Edit</Button>
                     </div>
                 </div>
-
+                <div class="tools">
+                    <div class="center-center">
+                        <Button @click="toAdviceIssue1">Advice</Button>
+                    </div>
+                </div>
+                <div class="tools">
+                    <div class="center-center">
+                        <Button @click="writeBackSingle1">Write Back</Button>
+                    </div>
+                </div>
+                <div class="tools">
+                    <div class="center-center">
+                        <Button @click="BugLocate1">Bug Locate</Button>
+                    </div>
+                </div>
+                <div class="tools">
+                    <div class="center-center">
+                        <Button @click="deleteIssue1">Delete</Button>
+                    </div>
+                </div>
             </div>
-            <div class="add-header">
+            <div class="add-header" style="margin-top: 80px;height: 650px">
+                <vue-scroll>
                 <div class="show" v-if="!this.issueEditVisible">
                     <div class="add-input">
                         <Input v-model="this.currentIssueDetail.title"
@@ -67,6 +76,7 @@
                         />
                     </div>
                 </div>
+                </vue-scroll>
             </div>
         </div>
     </div>
@@ -148,7 +158,8 @@
                 'getIssueList',
                 'getIssueAdvice',
                 'writeBackSingle',
-                'getBugLocation'
+                'getBugLocation',
+                'deleteIssue'
             ]),
 
             saveIssue() {
@@ -174,12 +185,36 @@
             cancelUpdate() {
                 this.set_issueEditVisible(false);
             },
-            async toAdviceIssue1() {
-                // await this.getIssueAdvice(this.currentIssueId);
+            async BugLocate1() {
                 await this.getBugLocation(this.currentIssueId);
+                await this.$router.push({name: 'bugLocation'})
+
             },
             async writeBackSingle1() {
                 await this.writeBackSingle(this.currentIssueId);
+            },
+            async toAdviceIssue1(){
+                await this.getIssueAdvice(this.currentIssueId);
+            },
+            async deleteIssue1(){
+                this.$router.push({ name: 'issueDetail'});
+                Modal.confirm({
+                    title: '删除Issue',
+                    content: '确认删除该Issue？',
+                    onOk: () => {
+                        this.dele();
+                        this.$router.push({ name: 'issueList'})
+                    },
+                    onCancel: () => {
+                        console.log('点击了取消');
+                    },
+                });
+                this.getIssueList(this.currentProjectId);
+                // this.$router.push({ name: 'issueList'})
+
+            },
+            async dele(){
+                await this.deleteIssue();
             }
 
         },
@@ -189,7 +224,6 @@
 <style scoped>
     .create-issue {
         margin-left: 120px;
-        margin-top: 80px;
         margin-right: 100px;
     }
 

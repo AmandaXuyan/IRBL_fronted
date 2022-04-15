@@ -6,15 +6,11 @@
     import {mapActions, mapGetters, mapMutations} from "vuex";
 
     export default {
-        name: "supplierAll",
-        data() {
-            this.$router.replace({
-                path: '/issueList',
-                name: 'issueList'
-            })
-            return {}
-        },
+        name: "lineChart",
         components: {},
+        data() {
+            return {};
+        },
         computed: {
             ...mapGetters([])
         },
@@ -27,7 +23,6 @@
 
 
         },
-
     }
 </script>
 

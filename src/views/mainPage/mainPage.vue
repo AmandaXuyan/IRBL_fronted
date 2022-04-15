@@ -26,25 +26,21 @@
                         </CarouselItem>
                     </Carousel>
                 </div>
-                <div class="card-list" style="height:800px">
-                    <div class="card-list" style="margin: 20px 0px auto auto;display:inline-block;">
-                        <graphCard></graphCard>
-                        <graphCard></graphCard>
-                        <graphCard></graphCard>
-                        <graphCard></graphCard>
-                    </div>
-                    <div class="card-list" style="margin: 20px 0px auto auto;display:inline-block;">
-                        <graphCard></graphCard>
-                        <graphCard></graphCard>
-                        <graphCard></graphCard>
-                        <graphCard></graphCard>
-                    </div>
-                    <div class="card-list" style="margin: 20px 0px auto auto;display:inline-block;">
-                        <graphCard></graphCard>
-                        <graphCard></graphCard>
-
-                    </div>
-                </div>
+<!--                <div class="card-list" style="height:800px">-->
+<!--                    <div class="card-list" style="margin: 20px 0px auto auto;display:inline-block;">-->
+<!--                        <graphCard></graphCard>-->
+<!--                        <graphCard></graphCard>-->
+<!--                        <graphCard></graphCard>-->
+<!--                        <graphCard></graphCard>-->
+<!--                    </div>-->
+<!--                    <div class="card-list" style="margin: 20px 0px auto auto;display:inline-block;">-->
+<!--                        <graphCard></graphCard>-->
+<!--                        <graphCard></graphCard>-->
+<!--                        <graphCard></graphCard>-->
+<!--                        <graphCard></graphCard>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                </div>-->
 
             </div>
             <!--            </vue-scroll>-->
@@ -58,14 +54,14 @@
 
 <script>
     import layout2 from "../../components/layout2/layout2";
-    import graphCard from "./components/graph-card"
+    // import graphCard from "./components/graph-card"
     import {mapActions, mapGetters, mapMutations} from "vuex";
 
     export default {
         name: "mainPage",
         components: {
             layout2,
-            graphCard
+            // graphCard
         },
         data() {
             return {

@@ -6,11 +6,11 @@
     import {mapActions, mapGetters, mapMutations} from "vuex";
 
     export default {
-        name: "supplierAll",
+        name: "supplierAll2",
         data() {
             this.$router.replace({
-                path: '/issueList',
-                name: 'issueList'
+                path: '/bugLocation',
+                name: 'bugLocation'
             })
             return {}
         },

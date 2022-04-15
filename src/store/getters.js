@@ -35,6 +35,7 @@ const getters={
     pageName:state => state.issue.pageName,
     bugLocationList:state => state.issue.bugLocationList,
     issueRelations:state => state.issue.issueRelations,
+    tableId:state => state.issue.tableId,
     //file
     codes:state=>state.file.codes,
     fileLanguage:state=>state.file.fileLanguage,

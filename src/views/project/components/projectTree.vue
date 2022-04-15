@@ -90,7 +90,7 @@
                             on: {
                                 click: async () => {
                                     if (data.children == null) {
-                                        await this.getFileByTree(data);
+                                        await this.getFileByTree(data.path);
                                     }
                                     this.handleContextMenu(data);
 
