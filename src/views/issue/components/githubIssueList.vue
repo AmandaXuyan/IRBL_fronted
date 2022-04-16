@@ -20,7 +20,13 @@
         </div>
         <div class="scroll-wrap" style="height: 805px">
             <vue-scroll>
-                <div class="new-github-list" style="position:relative;margin: 75px 60px 30px 45px;">
+                <div class="repo-inf" style="margin: 20px 20px 20px 45px;">
+                    <div class="add-title-style" >
+                        <span> Repository Name: {{this.currentProjectDetail.githubRepoName}} &nbsp;|&nbsp; </span>
+                        <span> Repository Owner: {{this.currentProjectDetail.githubRepoOwner}}</span>
+                    </div>
+                </div>
+                <div class="new-github-list" style="position:relative;margin: 10px 60px 30px 45px;">
                     <a-table :columns="columns"
                              :data-source="gitIssueList"
                              :expanded-row-keys.sync="expandedRowKeys"
@@ -94,7 +100,7 @@
                         <span slot="action" slot-scope="text, record">
       <a>Save to local</a>
       <a-divider type="vertical" />
-      <a>Delete</a>
+<!--      <a>Delete</a>-->
     </span>
                     </a-table>
                 </div>
@@ -243,6 +249,13 @@
         align-content: center;
         justify-items: center;
         justify-content: center;
+    }
+    .add-title-style{
+        color: #DBF5E0;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 5px;
     }
 
 

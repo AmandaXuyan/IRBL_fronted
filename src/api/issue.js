@@ -58,6 +58,14 @@ export function getIssueAdviceAPI(data) {
     })
 }
 
+// export function getIssueAdviceAPI(data){
+//     return axios({
+//         url: `${api.issuePre}/advice`,
+//         method: 'POST',
+//         data
+//     })
+// }
+
 export function getRepoAllIssuesAPI(data) {
     return axios({
         url: `${api.issuePre}/repoIssue`,

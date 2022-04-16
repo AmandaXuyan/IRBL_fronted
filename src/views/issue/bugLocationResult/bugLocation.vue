@@ -29,10 +29,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
-                                <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
+                                <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51" v-if="!this.isRetry" >
                                     <a-collapse-panel key="1" header="Tips"
                                                       :style="collapseStyle">
-                                        <span> 如果对结果不满意，可以重构Issue后，再进行Bug Locate试试！</span>
+                                        <span> 如果对结果不满意，可重构Issue，再进行Bug Locate试试！</span>
+                                        <div></div>
+                                        <Button @click="reBugLocation">RETRY</Button>
+
                                     </a-collapse-panel>
                                 </a-collapse>
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
@@ -84,7 +87,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                             </div>
                                             <div slot="secondPane" class="second-pane" ref="element"
                                                  style="padding-right: 70px;width: 100%;text-align: left;">
-
+                                                <line-chart></line-chart>
                                             </div>
                                         </rs-panes>
                                         <!--右上角result list和chart end -->
@@ -114,11 +117,13 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     import layout2 from '../../../components/layout2/layout2'
     import ResultList from "./components/resultList";
     import ResultDetail from "./components/resultDetail";
+    import LineChart from "./components/lineChart";
 
 
     export default {
         name: "bugLocation",
         components: {
+            LineChart,
             ResultDetail,
             ResultList,
             layout2,
@@ -145,6 +150,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'bugLocationList',
                 'currentProjectDetail',
                 'currentIssueDetail',
+                'currentIssueId',
+                'isRetry'
             ])
         },
         async mounted() {
@@ -153,8 +160,11 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         methods: {
             ...mapMutations([
                 'set_addProjectVisible',
+                'set_isRetry'
             ]),
-            ...mapActions([]),
+            ...mapActions([
+                'getBugLocation'
+            ]),
             jumpToCreate() {
                 this.set_addProjectVisible(true);
                 this.$router.push('addProject');
@@ -168,6 +178,14 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             jumpToIssue() {
                 this.$router.push({name: 'issueList'})
             },
+            async reBugLocation(){
+                this.set_isRetry(true);
+                await this.getBugLocation({id:this.currentIssueId,page:2});
+                await this.$router.replace({
+                    path: '/supplierAll2',
+                    name: 'supplierAll2'
+                })
+            }
 
 
         },

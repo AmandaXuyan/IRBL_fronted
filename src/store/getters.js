@@ -36,6 +36,7 @@ const getters={
     bugLocationList:state => state.issue.bugLocationList,
     issueRelations:state => state.issue.issueRelations,
     tableId:state => state.issue.tableId,
+    isRetry:state => state.issue.isRetry,
     //file
     codes:state=>state.file.codes,
     fileLanguage:state=>state.file.fileLanguage,

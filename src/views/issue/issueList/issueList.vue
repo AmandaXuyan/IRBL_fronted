@@ -134,11 +134,11 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                             Local Issues
                                         </MenuItem>
                                         <MenuItem name="2">
-                                            <Icon type="ios-people" />
+                                            <Icon type="logo-github" />
                                             Github Issues
                                         </MenuItem>
                                         <MenuItem name="3">
-                                            <Icon type="ios-construct" />
+                                            <Icon type="ios-git-network" />
                                             Issue Relations
                                         </MenuItem>
                                     </Menu>

@@ -134,6 +134,7 @@
                     subfield: false, // 单双栏模式
                     preview: true // 预览
                 },
+                url:'https://github.com/'
 
             };
         },
@@ -143,6 +144,7 @@
                 'currentIssueId',
                 'issueEditVisible',
                 'bugLocationList',
+                'currentProjectDetail'
 
             ])
         },
@@ -186,12 +188,17 @@
                 this.set_issueEditVisible(false);
             },
             async BugLocate1() {
-                await this.getBugLocation(this.currentIssueId);
+                await this.getBugLocation({id:this.currentIssueId,page:1});
                 await this.$router.push({name: 'bugLocation'})
 
             },
             async writeBackSingle1() {
                 await this.writeBackSingle(this.currentIssueId);
+                this.url=this.url+this.currentProjectDetail.githubRepoOwner+'/'+this.currentProjectDetail.githubRepoName+'/issues';
+                var tempwindow=window.open('_blank');
+                tempwindow.location=this.url;
+                this.url='https://github.com/';
+
             },
             async toAdviceIssue1(){
                 await this.getIssueAdvice(this.currentIssueId);

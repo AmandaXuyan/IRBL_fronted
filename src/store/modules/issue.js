@@ -35,6 +35,7 @@ const issue = {
         bugLocationList: null,
         issueRelations:null,
         tableId:0,
+        isRetry:false,
 
     },
     mutations: {
@@ -82,6 +83,9 @@ const issue = {
         },
         set_tableId:function (state, data) {
             state.tableId = data
+        },
+        set_isRetry:function (state, data) {
+            state.isRetry = data
         },
 
     },
@@ -184,6 +188,7 @@ const issue = {
             if (res) {
                 message.success('写回成功');
 
+
             }
         },
 
@@ -205,8 +210,8 @@ const issue = {
                 message.success('保存成功')
             }
         },
-        getBugLocation: async ({commit}, id) => {
-            const data = {id: id, page: 1};
+        getBugLocation: async ({commit}, data) => {
+            // const data = {id: id, page: page};
             console.log(data);
             const res = await getBugLocationAPI(data);
             if (res) {
