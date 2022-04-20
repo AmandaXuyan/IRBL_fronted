@@ -10,7 +10,7 @@
                 </div>
                 <div class="tools">
                     <div class="center-center">
-                        <Button @click="toAdviceIssue1">Advice</Button>
+                        <Button @click="toAdviceIssue1" :loading="adviceLoading">Advice</Button>
                     </div>
                 </div>
                 <div class="tools">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="tools">
                     <div class="center-center">
-                        <Button @click="BugLocate1">Bug Locate</Button>
+                        <Button @click="BugLocate1" :loading="bugLoading">Bug Locate</Button>
                     </div>
                 </div>
                 <div class="tools">
@@ -33,9 +33,10 @@
                 <vue-scroll>
                 <div class="show" v-if="!this.issueEditVisible">
                     <div class="add-input">
-                        <Input v-model="this.currentIssueDetail.title"
-                               disabled
-                               style="width: 600px"/>
+                        <span style="font-size: 17px;font-weight: 500;color: #DBF5E0">{{this.currentIssueDetail.title}}</span>
+<!--                        <Input v-model="this.currentIssueDetail.title"-->
+<!--                               disabled-->
+<!--                               style="width: 600px"/>-->
                     </div>
                     <div class="markdown">
                         <mavon-editor
@@ -145,7 +146,9 @@
                 'issueEditVisible',
                 'bugLocationList',
                 'currentProjectDetail',
-                'issueAdviceList'
+                'issueAdviceList',
+                'adviceLoading',
+                'bugLoading'
 
             ])
         },
@@ -155,7 +158,10 @@
         methods: {
             ...mapMutations([
                 'set_issueEditVisible',
-                'set_isRetry'
+                'set_isRetry',
+                'set_adviceVisible',
+                'set_adviceLoading',
+                'set_bugLoading'
             ]),
             ...mapActions([
                 'updateIssue',
@@ -192,6 +198,7 @@
                 this.set_issueEditVisible(false);
             },
             async BugLocate1() {
+                this.set_bugLoading(true);
                 await this.getBugLocation({id:this.currentIssueId,page:1});
                 await this.$router.push({name: 'bugLocation'})
 
@@ -205,7 +212,13 @@
 
             },
             async toAdviceIssue1(){
+                this.set_adviceLoading(true);
                 await this.getIssueAdvice(this.currentIssueId);
+                this.set_adviceVisible(true);
+                await this.$router.replace({
+                    path:'/supplierAll',
+                    name:'supplierAll'
+                })
             },
             async deleteIssue1(){
                 this.$router.push({ name: 'issueDetail'});

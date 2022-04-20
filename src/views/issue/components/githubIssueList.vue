@@ -26,10 +26,10 @@
                         <span> Repository Owner: {{this.currentProjectDetail.githubRepoOwner}}</span>
                     </div>
                     <div class="add-header-desccription" style="margin-top: 0">
-            <span style="margin-right: 20px">
-                 You can save all github issues here.
+            <span style="margin-right: 10px;color: #42b983">
+                 💡You can save all github issues here.
             </span>
-                        <Button @click="saveRepoAllIssues1" >save</Button>
+                        <Icon type="md-cloud-download" @click="saveRepoAllIssues1" style="cursor: pointer"/>
                     </div>
 
 

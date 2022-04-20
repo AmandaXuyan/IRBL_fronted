@@ -10,15 +10,18 @@
             </div>
             <Divider style="background-color: #658885"/>
             <div class="add-first">
-                <div class="add-title-style">
-                    <span> Repository Owner</span>
-                    <Input v-model="githubRepoOwner"
-                           placeholder="enter repository owner..." style="width: 200px;margin-left: 20px"/>
+                <div class="add-header-desccription" style="margin-bottom: 20px">
+            <span>
+                 Use Git or checkout with SVN using the web URL.
+            </span>
                 </div>
                 <div class="add-title-style">
-                    <span> Repository Name</span>
+                    <span> Github Url: &nbsp;https://github.com/</span>
+                    <Input v-model="githubRepoOwner"
+                           placeholder="enter repository owner..." style="width: 180px;margin-left: 5px;margin-right: 5px"/>
+                    <span>/</span>
                     <Input v-model="githubRepoName"
-                           placeholder="enter repository name..." style="width: 200px;margin-left: 20px"/>
+                           placeholder="enter repository name..." style="width: 180px;margin-left: 5px"/>
                 </div>
                 <Divider style="background-color: #658885"/>
                 <div class="add-header-desccription" style="margin-bottom: 20px">
@@ -34,7 +37,7 @@
                 <div class="add-title-style">
                     <span> Personal Access Token(optional)</span>
                     <Input v-model="personalAccessToken"
-                           placeholder="enter token..." style="width: 200px;margin-left: 20px"/>
+                           placeholder="enter token..." style="width: 400px;margin-left: 20px"/>
                 </div>
             </div>
             <div class="create-header" @click="getTags1" v-if="!showTag">
@@ -42,6 +45,12 @@
             </div>
             <div class="get-tag" v-if="showTag&&tagList.length!==0">
                 <Divider style="background-color: #658885"/>
+                <div class="connect-success" style="color: #42b983"> ✅ CONNECT SUCCESS</div>
+                <div class="add-header-desccription" style="margin-bottom: 10px;margin-top: 15px">
+            <span>
+                Project tag can help you judge the project version. There are some Github tags for this project, you can choose a version here.
+            </span>
+                </div>
                 <div class="add-title-style">
                     <span> Project Tag</span>
                     <Select v-model="model1" style="width: 200px;margin-left: 20px">
@@ -57,7 +66,7 @@
                 <Divider style="background-color: #658885"/>
                 <div class="add-header-desccription" style="margin-bottom: 10px;margin-top: 15px">
             <span>
-                Project tag can help you judge the project version. But There are no tags available for this project, you can enter a tag here.
+                Project tag can help you judge the project version. But there are no tags available for this project, you can enter a tag here.
             </span>
                 </div>
                 <div class="add-title-style">

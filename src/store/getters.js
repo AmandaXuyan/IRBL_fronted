@@ -24,6 +24,7 @@ const getters={
     issueShowVisible:state=> state.project.issueShowVisible,
     updateProjectPopV:state=> state.project.updateProjectPopV,
     tagList:state=> state.project.tagList,
+    addTokenVisible:state=> state.project.addTokenVisible,
     //issue
     currentIssueId:state => state.issue.currentIssueId,
     issueList: state => state.issue.issueList,
@@ -40,7 +41,12 @@ const getters={
     isRetry:state => state.issue.isRetry,
     xdata:state => state.issue.xdata,
     ydata:state => state.issue.ydata,
-
+    adviceVisible:state => state.issue.adviceVisible,
+    issueAdviceList:state => state.issue.issueAdviceList,
+    adviceLoading:state => state.issue.adviceLoading,
+    bugLoading:state => state.issue.bugLoading,
+    relationIssueInf:state => state.issue.relationIssueInf,
+    issueCardVisible:state => state.issue.issueCardVisible,
     //file
     codes:state=>state.file.codes,
     fileLanguage:state=>state.file.fileLanguage,

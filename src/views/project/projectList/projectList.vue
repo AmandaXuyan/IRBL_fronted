@@ -125,6 +125,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             this.set_currentIssueDetail(null);
             this.set_currentIssueId(null);
             this.set_currentProjectId(null);
+            this.set_issueShowVisible(false);
 
         },
         methods: {
@@ -136,6 +137,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'set_currentIssueDetail',
                 'set_currentIssueId',
                 'set_currentProjectId',
+                'set_issueShowVisible',
 
             ]),
             ...mapActions([

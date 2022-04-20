@@ -4,12 +4,14 @@
         <div id="cytoolbar_id" style="position: absolute; left: 5pt; top: 5pt; z-index: 2; background-color: #658885;">
             <div class="tools">
                 <div class="center-center">
-                    <Icon style="font-size: 32px; cursor: pointer;" title="放大" type="ios-add-circle-outline" @click="magnifying()"/>
+                    <Icon style="font-size: 32px; cursor: pointer;" title="放大" type="ios-add-circle-outline"
+                          @click="magnifying()"/>
                 </div>
             </div>
             <div class="tools">
                 <div class="center-center">
-                    <Icon style="font-size: 32px; cursor: pointer;" title="缩小" type="ios-remove-circle-outline" @click="contractible()"/>
+                    <Icon style="font-size: 32px; cursor: pointer;" title="缩小" type="ios-remove-circle-outline"
+                          @click="contractible()"/>
                 </div>
             </div>
             <div class="tools">
@@ -19,24 +21,61 @@
             </div>
             <div class="tools">
                 <div class="center-center">
-                    <Icon style="font-size: 32px; cursor: pointer;" title="高亮邻居" type="ios-color-wand-outline" @click="highlight()"/>
+                    <Icon style="font-size: 32px; cursor: pointer;" title="高亮邻居" type="ios-color-wand-outline"
+                          @click="highlight()"/>
                 </div>
             </div>
             <div class="tools">
                 <div class="center-center">
-                    <Icon style="font-size: 32px; cursor: pointer;" title="刷新布局" type="ios-sync" @click="refresh({name: 'cola'})"/>
+                    <Icon style="font-size: 32px; cursor: pointer;" title="刷新布局" type="ios-sync"
+                          @click="refresh({name: 'cola'})"/>
                 </div>
             </div>
             <div class="tools">
                 <div class="center-center">
-                    <Icon style="font-size: 32px; cursor: pointer;" title="网格布局" type="ios-apps-outline" @click="refresh({name: 'grid'})"/>
+                    <Icon style="font-size: 32px; cursor: pointer;" title="网格布局" type="ios-apps-outline"
+                          @click="refresh({name: 'grid'})"/>
                 </div>
             </div>
             <div class="tools">
                 <div class="center-center">
-                    <Icon style="font-size: 32px; cursor: pointer;" title="环形布局" type="ios-globe-outline" @click="refresh({name: 'circle'})"/>
+                    <Icon style="font-size: 32px; cursor: pointer;" title="环形布局" type="ios-globe-outline"
+                          @click="refresh({name: 'circle'})"/>
                 </div>
             </div>
+        </div>
+        <div class="tips" style="z-index: 3;position: absolute; left: 5pt; top: 50pt" v-if="!issueCardVisible">
+            <span style="color: #42b983">💡You can long press the node to get more information.</span>
+        </div>
+        <div class="issue-cards" v-if="issueCardVisible">
+            <Card style="width:400px;z-index: 3;position: absolute; left: 5pt; top: 50pt">
+                <p slot="title">
+                    <Icon type="ios-bug-outline" />
+                    Issue Detail
+                </p>
+                <a href="#" slot="extra" @click.prevent="closeIssue">
+                    <Icon type="ios-close" />
+                </a>
+                <div class="card-content" style="height: 400px">
+                    <span>{{this.relationIssueInf.title}}</span>
+                        <div class="markdown1" style="margin-top: 10px">
+                            <mavon-editor
+                                    :value="this.relationIssueInf.description"
+                                    defaultOpen="preview"
+                                    :boxShadow="false"
+                                    previewBackground="#354A51"
+                                    style="z-index:1;height:350px;border: 1px solid #d9d9d9;color: #fff"
+                                    :editable="false"
+                                    :subfield="false"
+                                    :toolbarsFlag="false"
+                                    :externalLink="false"
+                            >
+                            </mavon-editor>
+                        </div>
+
+                </div>
+
+            </Card>
         </div>
     </div>
 </template>
@@ -47,8 +86,11 @@
     import cola from 'cytoscape-cola';
     import avsdf from 'cytoscape-avsdf';
     import coseBilkent from 'cytoscape-cose-bilkent';
+    import {mapActions, mapGetters, mapMutations} from "vuex";
+
     export default {
         name: "CJS",
+        components: {},
         beforeCreate() {
             this.$cy && this.$cy.destroyed() && this.$cy.destroy();
             delete this.$cy;
@@ -60,6 +102,8 @@
         watch: {},
         props: {},
         mounted() {
+            this.set_issueCardVisible(false);
+            this.set_relationIssueInf(null);
             // Cxtmenu圆形菜单主要依赖组件
             if (!cytoscape().cxtmenu) {
                 cytoscape.use(cxtmenu);
@@ -112,36 +156,37 @@
                     return [
                         {
                             fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-                            content: '<span class="fa fa-flash fa-2x">操作1</span>', // html/text content to be displayed in the menu
+                            content: '<span class="fa fa-flash fa-2x">Detail</span>', // html/text content to be displayed in the menu
                             contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-                            select: function (ele) { // a function to execute when the command is selected
-                                alert(ele.id()); // `ele` holds the reference to the active element
-                            },
+                            // select: function (ele) { // a function to execute when the command is selected
+                            //     alert(ele.id()); // `ele` holds the reference to the active element
+                            // },
+                            select: (ele) => this.getIssueInf([ele.id()]),
                             enabled: true, // whether the command is selectable
                         },
-                        {
-                            fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-                            content: '<span class="fa fa-flash fa-2x">操作2</span>', // html/text content to be displayed in the menu
-                            contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-                            select: function (ele) { // a function to execute when the command is selected
-                                alert(ele.id()); // `ele` holds the reference to the active element
-                            },
-                            enabled: true, // whether the command is selectable
-                        },
+                        // {
+                        //     fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
+                        //     content: '<span class="fa fa-flash fa-2x">操作2</span>', // html/text content to be displayed in the menu
+                        //     contentStyle: {}, // css key:value pairs to set the command's css in js if you want
+                        //     select: function (ele) { // a function to execute when the command is selected
+                        //         alert(ele.id()); // `ele` holds the reference to the active element
+                        //     },
+                        //     enabled: true, // whether the command is selectable
+                        // },
                         {
                             // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-                            content: '高亮邻居', // html/text content to be displayed in the menu
+                            content: 'Highlight', // html/text content to be displayed in the menu
                             // contentStyle: {}, // css key:value pairs to set the command's css in js if you want
                             select: (ele) => this.lightOn([ele.id()]),  // a function to execute when the command is selected
                             enabled: true, // whether the command is selectable
                         },
-                        {
-                            // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
-                            content: '禁用', // html/text content to be displayed in the menu
-                            // contentStyle: {}, // css key:value pairs to set the command's css in js if you want
-                            select: (ele) => alert(ele.id()),  // a function to execute when the command is selected
-                            enabled: false, // whether the command is selectable
-                        }
+                        // {
+                        //     // fillColor: 'rgba(200, 200, 200, 0.75)', // optional: custom background color for item
+                        //     content: '禁用', // html/text content to be displayed in the menu
+                        //     // contentStyle: {}, // css key:value pairs to set the command's css in js if you want
+                        //     select: (ele) => alert(ele.id()),  // a function to execute when the command is selected
+                        //     enabled: false, // whether the command is selectable
+                        // }
                     ]
                 },
                 fillColor: '#658885', // 指令默认颜色(the background colour of the menu)
@@ -163,15 +208,35 @@
             this.$cy
                 .style()
                 .selector('.issue')
-                .css({'background-color': '#49A8AC','content': 'data(name)','border-color': '#49A8AC', 'border-width': "5px"})
+                .css({
+                    'background-color': '#49A8AC',
+                    'content': 'data(name)',
+                    'border-color': '#49A8AC',
+                    'border-width': "5px"
+                })
                 .selector('.classes-B')
-                .css({'background-color': '#b88cea', 'content': 'data(name)', 'border-color': '#b88cea', 'border-width': "5px"})
+                .css({
+                    'background-color': '#b88cea',
+                    'content': 'data(name)',
+                    'border-color': '#b88cea',
+                    'border-width': "5px"
+                })
                 // // .style({'background-color': '#00FF00', 'border-color': '#00FF00', 'border-width': "1px",})
                 .selector('.classes-C')
                 // // .style({'background-color': '#0000FF', 'border-color': '#0000FF', 'border-width': "1px",})
-                .css({'background-color': '#77c94f', 'content': 'data(name)','border-color':'#77c94f','border-width':"5px"})
+                .css({
+                    'background-color': '#77c94f',
+                    'content': 'data(name)',
+                    'border-color': '#77c94f',
+                    'border-width': "5px"
+                })
                 .selector('.classes-D')
-                .css({'background-color': '#fcb16f','content': 'data(name)','border-color': '#fcb16f', 'border-width': "5px"})
+                .css({
+                    'background-color': '#fcb16f',
+                    'content': 'data(name)',
+                    'border-color': '#fcb16f',
+                    'border-width': "5px"
+                })
                 .selector('.relation')
                 .css({
                     'target-arrow-color': '#999999', /*箭头颜色*/
@@ -193,7 +258,13 @@
             this.$cy.style()
                 /*未选择节点样式*/
                 .selector('node')
-                .style({'label': 'data(name)', 'font-size': '10pt', 'width': '8pt', 'height': '8pt','color':'#DBF5E0',})
+                .style({
+                    'label': 'data(name)',
+                    'font-size': '10pt',
+                    'width': '8pt',
+                    'height': '8pt',
+                    'color': '#DBF5E0',
+                })
                 /*已选择节点样式*/
                 .selector('node:selected')
                 .style({'border-color': '#c84e40', 'border-width': "1px",})
@@ -226,9 +297,26 @@
             ;
         },
         data() {
-            return {}
+            return {
+
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'relationIssueInf',
+                'issueCardVisible'
+            ])
         },
         methods: {
+            ...mapMutations([
+                'set_currentIssueId',
+                'set_relationIssueInf',
+                'set_issueCardVisible'
+            ]),
+            ...mapActions([
+                'relationGetIssueDetailById'
+            ]),
+
             /**
              * eles : Array or Map.
              * node_eg: {group: 'nodes', data: {id: 'nid1', name: 'name1', label: 'l1 l2', others: 'others'}, classes: 'like label', position: {x: 100, y: 100}};
@@ -269,6 +357,19 @@
                     selectedEles.remove();
                 });
                 this.$cy.endBatch();
+            },
+            /**
+             *  展示issue具体内容
+             **/
+            async getIssueInf(ele) {
+                let element = this.$cy.getElementById(ele);
+                let id = element.data().id;
+                await this.set_currentIssueId(id);
+                await this.relationGetIssueDetailById();
+            },
+            closeIssue(){
+                this.set_relationIssueInf(null);
+                this.set_issueCardVisible(false);
             },
             /***************************工具栏************************/
             /**
@@ -354,6 +455,7 @@
         width: 45px;
         vertical-align: middle;
     }
+
     .center-center {
         height: 100%;
         display: flex;

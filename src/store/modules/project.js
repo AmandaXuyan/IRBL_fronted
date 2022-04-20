@@ -35,6 +35,7 @@ const project =  {
         issueShowVisible:false,
         updateProjectPopV:true,
         tagList:[],
+        addTokenVisible:false,
     },
     mutations:{
         set_projectList:function(state, data) {
@@ -81,6 +82,9 @@ const project =  {
         },
         set_tagList:function(state, data) {
             state.tagList = data
+        },
+        set_addTokenVisible:function(state, data) {
+            state.addTokenVisible = data
         },
 
     },
@@ -161,9 +165,10 @@ const project =  {
             }
         },
         // eslint-disable-next-line no-unused-vars
-        updateProject: async({ state, commit }, data) => {
+        updateProject: async({ state, commit ,dispatch}, data) => {
             const res = await updateProjectAPI(data);
             if(res){
+                await dispatch('getProjectDetailById');
                 message.success('保存成功')
             }
         },

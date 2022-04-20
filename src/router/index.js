@@ -18,8 +18,8 @@ import addProjectUrlCommit from "@/views/project/createProject/addProjectUrlComm
 import createIssue from '@/views/issue/createIssue/createIssue';
 import supplierAll from '@/views/mainPage/supplierAll'
 import bugLocation from "@/views/issue/bugLocationResult/bugLocation";
-import supplierAll2 from '@/views/issue/bugLocationResult/supplierAll2'
-Vue.use(VueRouter)
+import supplierAll2 from '@/views/issue/bugLocationResult/supplierAll2';
+Vue.use(VueRouter);
 
 const routes = [
   {

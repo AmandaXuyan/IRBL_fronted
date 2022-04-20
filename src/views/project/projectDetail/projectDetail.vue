@@ -128,6 +128,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ])
         },
         async mounted() {
+            this.set_issueShowVisible(true);
         },
         methods: {
             ...mapMutations([
@@ -136,7 +137,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'set_panelLeftFirst',
                 'set_tabList',
                 'set_updateProjectPopV',
-                'set_treeData'
+                'set_treeData',
+                'set_issueShowVisible',
             ]),
             ...mapActions([
                 'updateProject',

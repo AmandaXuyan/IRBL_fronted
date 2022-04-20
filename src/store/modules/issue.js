@@ -39,7 +39,11 @@ const issue = {
         isRetry:false,
         xdata:[],
         ydata:[],
-
+        adviceVisible:false,
+        adviceLoading:false,
+        bugLoading:false,
+        relationIssueInf:null,
+        issueCardVisible:false,
     },
     mutations: {
         set_issueList: function (state, data) {
@@ -95,6 +99,21 @@ const issue = {
         },
         set_ydata:function (state, data) {
             state.ydata = data
+        },
+        set_adviceVisible:function (state, data) {
+            state.adviceVisible = data
+        },
+        set_adviceLoading:function (state, data) {
+            state.adviceLoading = data
+        },
+        set_bugLoading:function (state, data) {
+            state.bugLoading = data
+        },
+        set_relationIssueInf:function (state, data) {
+            state.relationIssueInf = data
+        },
+        set_issueCardVisible:function (state, data) {
+            state.issueCardVisible = data
         },
 
     },
@@ -160,11 +179,22 @@ const issue = {
         },
         getIssueDetailById: async ({commit, state}) => {
             const data = {id: state.currentIssueId};
-            const res = await getIssueDetailByIdAPI(data)
+            const res = await getIssueDetailByIdAPI(data);
             if (res) {
                 console.log('issueDetail');
                 console.log(res);
                 commit('set_currentIssueDetail', res);
+            }
+        },
+        relationGetIssueDetailById: async ({commit, state}) => {
+            const data = {id: state.currentIssueId};
+            const res = await getIssueDetailByIdAPI(data);
+            if (res) {
+                console.log('relationGetIssueDetailById');
+                console.log(res);
+                commit('set_relationIssueInf', res);
+                commit('set_issueCardVisible',true);
+
             }
         },
 
@@ -196,6 +226,7 @@ const issue = {
             const data = {id: id};
             const res = await getIssueAdviceAPI(data);
             if (res) {
+                commit('set_adviceLoading',false);
                 console.log('advice!');
                 console.log(res);
                 commit('set_issueAdviceList', res)
@@ -235,6 +266,7 @@ const issue = {
             console.log(data);
             const res = await getBugLocationAPI(data);
             if (res) {
+                commit('set_bugLoading',false);
                 commit('set_bugLocationList', res.recommendationList);
                 commit('set_xdata',res.xdata);
                 commit('set_ydata',res.ydata);

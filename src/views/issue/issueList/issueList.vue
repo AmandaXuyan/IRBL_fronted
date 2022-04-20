@@ -143,7 +143,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                         </MenuItem>
                                     </Menu>
                                     <div class="page-content">
-                                        <issue-detail-show v-if="this.pageName==1"></issue-detail-show>
+                                        <issue-detail-show v-if="this.pageName==1&&!adviceVisible"></issue-detail-show>
+                                        <advice-confirm v-if="this.pageName==1&&adviceVisible"></advice-confirm>
                                         <githubIssueList v-if="this.pageName==2"></githubIssueList>
                                     </div>
                                 </div>
@@ -165,10 +166,12 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
     import githubIssueList from "../components/githubIssueList";
     import IssueItem from "../components/issueItem";
     import {message} from 'ant-design-vue';
+    import AdviceConfirm from "../components/adviceConfirm";
 
     export default {
         name: "issueList",
         components: {
+            AdviceConfirm,
             IssueItem,
             IssueDetailShow,
             layout2,
@@ -188,6 +191,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 chosenIssue: '',
                 model11: '',
                 isGithubIssue:false,
+
             };
         },
         computed: {
@@ -203,7 +207,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'issueDetailVisible',
                 'currentIssueDetail',
                 'gitIssueList',
-                'pageName'
+                'pageName',
+                'adviceVisible'
             ])
         },
         async mounted() {
