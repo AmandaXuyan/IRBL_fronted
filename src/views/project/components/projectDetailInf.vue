@@ -17,6 +17,13 @@
                     />
                 </div>
                 <div class="add-title-style">
+                    <span style="margin-right: 30px"> Project Tag</span>
+                    <Input v-model="this.currentProjectDetail.tag"
+                           disabled
+                           :placeholder="this.currentProjectDetail.tag"
+                           style="width: auto" />
+                </div>
+                <div class="add-title-style">
                     <span style="margin-right: 30px"> Project Description</span>
                     <Input v-model="this.currentProjectDetail.projectDescription"
                            type="textarea"
@@ -100,12 +107,13 @@
                 this.updateProVisible=true;
             },
             updateProject1(){
-                this.projectUpdate.id=this.currentProjectId;
-                this.projectUpdate.projectName=this.projectName;
-                this.projectUpdate.projectDescription=this.projectDescription;
                 if(this.projectName==''){
                     message.info('project name 不能为空！')
                 }else{
+                    this.projectUpdate=this.currentProjectDetail;
+                    this.projectUpdate.id=this.currentProjectId;
+                    this.projectUpdate.projectName=this.projectName;
+                    this.projectUpdate.projectDescription=this.projectDescription;
                     this.updateProject(this.projectUpdate);
                     this.set_currentProjectDetail(this.projectUpdate);
                     this.updateProVisible=false;
@@ -116,11 +124,7 @@
                 this.updateProVisible=false;
             },
             reset(){
-                this.projectUpdate={
-                        id:0,
-                        projectName:'',
-                        projectDescription:'',
-                }
+                this.projectUpdate=null;
             }
 
 

@@ -8,6 +8,18 @@
             </span>
             </div>
             <Divider style="background-color: #658885"/>
+            <div class="choose-tag">
+                <div class="add-title-style">
+                    <span> Project Tag (Optional)</span>
+                    <Input v-model="tag"
+                           placeholder="enter project tag..." style="width: 200px;margin-left: 20px"/>
+                </div>
+                <div class="add-header-desccription" style="margin-bottom: 20px;margin-top: 10px">
+            <span >
+                 You can judge the project version by project tag.
+            </span>
+                </div>
+            </div>
             <div class="add-first">
                 <div class="add-title-style">
                     <span> Upload File</span>
@@ -57,8 +69,10 @@
                 addProjectFileForm:{
                     userId:0,
                     id:0,
-                    file:null
+                    file:null,
+                    tag:null
                 },
+                tag:'',
             };
         },
         computed:{
@@ -106,9 +120,11 @@
                 this.addProjectFileForm.file=this.file;
                 this.addProjectFileForm.id=this.currentProjectId;
                 this.addProjectFileForm.userId=this.userId;
+                this.addProjectFileForm.tag=this.tag;
                 var mydata = new FormData();
-                mydata.append("id",this.currentProjectId)
-                mydata.append("file",this.file)
+                mydata.append("id",this.currentProjectId);
+                mydata.append("file",this.file);
+                mydata.append("tag",this.tag);
                 console.log(this.addProjectFileForm);
                 await this.addByFile(mydata);
                 setTimeout(() => {

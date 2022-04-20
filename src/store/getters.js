@@ -23,6 +23,7 @@ const getters={
     treeData:state=> state.project.treeData,
     issueShowVisible:state=> state.project.issueShowVisible,
     updateProjectPopV:state=> state.project.updateProjectPopV,
+    tagList:state=> state.project.tagList,
     //issue
     currentIssueId:state => state.issue.currentIssueId,
     issueList: state => state.issue.issueList,
@@ -37,6 +38,9 @@ const getters={
     issueRelations:state => state.issue.issueRelations,
     tableId:state => state.issue.tableId,
     isRetry:state => state.issue.isRetry,
+    xdata:state => state.issue.xdata,
+    ydata:state => state.issue.ydata,
+
     //file
     codes:state=>state.file.codes,
     fileLanguage:state=>state.file.fileLanguage,

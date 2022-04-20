@@ -15,7 +15,8 @@ import {
     writeBackSingleAPI,
     getBugLocationAPI,
     getAllIssueRelationAPI,
-    writeBackAPI
+    writeBackAPI,
+    setRepoSingleIssueAPI
 } from '@/api/issue'
 
 
@@ -27,7 +28,7 @@ const issue = {
         currentIssueDetail: {},
         issueListLoading: false,
         searchResult: {},
-        issueAdviceList: [],
+        issueAdviceList: null,
         issueDetailVisible: false,
         issueEditVisible: false,
         currentGraph: '',
@@ -36,6 +37,8 @@ const issue = {
         issueRelations:null,
         tableId:0,
         isRetry:false,
+        xdata:[],
+        ydata:[],
 
     },
     mutations: {
@@ -87,6 +90,12 @@ const issue = {
         set_isRetry:function (state, data) {
             state.isRetry = data
         },
+        set_xdata:function (state, data) {
+            state.xdata = data
+        },
+        set_ydata:function (state, data) {
+            state.ydata = data
+        },
 
     },
     actions: {
@@ -130,7 +139,8 @@ const issue = {
             const data = {id: state.currentIssueId};
             const res = await deleteIssueAPI(data);
             if (res) {
-                dispatch('getIssueList', state.currentIssueDetail.projectId);
+                await dispatch('getIssueList', state.currentIssueDetail.projectId);
+                commit('set_currentIssueId',null);
                 message.success('删除成功')
             } else {
                 message.error('删除失败')
@@ -158,6 +168,17 @@ const issue = {
             }
         },
 
+        // eslint-disable-next-line no-unused-vars
+        setRepoSingleIssue:async ({state,commit,dispatch},data) => {
+            const res = await setRepoSingleIssueAPI(data);
+            //
+            if (res) {
+                message.success('保存成功');
+                await dispatch('getIssueList',data.id);
+
+            }
+        },
+
 
         // eslint-disable-next-line no-unused-vars
         searchIssue: async ({state, commit}, data) => {
@@ -173,7 +194,7 @@ const issue = {
         // eslint-disable-next-line no-unused-vars
         getIssueAdvice: async ({commit, state}, id) => {
             const data = {id: id};
-            const res = await getIssueAdviceAPI(data)
+            const res = await getIssueAdviceAPI(data);
             if (res) {
                 console.log('advice!');
                 console.log(res);
@@ -184,11 +205,9 @@ const issue = {
         // eslint-disable-next-line no-unused-vars
         writeBackSingle: async ({commit, state}, id) => {
             const data = {id: id};
-            const res = await writeBackSingleAPI(data)
+            const res = await writeBackSingleAPI(data);
             if (res) {
                 message.success('写回成功');
-
-
             }
         },
 
@@ -202,11 +221,12 @@ const issue = {
         },
 
         // eslint-disable-next-line no-unused-vars
-        saveRepoAllIssues: async ({commit}, id) => {
+        saveRepoAllIssues: async ({commit,dispatch}, id) => {
             const data = {id: id};
             console.log(data)
-            const res = await saveRepoAllIssuesAPI(data)
+            const res = await saveRepoAllIssuesAPI(data);
             if (res) {
+                await dispatch('getIssueList',id);
                 message.success('保存成功')
             }
         },
@@ -215,8 +235,9 @@ const issue = {
             console.log(data);
             const res = await getBugLocationAPI(data);
             if (res) {
-                commit('set_bugLocationList', res);
-                console.log(res);
+                commit('set_bugLocationList', res.recommendationList);
+                commit('set_xdata',res.xdata);
+                commit('set_ydata',res.ydata);
                 message.success('Bug Location Success')
             }
         },

@@ -11,6 +11,8 @@ import {
     getProjectDetailByIdAPI,
     addProjectUrlAPI,
     getFileTreeAPI,
+    getTagsAPI,
+    addProjectUrlWithTagAPI,
 } from '@/api/project'
 
 
@@ -32,6 +34,7 @@ const project =  {
         treeData:[],
         issueShowVisible:false,
         updateProjectPopV:true,
+        tagList:[],
     },
     mutations:{
         set_projectList:function(state, data) {
@@ -76,6 +79,9 @@ const project =  {
         set_updateProjectPopV:function(state, data) {
             state.updateProjectPopV = data
         },
+        set_tagList:function(state, data) {
+            state.tagList = data
+        },
 
     },
     actions:{
@@ -93,6 +99,8 @@ const project =  {
             const data={id:state.currentProjectId};
             const res = await getProjectDetailByIdAPI(data);
             if(res){
+                console.log('getProjectDetailById');
+                console.log(res);
                 commit('set_currentProjectDetail', res);
                 commit('set_issueShowVisible',true)
             }
@@ -115,18 +123,33 @@ const project =  {
             const res = await addProjectUrlAPI(data);
             console.log(res);
             if(res){
-                message.success('连接成功');
+                message.success('创建成功');
                 commit('set_addProjectVisible', false);
                 commit('set_currentProjectDetail',res);
                 commit('set_connectResVisible',true);
                 dispatch('getFileTree',state.currentProjectId)
+                // commit('set_currentProjectId',res.id)
+            }
+        },
 
+        addProjectUrlWithTag: async({ state, dispatch,commit }, data) => {
+            console.log(data);
+            const res = await addProjectUrlWithTagAPI(data);
+            console.log(res);
+            if(res){
+                message.success('创建成功');
+                commit('set_addProjectVisible', false);
+                commit('set_currentProjectDetail',res);
+                commit('set_connectResVisible',true);
+                commit('set_tagList',[]);
+                dispatch('getFileTree',state.currentProjectId)
                 // commit('set_currentProjectId',res.id)
             }
         },
 
         // eslint-disable-next-line no-unused-vars
         addByFile: async({ state, commit }, data) => {
+            console.log('addByFile');
             console.log(data);
             const res = await addByFileAPI(data)
             console.log(res);
@@ -169,6 +192,17 @@ const project =  {
                 commit('set_treeData', res.children)
             }
         },
+
+        getTags: async({commit },data) => {
+            const res = await getTagsAPI(data);
+            if(res) {
+                console.log('getTags');
+                console.log(res);
+                commit('set_tagList',res);
+            }
+        },
+
+
 
 
     }

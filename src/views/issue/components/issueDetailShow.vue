@@ -144,15 +144,18 @@
                 'currentIssueId',
                 'issueEditVisible',
                 'bugLocationList',
-                'currentProjectDetail'
+                'currentProjectDetail',
+                'issueAdviceList'
 
             ])
         },
         async mounted() {
+            this.set_isRetry(false);
         },
         methods: {
             ...mapMutations([
-                'set_issueEditVisible'
+                'set_issueEditVisible',
+                'set_isRetry'
             ]),
             ...mapActions([
                 'updateIssue',
@@ -161,7 +164,8 @@
                 'getIssueAdvice',
                 'writeBackSingle',
                 'getBugLocation',
-                'deleteIssue'
+                'deleteIssue',
+
             ]),
 
             saveIssue() {

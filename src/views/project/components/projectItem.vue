@@ -5,6 +5,9 @@
                       :title="this.projectName"
                       :description='"description: "+this.projectDescription'
         />
+        <div class="project-tag" style="color: #DBF5E0;font-size: 12px;margin-top: 20px">
+            <span>{{this.tag}}</span>
+        </div>
         <template slot="action" >
             <li>
                 <a @click="jumpToDetail" style="color: #fff">Edit</a>
@@ -13,6 +16,7 @@
                 <a @click="deleteProject1" style="color: #fff">Delete</a>
             </li>
         </template>
+
     </ListItem>
 
 </div>
@@ -23,9 +27,10 @@
     import {mapActions, mapGetters, mapMutations} from "vuex";
     import {Modal} from 'ant-design-vue'
 
+
     export default {
         name: "projectItem",
-        props:["projectName","projectDescription","id","tags","githubRepoName"],
+        props:["projectName","projectDescription","id","tag","githubRepoName"],
         data(){
             return{
                 allDes:"description:"+this.projectDescription,

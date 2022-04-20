@@ -35,7 +35,8 @@
                 'set_currentProjectId',
                 'set_panelLeftFirst',
                 'set_currentIssueId',
-                'set_pageName'
+                'set_pageName',
+                'set_currentIssueDetail'
             ]),
             ...mapActions([
                 'deleteIssue',
@@ -53,13 +54,18 @@
                 // this.$router.push({ name: 'issueDetail'})
             },
             async deleteIssue1(){
-                this.$router.push({ name: 'issueDetail'})
+                this.$router.push({ name: 'issueDetail'});
                 Modal.confirm({
-                    title: '删除Issue',
+                    title: '删除'+ this.title,
                     content: '确认删除该Issue？',
                     onOk: () => {
                         this.dele();
-                        this.$router.push({ name: 'issueList'})
+                        this.set_currentIssueDetail(null);
+                        this.$router.replace({
+                            path:'/supplierAll',
+                            name:'supplierAll'
+                        })
+
                     },
                     onCancel: () => {
                         console.log('点击了取消');

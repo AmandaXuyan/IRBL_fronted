@@ -25,6 +25,14 @@
                         <span> Repository Name: {{this.currentProjectDetail.githubRepoName}} &nbsp;|&nbsp; </span>
                         <span> Repository Owner: {{this.currentProjectDetail.githubRepoOwner}}</span>
                     </div>
+                    <div class="add-header-desccription" style="margin-top: 0">
+            <span style="margin-right: 20px">
+                 You can save all github issues here.
+            </span>
+                        <Button @click="saveRepoAllIssues1" >save</Button>
+                    </div>
+
+
                 </div>
                 <div class="new-github-list" style="position:relative;margin: 10px 60px 30px 45px;">
                     <a-table :columns="columns"
@@ -98,8 +106,8 @@
                         </template>
 <!--                        eslint-disable-next-line vue/no-unused-vars-->
                         <span slot="action" slot-scope="text, record">
-      <a>Save to local</a>
-      <a-divider type="vertical" />
+      <a @click="saveToLocal(record)">Save to local</a>
+<!--      <a-divider type="vertical" />-->
 <!--      <a>Delete</a>-->
     </span>
                     </a-table>
@@ -124,7 +132,7 @@
         data() {
             return {
                 columns: [{
-                    title: 'Title',
+                    title: '    Github Issue Title',
                     dataIndex: 'title',
                     key: 'title',
                     scopedSlots: {
@@ -203,7 +211,9 @@
         methods: {
             ...mapMutations([]),
             ...mapActions([
-                'getRepoAllIssues'
+                'getRepoAllIssues',
+                'setRepoSingleIssue',
+                'saveRepoAllIssues'
             ]),
             async getGithubIssue() {
                 console.log(this.currentProjectId);
@@ -227,6 +237,14 @@
                 clearFilters();
                 this.searchText = '';
             },
+            saveToLocal(record){
+                let data={record:record,id:this.currentProjectId};
+                this.setRepoSingleIssue(data);
+            },
+            saveRepoAllIssues1() {
+                this.saveRepoAllIssues(this.currentProjectId);
+            },
+
 
 
 

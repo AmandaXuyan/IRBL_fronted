@@ -98,4 +98,22 @@ export function getFileTreeAPI(data) {
 }
 
 
+export function getTagsAPI(data){
+    return axios({
+        url:`${api.projectPre}/getTags`,
+        method: 'POST',
+        data
+    })
+}
+
+export function addProjectUrlWithTagAPI(data){
+    return axios({
+        url:`${api.projectPre}/addProjectUrlWithTag`,
+        method: 'POST',
+        data
+    })
+}
+
+
+
 

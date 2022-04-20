@@ -18,7 +18,10 @@
             };
         },
         computed: {
-            ...mapGetters([])
+            ...mapGetters([
+                'xdata',
+                'ydata',
+            ])
         },
         async mounted() {
             this.initEcharts();
@@ -30,15 +33,23 @@
                 // 基本柱状图
                 const option = {
                     xAxis: {
-                        data: this.xData
+                        data: this.xdata,
+                        axisLabel: {
+                            show: false
+                        },
                     },
                     yAxis: {},
                     series: [
                         {
                             type: "bar", //形状为柱状图
-                            data: this.yData
+                            data: this.ydata,
+
                         }
-                    ]
+                    ],
+                    tooltip:{
+                        trigger:'axis',
+
+                    }
                 };
                 const myChart = echarts.init(document.getElementById("mychart"));
                 myChart.setOption(option);

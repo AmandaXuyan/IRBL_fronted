@@ -85,12 +85,12 @@
         },
         mounted(){
             this.initEditor();
-            this.RunResult();
         },
         watch:{
             tabName(){
                 this.monacoEditor.setValue(this.codes);
-            }
+            },
+
         },
         methods:{
             initEditor(){
@@ -117,16 +117,11 @@
                 });
                 //编辑器随窗口自适应
                 window.addEventListener('resize',function(){
-                    this.initEditor();
+                    self.initEditor();
                 })
-
             },
             RunResult(){
                 console.log(this.monacoEditor.getValue());
-            },
-            // eslint-disable-next-line no-unused-vars
-            themeChange(val){
-                this.initEditor();
             },
 
 

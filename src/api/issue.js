@@ -122,3 +122,14 @@ export function getAllIssueRelationAPI(data) {
         params:data,
     })
 }
+
+export function setRepoSingleIssueAPI(data) {
+    return axios({
+        url: `${api.issuePre}/setRepoSingleIssue?projectId=${data.id}`,
+        method: 'POST',
+        data:data.record,
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+}

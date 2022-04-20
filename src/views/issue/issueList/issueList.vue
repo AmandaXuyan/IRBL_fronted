@@ -5,7 +5,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             <layout2/>
             <div class="project-title" @click="jumpToProject" style="cursor:pointer;">
 <!--                Issue：{{this.currentProjectDetail.projectName}}{{this.currentIssueDetail.title}} &#45;&#45;-->
-                <span class="title-head">Project: {{this.currentProjectDetail.projectName}} - Issues</span>
+                <span class="title-head">Project: {{this.currentProjectDetail.projectName}} &nbsp;{{this.currentProjectDetail.tag}} - Issues</span>
             </div>
             <div class="layout-content">
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">

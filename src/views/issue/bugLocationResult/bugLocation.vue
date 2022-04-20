@@ -167,16 +167,19 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             ]),
             jumpToCreate() {
                 this.set_addProjectVisible(true);
+                this.set_isRetry(false);
                 this.$router.push('addProject');
             },
             selected(id) {
                 this.activeName = id;
             },
             jumpToCreateIssue() {
-                this.$router.push({name: 'createIssue'})
+                this.$router.push({name: 'createIssue'});
+                this.set_isRetry(false);
             },
             jumpToIssue() {
-                this.$router.push({name: 'issueList'})
+                this.$router.push({name: 'issueList'});
+                this.set_isRetry(false);
             },
             async reBugLocation(){
                 this.set_isRetry(true);

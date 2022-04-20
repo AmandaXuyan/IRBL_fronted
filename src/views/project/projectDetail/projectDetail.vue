@@ -5,7 +5,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         <div class="page-content">
             <layout2/>
             <div class="project-title">
-                <span class="title-head">Project：{{this.currentProjectDetail.projectName}}</span>
+                <span class="title-head">Project：{{this.currentProjectDetail.projectName}}  &nbsp;{{this.currentProjectDetail.tag}}</span>
             </div>
             <div class="layout-content">
                 <div class="side-content" style="margin-bottom: 22px;width: 50px">

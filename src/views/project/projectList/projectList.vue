@@ -30,11 +30,15 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                                       :style="collapseStyle" v-if="this.panelLeftFirst">
                                         <span> name : {{this.currentProjectDetail.projectName}} </span>
                                         <div></div>
+                                        <span v-if="this.currentProjectDetail.tag!=null"> project tag : {{this.currentProjectDetail.tag}}</span>
+                                        <div></div>
                                         <span> description : {{this.currentProjectDetail.projectDescription}}</span>
                                         <div></div>
                                         <span v-if="this.currentProjectDetail.githubRepoName!=null"> repository name : {{this.currentProjectDetail.githubRepoName}}</span>
                                         <div></div>
                                         <span v-if="this.currentProjectDetail.githubRepoOwner!=null"> github owner : {{this.currentProjectDetail.githubRepoOwner}}</span>
+
+
                                     </a-collapse-panel>
                                 </a-collapse>
                             </div>
@@ -59,6 +63,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                                                  :id="item.id"
                                                                  :project-description="item.projectDescription"
                                                                  :githubRepoName="item.githubRepoName"
+                                                                 :tag="item.tag"
                                                     ></projectItem>
                                                 </List>
                                             </div>
@@ -117,6 +122,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         async mounted() {
             await this.getProjectList(this.userId);
             this.set_panelLeftFirst(false);
+            this.set_currentIssueDetail(null);
+            this.set_currentIssueId(null);
+            this.set_currentProjectId(null);
 
         },
         methods: {
@@ -124,7 +132,11 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'set_projectList',
                 'set_ProjectListLoading',
                 'set_addProjectVisible',
-                'set_panelLeftFirst'
+                'set_panelLeftFirst',
+                'set_currentIssueDetail',
+                'set_currentIssueId',
+                'set_currentProjectId',
+
             ]),
             ...mapActions([
                 'getProjectList',
