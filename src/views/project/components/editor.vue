@@ -29,7 +29,7 @@
             codes:{
                 type:String,
                 default:function(){
-                    return '<div>请编辑html内容</div>'
+                    return '<div>这是project file 内容</div>'
                 }
             },
             language:{

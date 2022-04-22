@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="echart" id="mychart" style="width: 100%;height: 320px;margin-left: 10px"></div>
+        <div class="echart" id="mychart" style="width: 100%;height: 320px;margin-left: 10px">
+        </div>
     </div>
 </template>
 
@@ -48,8 +49,22 @@
                     ],
                     tooltip:{
                         trigger:'axis',
-
-                    }
+                    },
+                    // title:{
+                    //     show:true,
+                    //     text:'这该叫什么',
+                    //     textStyle: { //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"}
+                    //         fontFamily: 'Arial, Verdana, sans...',
+                    //         fontSize: 18,
+                    //         color:'#EBFFEF',
+                    //         x:'60',
+                    //         y: '20',
+                    //         margin: 10,
+                    //         fontStyle: 'normal',
+                    //         fontWeight: 'normal',
+                    //     },
+                    //
+                    // }
                 };
                 const myChart = echarts.init(document.getElementById("mychart"));
                 myChart.setOption(option);

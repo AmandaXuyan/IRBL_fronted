@@ -9,6 +9,7 @@
                         :customRow="customRow"
 
                 >
+
                 </a-table>
             </div>
         </vue-scroll>
@@ -21,7 +22,7 @@
 
     const columns = [
         {
-            title: 'RESULT: File Path',
+            title: 'RESULT: File Path (10 items, scroll down for more)',
             dataIndex: 'fileName',
             width: '80%',
 

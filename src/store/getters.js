@@ -47,6 +47,7 @@ const getters={
     bugLoading:state => state.issue.bugLoading,
     relationIssueInf:state => state.issue.relationIssueInf,
     issueCardVisible:state => state.issue.issueCardVisible,
+    isNext:state => state.issue.isNext,
     //file
     codes:state=>state.file.codes,
     fileLanguage:state=>state.file.fileLanguage,

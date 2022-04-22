@@ -44,6 +44,7 @@ const issue = {
         bugLoading:false,
         relationIssueInf:null,
         issueCardVisible:false,
+        isNext:false,
     },
     mutations: {
         set_issueList: function (state, data) {
@@ -114,6 +115,9 @@ const issue = {
         },
         set_issueCardVisible:function (state, data) {
             state.issueCardVisible = data
+        },
+        set_isNext:function (state, data) {
+            state.isNext = data
         },
 
     },

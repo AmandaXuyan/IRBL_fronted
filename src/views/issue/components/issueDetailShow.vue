@@ -153,7 +153,6 @@
             ])
         },
         async mounted() {
-            this.set_isRetry(false);
         },
         methods: {
             ...mapMutations([
@@ -161,7 +160,8 @@
                 'set_isRetry',
                 'set_adviceVisible',
                 'set_adviceLoading',
-                'set_bugLoading'
+                'set_bugLoading',
+                'set_isNext'
             ]),
             ...mapActions([
                 'updateIssue',
@@ -199,6 +199,8 @@
             },
             async BugLocate1() {
                 this.set_bugLoading(true);
+                this.set_isRetry(false);
+                this.set_isNext(false);
                 await this.getBugLocation({id:this.currentIssueId,page:1});
                 await this.$router.push({name: 'bugLocation'})
 

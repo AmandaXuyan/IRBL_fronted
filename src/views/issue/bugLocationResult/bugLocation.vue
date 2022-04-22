@@ -29,30 +29,43 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
-                                <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51" v-if="!this.isRetry" >
+                                <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51"  >
                                     <a-collapse-panel key="1" header="Tips"
                                                       :style="collapseStyle">
-                                        <span> 如果对结果不满意，可重构Issue，再进行Bug Locate试试！</span>
-                                        <div></div>
-                                        <Button @click="reBugLocation">RETRY</Button>
+                                        <div class="next-list">
+                                            <span style="color: #42b983"> 💡如果对结果不满意？</span>
+                                            <div></div>
+                                            <span style="color: #42b983;cursor: pointer" @click="reBugLocation2" v-if="!isNext"> &nbsp;&nbsp;&nbsp;&nbsp;➡️&nbsp;点击得到下一批结果</span>
+                                            <span style="color: #42b983" v-if="isNext"> &nbsp;&nbsp;&nbsp;&nbsp;➡️&nbsp;已无更多结果</span>
+                                        </div>
+                                        <div class="reconstruct" v-if="!this.isRetry">
+                                        <span style="color: #42b983;cursor: pointer" @click="reBugLocation"> &nbsp;&nbsp;&nbsp;&nbsp;➡️&nbsp;重构Issue，再进行Bug Locate试试</span>
+                                        </div>
+                                        <div class="reconstruct" v-if="this.isRetry">
+                                            <span style="color: #42b983"> &nbsp;&nbsp;&nbsp;&nbsp;➡️&nbsp;issue已重构</span>
+                                            <div></div>
+                                            <span style="color: #42b983;cursor: pointer" v-if="isNext" @click="jumpToIssue">&nbsp;&nbsp;&nbsp;&nbsp;➡️&nbsp;点击返回 </span>
+                                        </div>
 
                                     </a-collapse-panel>
                                 </a-collapse>
                                 <a-collapse default-active-key="1" :bordered="false" style="background-color: #354A51">
-                                    <a-collapse-panel key="1" :header="this.currentIssueDetail.title"
+                                    <a-collapse-panel key="1" header="Issue Detail"
                                                       :style="collapseStyle">
                                         <div class="issue-detail">
                                             <!--                                            <span>title: {{this.currentIssueDetail.title}}</span>-->
                                             <!--                                            <div></div>-->
                                             <!--                                            <span v-if="this.currentIssueDetail.userName!=null">author: {{this.currentIssueDetail.userName}}</span>-->
                                             <div class="markdown-issue" style="height: 600px">
+                                                <span style="color: #DBF5E0">{{this.currentIssueDetail.title}}</span>
+                                                <div></div>
                                                 <vue-scroll>
                                                     <mavon-editor
                                                             :value="this.currentIssueDetail.description"
                                                             defaultOpen="preview"
                                                             :boxShadow="false"
                                                             previewBackground="#354A51"
-                                                            style="z-index:1;height:auto;border: 1px solid #d9d9d9;color: #fff"
+                                                            style="z-index:1;height:auto;border: 1px solid #d9d9d9;color: #fff;margin-top: 10px"
                                                             :editable="false"
                                                             :subfield="false"
                                                             :toolbarsFlag="false"
@@ -87,6 +100,9 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                             </div>
                                             <div slot="secondPane" class="second-pane" ref="element"
                                                  style="padding-right: 70px;width: 100%;text-align: left;">
+                                                <div>
+                                                    <span style="position: absolute;top:10px;left:25px;color: #DBF5E0">这是标题</span>
+                                                </div>
                                                 <line-chart></line-chart>
                                             </div>
                                         </rs-panes>
@@ -151,7 +167,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'currentProjectDetail',
                 'currentIssueDetail',
                 'currentIssueId',
-                'isRetry'
+                'isRetry',
+                'isNext'
             ])
         },
         async mounted() {
@@ -160,7 +177,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
         methods: {
             ...mapMutations([
                 'set_addProjectVisible',
-                'set_isRetry'
+                'set_isRetry',
+                'set_isNext'
             ]),
             ...mapActions([
                 'getBugLocation'
@@ -183,6 +201,15 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             },
             async reBugLocation(){
                 this.set_isRetry(true);
+                this.set_isNext(false);
+                await this.getBugLocation({id:this.currentIssueId,page:2});
+                await this.$router.replace({
+                    path: '/supplierAll2',
+                    name: 'supplierAll2'
+                })
+            },
+            async reBugLocation2(){
+                this.set_isNext(true);
                 await this.getBugLocation({id:this.currentIssueId,page:2});
                 await this.$router.replace({
                     path: '/supplierAll2',

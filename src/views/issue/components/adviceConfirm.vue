@@ -6,8 +6,12 @@
             <span style="font-size: 17px;font-weight: 500">{{this.currentIssueDetail.title}}</span>
 
         </div>
-        <div class="add-header-desccription" style="margin-left: 30px;margin-top: 10px">
-            <span style="color: #42b983">The left side is the original content of the issue, and the right side is the refactored issue content. </span>
+        <div class="add-header-desccription" style="margin-left: 30px;margin-top: 15px">
+            <span style="color: #42b983"> 🔧This is the issue refactored by the tool Bee. If you are satisfied with the refactored content, you can click here to update the issue content.</span>
+            <Icon type="ios-archive" style="margin-left: 10px;cursor: pointer" @click="updateIssue1"/>
+            <div></div>
+            <span style="color: #42b983"> 🔧Not satisfied with the result？ Click here to return.</span>
+            <Icon type="ios-backspace" style="margin-left: 10px;cursor: pointer" @click="returnBack"/>
         </div>
         <div style="margin-top: 5px">
         <rs-panes split-to="columns"
@@ -17,8 +21,11 @@
                   class="panes-wrap">
             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
                 <div class="add-header" style="margin-top: 30px;height: 650px">
+                    <div class="add-header-title" style="margin-top: 30px">
+                        <span style="margin-left: 30px;margin-right: 20px;margin-bottom: 10px"> </span>
+                    </div>
                     <vue-scroll>
-                        <div class="show" style="margin-left: 10px;margin-top: 60px">
+                        <div class="show" style="margin-left: 10px;">
                             <div class="markdown">
                                 <mavon-editor
                                         :value="this.currentIssueDetail.description"
@@ -39,11 +46,11 @@
             </div>
             <div slot="secondPane" class="second-pane" ref="element"
                  style="padding-right: 70px;width: 100%;text-align: left;">
-                <div class="add-header-desccription" style="margin-left: 30px;margin-top: 15px">
-                    <span style="color: #42b983"> 🔧This is the issue refactored by the tool Bee. If you are satisfied with the refactored content, you can click here to update the issue content.</span>
-                    <Icon type="ios-archive" style="margin-left: 10px;cursor: pointer" @click="updateIssue1"/>
-                </div>
+
                 <div class="add-header" style="margin-top: 30px;height: 650px">
+                    <div class="add-header-title" style="margin-top: 30px">
+                        <span style="margin-left: 30px;margin-right: 20px;font-size:18px;margin-bottom: 10px">Adviced : </span>
+                    </div>
                     <vue-scroll>
                         <div class="show" style="margin-left: 20px">
                             <div class="markdown">
@@ -112,8 +119,13 @@
                     path:'/supplierAll',
                     name:'supplierAll'
                 })
-
-
+            },
+            returnBack(){
+                this.set_adviceVisible(false);
+                this.$router.replace({
+                    path:'/supplierAll',
+                    name:'supplierAll'
+                })
             }
 
 
