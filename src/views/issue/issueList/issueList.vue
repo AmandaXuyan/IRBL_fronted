@@ -24,11 +24,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                     <a-icon type="github" @click="writeBack1"/>
                         </Poptip>
                 </span>
-<!--                    <span class="side-content-tool">-->
-<!--                        <Poptip trigger="hover" content="save github issue" placement="right">-->
-<!--                    <a-icon type="cloud-download" @click="saveGithubIssue"/>-->
-<!--                        </Poptip>-->
-<!--                </span>-->
 
                 </div>
                 <div class="main-content" style="margin-left: 50px;margin-bottom: 22px">
@@ -41,13 +36,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                   :min-size=this.minSize
                                   class="panes-wrap">
                             <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">
-                                <!--                                左边上下第一个分栏-->
-<!--                                <rs-panes split-to="rows"-->
-<!--                                          :allow-resize="true"-->
-<!--                                          :size=this.size-->
-<!--                                          :min-size=this.minSize-->
-<!--                                          class="panes-wrap">-->
-<!--                                    <div slot="firstPane" class="first-pane" style="width: 100%;text-align: left">-->
+
                                         <div class="no-curr-project">
                                             <Select v-model="model11"
                                                     filterable
@@ -91,40 +80,6 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                             </a-collapse-panel>
                                         </a-collapse>
                                     </div>
-<!--                                    <div slot="secondPane" class="second-pane" ref="element"-->
-<!--                                         style="padding-right: 30px;width: 100%;text-align: left;">-->
-<!--                                        &lt;!&ndash;                                        左边上下第二个分栏&ndash;&gt;-->
-
-<!--&lt;!&ndash;                                        <a-collapse default-active-key="1" :bordered="false"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    style="background-color: #354A51">&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <a-collapse-panel key="1" header="Github Issues"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                              :style="collapseStyle">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                <div style="height: 300px">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    <vue-scroll>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        <div class="issueList" v-for="item in gitIssueList"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                             :key="item.title"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                             style="max-height: 250px">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            <List>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                                <ListItem class="issueItem-one">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                                    <ListItemMeta :title="item.title"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                                </ListItem>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                            </List>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    </vue-scroll>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            </a-collapse-panel>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        </a-collapse>&ndash;&gt;-->
-<!--                                        <a-collapse default-active-key="1" :bordered="false"-->
-<!--                                                    style="background-color: #354A51">-->
-<!--                                            <a-collapse-panel key="1" header="Issue Detail"-->
-<!--                                                              :style="collapseStyle" v-if="this.panelLeftFirst">-->
-<!--                                                <span> todo: issue详情API:id={{this.currentIssueId}}</span>-->
-<!--                                            </a-collapse-panel>-->
-<!--                                        </a-collapse>-->
-
-<!--                                    </div>-->
-<!--                                </rs-panes>-->
-<!--                            </div>-->
                             <div slot="secondPane" class="second-pane" ref="element"
                                  style="padding-right: 30px;width: 100%;text-align: left;" >
                                 <div class="scroll-content">

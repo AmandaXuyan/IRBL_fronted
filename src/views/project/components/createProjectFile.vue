@@ -40,9 +40,6 @@
                     </div>
                 </div>
             </div>
-            <!--            <div class="create-header" @click="uploadFile1">-->
-            <!--                Upload-->
-            <!--            </div>-->
         </div>
 
     </div>

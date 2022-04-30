@@ -1,16 +1,5 @@
 <template>
     <div class="myEditor" >
-<!--            <Button  @click="RunResult">res</Button>-->
-<!--            <span class="theme" style="float:right">-->
-<!--                <el-select v-model="theme" size="mini" @change="themeChange" placeholder="请选择主题">-->
-<!--                    <el-option-->
-<!--                            v-for="item in themeOption"-->
-<!--                            :key="item.value"-->
-<!--                            :label="item.label"-->
-<!--                            :value="item.value">-->
-<!--                    </el-option>-->
-<!--                </el-select>-->
-<!--            </span>-->
         <div id="container" ref="container" style="height:720px;"></div>
     </div>
 </template>
@@ -111,7 +100,7 @@
                     editorOptions:self.editorOptions,
                 });
                 self.$emit('onMounted',self.monacoEditor);//编辑器创建完成回调
-                self.monacoEditor.onDidChangeModelContent(function(event){//编辑器内容changge事件
+                self.monacoEditor.onDidChangeModelContent(function(event){//编辑器内容change事件
                     self.codesCopy = self.monacoEditor.getValue();
                     self.$emit('onCodeChange',self.monacoEditor.getValue(),event);
                 });

@@ -101,7 +101,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                                             <div slot="secondPane" class="second-pane" ref="element"
                                                  style="padding-right: 70px;width: 100%;text-align: left;">
                                                 <div>
-                                                    <span style="position: absolute;top:10px;left:25px;color: #DBF5E0">这是标题</span>
+                                                    <span style="position: absolute;top:10px;left:35px;color: #DBF5E0">缺陷定位相似度分数柱状图</span>
                                                 </div>
                                                 <line-chart></line-chart>
                                             </div>

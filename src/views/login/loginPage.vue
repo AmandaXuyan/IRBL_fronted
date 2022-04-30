@@ -22,7 +22,7 @@
                 <Form ref="loginFrom" :model="loginFrom" :rules="loginRule">
                     <Form-item prop="userName">
                         <Input type="text" v-model="loginFrom.email" placeholder="邮箱">
-                            <Icon type="ios-person-outline" slot="prepend"></Icon>
+                            <Icon type="ios-mail-outline" slot="prepend"></Icon>
                         </Input>
                     </Form-item>
                     <Form-item prop="password">

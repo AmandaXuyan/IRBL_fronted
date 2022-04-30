@@ -31,7 +31,6 @@
             ...mapMutations([]),
             ...mapActions([]),
             initEcharts() {
-                // 基本柱状图
                 const option = {
                     xAxis: {
                         data: this.xdata,
@@ -42,29 +41,13 @@
                     yAxis: {},
                     series: [
                         {
-                            type: "bar", //形状为柱状图
+                            type: "bar",
                             data: this.ydata,
-
                         }
                     ],
                     tooltip:{
                         trigger:'axis',
                     },
-                    // title:{
-                    //     show:true,
-                    //     text:'这该叫什么',
-                    //     textStyle: { //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"}
-                    //         fontFamily: 'Arial, Verdana, sans...',
-                    //         fontSize: 18,
-                    //         color:'#EBFFEF',
-                    //         x:'60',
-                    //         y: '20',
-                    //         margin: 10,
-                    //         fontStyle: 'normal',
-                    //         fontWeight: 'normal',
-                    //     },
-                    //
-                    // }
                 };
                 const myChart = echarts.init(document.getElementById("mychart"));
                 myChart.setOption(option);
