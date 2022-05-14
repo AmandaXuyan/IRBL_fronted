@@ -133,3 +133,17 @@ export function setRepoSingleIssueAPI(data) {
         },
     })
 }
+
+//todo: data {projectId: ,page: }
+//返回关键词node和边，注意classes
+// let ele=[
+//     {group:"nodes",data:{id:200,name:"keyword1; keyword2"},classes:"word"},
+//     {group:"edges",data:{id:100,name:"关键词",source:120,target:200},classes:"relation2"}
+//     ];
+export function getKeywordsAPI(data) {
+    return axios({
+        url: `${api.issuePre}/getGraphModified`,
+        method: 'GET',
+        params:data,
+    })
+}

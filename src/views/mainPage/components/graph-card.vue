@@ -1,20 +1,20 @@
 <template>
     <div class="graph-card">
-        <a-card hoverable style="width: 250px;background-color: #658885" @click="jumpToGraph">
+        <a-card hoverable style="width: 300px;background-color: #658885" >
             <template #cover>
                 <img
                         alt="example"
                         :src=imgSrc
                 />
             </template>
-            <template #actions>
-                <Icon type="ios-bug-outline" />
-                <Icon type="ios-bulb-outline" />
+<!--            <template #actions>-->
+<!--                <Icon type="ios-bug-outline" />-->
+<!--                <Icon type="ios-bulb-outline" />-->
 
-            </template>
+<!--            </template>-->
             <a-card-meta :title=cardTitle :description=cardDes>
                 <template #avatar>
-                <Icon type="md-git-network" />
+                <Icon :type=iconString />
                 </template>
             </a-card-meta>
         </a-card>
@@ -43,10 +43,10 @@
                 type: String,
                 default: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
             },
-            graphId: {
-                type: String,
-                default: 'graphId'
-            },
+            iconString:{
+                type:String,
+                default:"md-git-network"
+            }
 
         },
         data() {

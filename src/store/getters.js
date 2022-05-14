@@ -48,6 +48,10 @@ const getters={
     relationIssueInf:state => state.issue.relationIssueInf,
     issueCardVisible:state => state.issue.issueCardVisible,
     isNext:state => state.issue.isNext,
+    graphNumber:state => state.issue.graphNumber,
+    keywordsEle:state => state.issue.keywordsEle,
+    highlightList:state => state.issue.highlightList,
+    highlightEdgeList:state => state.issue.highlightEdgeList,
     //file
     codes:state=>state.file.codes,
     fileLanguage:state=>state.file.fileLanguage,

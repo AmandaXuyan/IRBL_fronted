@@ -10,7 +10,7 @@
                     />
                 </div>
                 <div class="layout-title" @click="goToActivePage('main')">
-                    IRBL
+                    BLIT
                 </div>
                 <div class="layout-nav">
                     <Menu-item name="projectList" @mouseenter.native="mouseOver" @mouseleave.native="mouseLeave">

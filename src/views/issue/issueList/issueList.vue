@@ -191,7 +191,8 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
                 'set_currentIssueDetail',
                 'set_issueDetailVisible',
                 'set_issueEditVisible',
-                'set_pageName'
+                'set_pageName',
+                'set_adviceVisible'
             ]),
             ...mapActions([
                 'searchIssue',
@@ -273,6 +274,7 @@ import {SelfBuildingSquareSpinner} from "epic-spinners";
             async choosePage(data){
                 console.log(data);
                 await this.set_pageName(data);
+                await this.set_adviceVisible(false);
                 if(data==3){
                     this.$router.push({name: 'connectDetail'})
                 }else(

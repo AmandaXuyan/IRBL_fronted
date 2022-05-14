@@ -19,6 +19,7 @@ import createIssue from '@/views/issue/createIssue/createIssue';
 import supplierAll from '@/views/mainPage/supplierAll'
 import bugLocation from "@/views/issue/bugLocationResult/bugLocation";
 import supplierAll2 from '@/views/issue/bugLocationResult/supplierAll2';
+import supplierAll3 from '@/views/mainPage/supplierAll3'
 Vue.use(VueRouter);
 
 const routes = [
@@ -42,6 +43,11 @@ const routes = [
     path:'/supplierAll2',
     name:'supplierAll2',
     component:supplierAll2,
+  },
+  {
+    path:'/supplierAll3',
+    name:'supplierAll3',
+    component:supplierAll3,
   },
 
   {

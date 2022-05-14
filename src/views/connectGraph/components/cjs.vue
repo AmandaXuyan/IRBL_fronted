@@ -1,7 +1,25 @@
 <template>
     <div style="position: relative; height: 100%; width: 100%; z-index: 1;">
-        <div id="cytoscape_id" style="height: 100%; width: 100%; z-index: 2;"></div>
-        <div id="cytoolbar_id" style="position: absolute; left: 5pt; top: 5pt; z-index: 2; background-color: #658885;">
+        <div id="cytoscape_id" style="height: 85%; width: 100%; z-index: 2;"></div>
+        <div id="cytoolgraph_id" style="position: absolute; left: 5pt; top: 5pt; z-index: 2; background-color: #354A51;">
+            <div>
+                <RadioGroup v-model="graph" @on-change="changeTo">
+                    <Radio label="1">
+                        <span>graph1</span>
+                    </Radio>
+                    <Radio label="2">
+                        <span>graph2</span>
+                    </Radio>
+                </RadioGroup>
+            </div>
+        </div>
+        <div id="cytoolbar_id" style="position: absolute; left: 125pt; top: 5pt; z-index: 2; background-color: #658885;">
+            <div class="tools">
+                <div class="center-center">
+                    <Icon style="font-size: 32px; cursor: pointer;" title="剪枝" type="ios-cut-outline"
+                          @click="cutGraphShow"/>
+                </div>
+            </div>
             <div class="tools">
                 <div class="center-center">
                     <Icon style="font-size: 32px; cursor: pointer;" title="放大" type="ios-add-circle-outline"
@@ -102,6 +120,11 @@
         watch: {},
         props: {},
         mounted() {
+            if(this.graphNumber==="1"){
+                this.graph="1";
+            }else{
+                this.graph="2";
+            }
             this.set_issueCardVisible(false);
             this.set_relationIssueInf(null);
             // Cxtmenu圆形菜单主要依赖组件
@@ -180,46 +203,40 @@
                     'background-color': '#49A8AC',
                     'content': 'data(name)',
                     'border-color': '#49A8AC',
-                    'border-width': "5px"
+                    'border-width': "5px",
+                    'color': '#DBF5E0',
+                    'font-size': '10pt',
                 })
-                .selector('.classes-B')
-                .css({
-                    'background-color': '#b88cea',
-                    'content': 'data(name)',
-                    'border-color': '#b88cea',
-                    'border-width': "5px"
-                })
-                // // .style({'background-color': '#00FF00', 'border-color': '#00FF00', 'border-width': "1px",})
-                .selector('.classes-C')
-                // // .style({'background-color': '#0000FF', 'border-color': '#0000FF', 'border-width': "1px",})
+                .selector('.word')
                 .css({
                     'background-color': '#77c94f',
                     'content': 'data(name)',
                     'border-color': '#77c94f',
-                    'border-width': "5px"
+                    'border-width': "6px",
+                    'target-endpoint':'inside-to-node',
+                    'color': '#fcb16f',
+                    'shape':'star',
+                    'font-size': '16pt',
+
                 })
-                .selector('.classes-D')
-                .css({
-                    'background-color': '#fcb16f',
-                    'content': 'data(name)',
-                    'border-color': '#fcb16f',
-                    'border-width': "5px"
-                })
+                // // .style({'background-color': '#00FF00', 'border-color': '#00FF00', 'border-width': "1px",})
                 .selector('.relation')
                 .css({
                     'target-arrow-color': '#999999', /*箭头颜色*/
                     'curve-style': 'bezier', /*线条样式曲线*/
                     'line-color': '#999999', /*线条颜色*/
                     'width': '1px', /*线条宽度*/
+                    'label': '',
                 })
-                .selector('.relationB')
+                .selector('.relation2')
                 .css({
-                    'line-style': 'dotted',
                     'target-arrow-color': '#999999', /*箭头颜色*/
-                    'curve-style': 'bezier', /*线条样式曲线*/
+                    'curve-style': 'unhundled-bezier', /*线条样式曲线*/
+                    'line-style':'dashed',
                     'line-color': '#999999', /*线条颜色*/
                     'line-dash-offset': '1',
                     'width': '1px', /*线条宽度*/
+                    'label': 'data(name)',
                 })
             ;
             // 通用的样式
@@ -228,10 +245,9 @@
                 .selector('node')
                 .style({
                     'label': 'data(name)',
-                    'font-size': '10pt',
                     'width': '8pt',
                     'height': '8pt',
-                    'color': '#DBF5E0',
+
                 })
                 /*已选择节点样式*/
                 .selector('node:selected')
@@ -239,15 +255,14 @@
                 /*未选择节点样式*/
                 .selector('edge')
                 .style({
-                    'label': 'data(name)',
-                    'target-arrow-shape': 'triangle-backcurve', /*箭头样式*/
+                    'target-arrow-shape': 'none', /*箭头样式*/
                     'target-arrow-size': '1px', /*箭头大小*/
                     'target-arrow-color': '#999999', /*箭头颜色*/
                     'curve-style': 'bezier', /*线条样式曲线*/
                     'line-color': '#999999', /*线条颜色*/
                     'width': '1px', /*线条宽度*/
                     'font-size': '10px', /*标签字体大小*/
-                    'color': '#658885', /*标签字体大小*/
+                    'color': '#658885', /*标签字体颜色*/
                     'text-outline-color': 'white', /*文本轮廓颜色*/
                     'text-outline-width': '1px', /*文本轮廓宽度*/
                     'text-rotation': 'autorotate', /*标签方向*/
@@ -265,22 +280,36 @@
             ;
         },
         data() {
-            return {}
+            return {
+                graph:'1',
+                isCut:false,
+            }
         },
         computed: {
             ...mapGetters([
                 'relationIssueInf',
-                'issueCardVisible'
+                'issueCardVisible',
+                'keywordsEle',
+                'currentProjectId',
+                'highlightList',
+                'highlightEdgeList',
+                'graphNumber'
+
             ])
         },
         methods: {
             ...mapMutations([
                 'set_currentIssueId',
                 'set_relationIssueInf',
-                'set_issueCardVisible'
+                'set_issueCardVisible',
+                'set_graphNumber',
+                'set_keywordsEle'
             ]),
             ...mapActions([
-                'relationGetIssueDetailById'
+                'relationGetIssueDetailById',
+                'getKeywords',
+                'getHighlightList',
+                'getAllIssueRelation'
             ]),
 
             /**
@@ -341,6 +370,76 @@
                 this.set_relationIssueInf(null);
                 this.set_issueCardVisible(false);
             },
+            /**
+             * todo: 获得剪枝图，高亮，并显示关键词
+             **/
+            async cutGraphShow(){
+                if(!this.isCut){
+                    //获取关键词，点的class为.word；边的class为.relation2
+                    await this.getKeywords(this.currentProjectId);
+                    await this.cutLightOn();
+                    // this.set_keywordsEle(null);
+                    this.isCut=true;
+                }else{
+                    this.cutLightOff();
+                    this.isCut=false;
+                    this.$router.replace({
+                        path:'/supplierAll3',
+                        name:'supplierAll3'
+                    })
+                }
+
+
+
+            },
+            cutLightOff(){
+                this.$cy.startBatch();
+                this.$cy.batch(() => {
+                    this.$cy.elements().removeClass("light-off") /*移除样式*/;
+
+                });
+                this.$cy.endBatch();
+            },
+            /**
+             * todo: 高亮.
+             * @param ele 某元素ID
+             * elements是需要高亮的id的list，如['108','111']，那点和边的id会有一样的吗
+             */
+            async cutLightOn() {
+                this.$cy.startBatch();
+                this.$cy.batch(() => {
+                    this.$cy.elements().addClass("light-off"); //*添加样式*/
+                    let elements = this.highlightList;
+                    //获得要高亮的3个array
+                    elements.forEach(__ => {
+                        this.$cy.getElementById(__).removeClass("light-off");
+
+                    });
+                    for (var i in this.highlightEdgeList){
+                        console.log(this.highlightEdgeList[i]);
+                        this.$cy.edges(this.highlightEdgeList[i]).removeClass("light-off");
+                    }
+                    // this.$cy.edges('edge[source="99"][target="100"]').removeClass("light-off");
+
+                });
+                this.$cy.endBatch();
+                await this.addEles(this.keywordsEle);
+            },
+
+            async changeTo(data){
+                console.log(data);
+                if (data==="1"){
+                    await this.set_graphNumber('1');
+                }else{
+                    await this.set_graphNumber('2');
+                }
+                await this.getAllIssueRelation(this.currentProjectId);
+                this.$router.replace({
+                    path:'/supplierAll3',
+                    name:'supplierAll3'
+                })
+            },
+
             /***************************工具栏************************/
             /**
              * 缩放大小.

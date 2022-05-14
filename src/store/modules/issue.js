@@ -16,7 +16,8 @@ import {
     getBugLocationAPI,
     getAllIssueRelationAPI,
     writeBackAPI,
-    setRepoSingleIssueAPI
+    setRepoSingleIssueAPI,
+    getKeywordsAPI,
 } from '@/api/issue'
 
 
@@ -45,6 +46,10 @@ const issue = {
         relationIssueInf:null,
         issueCardVisible:false,
         isNext:false,
+        graphNumber:"1",
+        keywordsEle:null,
+        highlightList:[],
+        highlightEdgeList:[],
     },
     mutations: {
         set_issueList: function (state, data) {
@@ -118,6 +123,18 @@ const issue = {
         },
         set_isNext:function (state, data) {
             state.isNext = data
+        },
+        set_graphNumber:function (state, data) {
+            state.graphNumber = data
+        },
+        set_keywordsEle:function (state, data) {
+            state.keywordsEle = data
+        },
+        set_highlightList:function (state, data) {
+            state.highlightList = data
+        },
+        set_highlightEdgeList:function (state, data) {
+            state.highlightEdgeList = data
         },
 
     },
@@ -277,8 +294,9 @@ const issue = {
                 message.success('Bug Location Success')
             }
         },
-        getAllIssueRelation:async ({commit}, id) => {
-            const data = {projectId: id, page: 1};
+        getAllIssueRelation:async ({commit,state}, id) => {
+
+            const data = {projectId: id, page: (state.graphNumber==="1"?1:2)};
             console.log(data);
             const res = await getAllIssueRelationAPI(data);
             if (res) {
@@ -287,7 +305,23 @@ const issue = {
                 // message.success('Issue Relation Success')
             }
         },
+        getKeywords:async ({commit,state}, id) => {
+            const data = {projectId: id, page: (state.graphNumber==="1"?1:2)};
+            const res = await getKeywordsAPI(data);
+            if (res) {
+                console.log(res);
+                commit('set_keywordsEle', res.graphVOS);
+                let newlist=[];
+                var item;
+                for (item in res.edges){
+                    newlist.push("#"+res.edges[item].toString())
+                }
+                console.log(newlist);
+                commit('set_highlightList', res.nodes);
+                commit('set_highlightEdgeList',res.edges_st);
 
+            }
+        },
 
     }
 }

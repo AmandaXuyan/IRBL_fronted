@@ -153,6 +153,7 @@
             ])
         },
         async mounted() {
+            await this.set_adviceVisible(false);
         },
         methods: {
             ...mapMutations([
